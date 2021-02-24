@@ -1,0 +1,20 @@
+{
+  "name": "fec",
+  "version": "1.0.0",
+  "description": "Project Catwalk",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr-team-usa/project-catwalk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hr-team-usa/project-catwalk/issues"
+  },
+  "homepage": "https://github.com/hr-team-usa/project-catwalk#readme"
+}
