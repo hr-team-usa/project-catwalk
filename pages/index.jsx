@@ -1,4 +1,25 @@
+import React from 'react';
+import ProductDescription from '../components/Description-Scott/ProductDescription';
+import Comparison from '../components/Comparison-Dorien/Comparison';
+import QAs from '../components/QAs-Malcolm/QAs';
+import Reviews from '../components/Reviews-Jim/Reviews';
+
+const App = () => (
+  <div>
+    <ProductDescription />
+    <Comparison />
+    <QAs />
+    <Reviews />
+  </div>
+);
+
+export default App;
+
+/*
+//THIS IS OUR HELLO API CODE, LEAVING IT HERE FOR FUTURE REFERENCE
+
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import config from '../config';
 
@@ -33,3 +54,4 @@ const Hello = () => {
 };
 
 export default Hello;
+*/
