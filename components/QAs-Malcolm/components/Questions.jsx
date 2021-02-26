@@ -1,7 +1,8 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../../config';
-
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -25,12 +26,14 @@ function Questions() {
   }, []);
 
   return (
-    <div>
+    <React.Fragment>
       {questions.map((item, i) =>
-      <p index={i}><b>Q: {item.question_body}</b></p>
+      <p key={i}><b>Q: {item.question_body}</b><br></br>
+      A: {}
+      </p>
       )}
       {console.log(questions)}
-    </div>
+    </React.Fragment>
   );
 }
 
