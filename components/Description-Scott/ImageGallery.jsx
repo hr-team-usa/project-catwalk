@@ -10,7 +10,7 @@ const ImageGallery = () => {
   // productID of selected product -> allows us to fetch the various styles -> allows us to get main image for selected style
   // image thumbnails
 
-  let productId = 18201;
+  let productId = 18078;
   let [mainImageSrc, setMainImageSrc] = useState('');
   let [thumbnails, setThumbnails] = useState([]);
 
@@ -28,18 +28,15 @@ const ImageGallery = () => {
         var styles = results.data.results;
         console.log('results.data: ', results.data);
         console.log('styles: ', styles);
-        // could use the 'find' method here instead of iterating through each style
-        styles.forEach((style) => {
-          if (style['default?']) {
-            style.photos.forEach((photo) => {
-              console.log('photo url: ', photo.url)
-              setMainImageSrc(photo.url);
-              // add thumbnail photos to thumbnails array
-              setThumbnails([...thumbnails, photo.thumbnail_url])
-            })
-            return;
-          }
-        })
+        var defaultStyle = styles.find(style => style['default?'] === true)
+        setMainImageSrc(defaultStyle.photos[0].url);
+        var thumbnails = []
+
+        for (var i=0; i < defaultStyle.photos.length; i++) {
+          thumbnails.push(defaultStyle.photos[i].thumbnail_url)
+        }
+
+        setThumbnails(thumbnails);
       })
       .catch((err) => console.error(err))
   }
