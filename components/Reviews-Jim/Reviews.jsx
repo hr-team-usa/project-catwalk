@@ -31,10 +31,23 @@ const Reviews = () => {
     <div>
       <h1>Reviews</h1>
       {reviews.map((review) =>
-      <div key={review.review_id}>
-        <h3>{review.summary}</h3>
-        <p>{review.body}</p>
-      </div>)}
+        <div key={review.review_id}>
+          <h3>{review.summary}</h3>
+          <p>{review.body}</p>
+          {review.photos.map((photo) =>
+            <img key={photo.id} src={photo.url}></img>
+          )}
+        </div>
+      )}
+
+      <style jsx>{`
+        h3 {
+          color: indigo;
+        }
+        img {
+          height: 150px;
+        }
+      `}</style>
     </div>
   );
 };
