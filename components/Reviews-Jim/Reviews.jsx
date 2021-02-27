@@ -4,52 +4,66 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../config';
 
+import ReviewsList from './components/ReviewsList';
+import ReviewsBreakdown from './components/ReviewsBreakdown';
+
 const Reviews = () => {
-  const [ reviews, setReviews ] = useState([]);
-
-  const getAllReviews = (query) => {
-    const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/?${query}`,
-      method: 'get',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-    };
-
-    axios(options)
-      .then((res) => {
-        setReviews(res.data.results);
-      })
-      .catch((err) => { console.log(err); });
-  };
-
-  useEffect(() => {
-    getAllReviews('product_id=18201');
-  }, []);
 
   return (
     <div>
-      <h1>Reviews</h1>
-      {reviews.map((review) =>
-        <div key={review.review_id}>
-          <h3>{review.summary}</h3>
-          <p>{review.body}</p>
-          {review.photos.map((photo) =>
-            <img key={photo.id} src={photo.url}></img>
-          )}
-        </div>
-      )}
-
-      <style jsx>{`
-        h3 {
-          color: indigo;
-        }
-        img {
-          height: 150px;
-        }
-      `}</style>
+      <h3>Ratings & Reviews</h3>
+      <ReviewsList />
+      <ReviewsBreakdown />
     </div>
   );
 };
+
+// const Reviews = () => {
+//   const [ reviews, setReviews ] = useState([]);
+
+//   const getAllReviews = (query) => {
+//     const options = {
+//       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/?${query}`,
+//       method: 'get',
+//       headers: {
+//         Authorization: config.TOKEN,
+//       },
+//     };
+
+//     axios(options)
+//       .then((res) => {
+//         setReviews(res.data.results);
+//       })
+//       .catch((err) => { console.log(err); });
+//   };
+
+//   useEffect(() => {
+//     getAllReviews('product_id=18201');
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Ratings & Reviews</h1>
+//       {reviews.map((review) =>
+//         <div key={review.review_id}>
+//           <h3>{review.summary}</h3>
+//           <p>{review.body}</p>
+//           {review.photos.map((photo) =>
+//             <img key={photo.id} src={photo.url}></img>
+//           )}
+//         </div>
+//       )}
+
+//       <style jsx>{`
+//         h3 {
+//           color: indigo;
+//         }
+//         img {
+//           height: 150px;
+//         }
+//       `}</style>
+//     </div>
+//   );
+// };
 
 export default Reviews;
