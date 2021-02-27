@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../config';
+import Image from 'next/image'
 
 // should pull in productId from global state
 const ImageGallery = () => {
@@ -11,6 +12,7 @@ const ImageGallery = () => {
 
   let productId = 18201;
   let [mainImageSrc, setMainImageSrc] = useState('');
+  let [thumbnails, setThumbnails] = useState([]);
 
   const options = {
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/products/${productId}/styles`,
@@ -20,37 +22,53 @@ const ImageGallery = () => {
     }
   }
 
-  const getMainImage = () => {
+  const getImages = () => {
     axios(options)
-    .then((results) => {
-      var styles = results.data.results;
-      console.log('styles: ', styles);
-      // could use the 'find' method here instead of iterating through each style
-      styles.forEach((style) => {
-        if (style['default?']) {
-          console.log('photo url: ', style.photos[0].url)
-          setMainImageSrc(style.photos[0].url);
-          return;
-        }
+      .then((results) => {
+        var styles = results.data.results;
+        console.log('results.data: ', results.data);
+        console.log('styles: ', styles);
+        // could use the 'find' method here instead of iterating through each style
+        styles.forEach((style) => {
+          if (style['default?']) {
+            style.photos.forEach((photo) => {
+              console.log('photo url: ', photo.url)
+              setMainImageSrc(photo.url);
+              // add thumbnail photos to thumbnails array
+              setThumbnails([...thumbnails, photo.thumbnail_url])
+            })
+            return;
+          }
+        })
       })
-    })
-    .catch ((err) => console.error(err))
+      .catch((err) => console.error(err))
+  }
 
+  useEffect(() => {
+    getImages();
+  }, [])
 
-}
+  return (
 
-useEffect(() => {
-  getMainImage();
-}, [])
-
-return (
   <div>
-    <img
-      src={mainImageSrc}
+    {/* Main Image: */}
+    <Image
+      src={mainImageSrc || '/favicon.ico'}
       alt="main product image"
-      // width={500}
-      // height={500}
+      width={250}
+      height={300}
     />
+   {/* Thumbnails: */}
+   {thumbnails.length > 0 ? thumbnails.map((thumbnail) => (
+     <Image
+       src={thumbnail || '/favicon.ico'}
+       key={thumbnail}
+       alt="thumbnail product image"
+       width={78}
+       height={78}
+     />
+   )) : <div/>}
+
   </div>
 );
 }
