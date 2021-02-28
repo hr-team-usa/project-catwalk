@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../../config';
+import Q from './Q';
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -10,6 +11,7 @@ function Questions() {
   const getQuestions = () => {
     const options = {
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=18201',
+
       method: 'get',
       headers: {
         Authorization: config.TOKEN,
@@ -21,18 +23,16 @@ function Questions() {
       .catch((err) => console.log(err));
   };
 
+
   useEffect(() => {
     getQuestions();
   }, []);
 
   return (
     <React.Fragment>
-      {questions.map((item, i) =>
-      <p key={i}><b>Q: {item.question_body}</b><br></br>
-      A: {}
-      </p>
-      )}
-      {console.log(questions)}
+      {questions.map((item, i) => {
+        return <Q question={item} key={item.question_id} answers={item.answers}/>
+      })}
     </React.Fragment>
   );
 }

@@ -5,7 +5,7 @@ import SearchBar from './components/SearchBar';
 
 const QAs = () => (
   <div>
-    Questions and Answers Widget
+    QUESTIONS & ANSWERS
     <SearchBar />
     <Questions />
     <AddQuestion />
