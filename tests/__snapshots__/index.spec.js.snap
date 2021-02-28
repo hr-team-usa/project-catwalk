@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With Snapshot Testing App shows "Hello, Sunshine!" 1`] = `
+<div>
+  <div>
+    Product Description Widget
+  </div>
+  <div>
+    Comparison Widget
+  </div>
+  <div>
+    Questions and Answers Widget
+  </div>
+  <div>
+    Reviews Widget
+  </div>
+</div>
+`;
