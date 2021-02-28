@@ -1,25 +1,34 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Review = props => {
 
   const review = props.review;
 
   return (
-    <div key={review.review_id}>
-      <div>rating: {review.rating}</div>
-      <div>reviewer: {review.reviewer_name} date: {review.date}</div>
-      <div>{review.summary}</div>
-      <div>{review.body}</div>
-      {review.photos.map((photo) =>
-        <img key={photo.id} src={photo.url}/>
-      )}
-      <div>recommended: {review.recommended}</div>
-      {review.response ? <div>{review.response}</div> : null}
-      <div>Helpful? Yes ({review.helpfulness})</div>
-      <div>Report</div>
+    <Container>
+      <Row>
+        <Col>rating: {review.rating}</Col>
+        <Col>reviewer: {review.reviewer_name} date: {review.date}</Col>
+      </Row>
+      <Row>
+        <Col>{review.summary}</Col>
+      </Row>
+      <Row>
+        <Col>{review.body}</Col>
+      </Row>
+      <Row>
+        {review.photos.map((photo) =>
+          <img key={photo.id} src={photo.url}/>
+        )}
+      </Row>
+      {review.recommended ? <Row><Col>I recommend this product</Col></Row> : null}
+      {review.response ? <Row><Col>Response: {review.response}</Col></Row> : null}
+      <Row>
+        <Col>Helpful? Yes ({review.helpfulness}) | Report</Col>
+      </Row>
 
       <style jsx>{`
           img {
@@ -27,7 +36,7 @@ const Review = props => {
           }
       `}</style>
 
-    </div>
+    </Container>
   );
 };
 
