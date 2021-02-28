@@ -7,6 +7,8 @@ import renderer from 'react-test-renderer';
 
 import App from '../pages/index.jsx';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
+import QAs from '../components/QAs-Malcolm/QAs';
+import AddQuestion from 'components/QAs-Malcolm/components/AddQuestion';
 
 describe('index.js test suite', () => {
   it('runs a basic jest test', () => {
@@ -20,6 +22,16 @@ describe('index.js test suite', () => {
   });
 });
 
+describe('QAs test suite', () => {
+  it('runs a basic jest test', () => {
+    expect(true).toEqual(true);
+  });
+
+  it ('runs a test on the QAs component with enzyme', () => {
+    const qas = shallow(<QAs />);
+    expect(qas.contains(<AddQuestion />)).toBeTruthy();
+  });
+});
 /* THIS IS FROM THE INTERNET FOR REFERENCE:
 describe("With Enzyme", () => {
   it('App shows "Hello, Sunshine!"', () => {
