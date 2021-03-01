@@ -1,9 +1,11 @@
 /* eslint-disable */
 import React, {useState, useEffect} from 'react';
-import ImageGallery from './ImageGallery/ImageGallery.jsx';
-import ProductInfo from './ProductInfo/ProductInfo.jsx';
 import axios from 'axios';
 import config from '../../config';
+
+import ImageGallery from './ImageGallery/ImageGallery.jsx';
+import ProductInfo from './ProductInfo/ProductInfo.jsx';
+import StyleSelector from './StyleSelector/StyleSelector.jsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -14,6 +16,7 @@ const ProductDescription = () => {
   var [category, setCategory] = useState('');
   var [description, setDescription] = useState('');
 
+  var [allStyles ,setAllStyles] = useState([]);
   var [styleInfo, setStyleInfo] = useState('');
 
   const getProduct = () => {
@@ -41,6 +44,8 @@ const ProductDescription = () => {
     }
     axios(stylesRequest)
     .then((stylesResponse)=> {
+      console.log('stylesResponse.data.results ', stylesResponse.data.results)
+      setAllStyles(stylesResponse.data.results);
       var defaultStyle = stylesResponse.data.results.find(style => style['default?'] === true)
       setStyleInfo(defaultStyle);
     }).catch((err) => console.error(err));
@@ -62,7 +67,7 @@ const ProductDescription = () => {
                        description={description}
                        styleInfo={styleInfo}
                        />
-          <div> Style Selector will go here </div>
+          <StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={setStyleInfo} />
           <div> Add to Cart will go here </div>
         </Col>
       </Row>
