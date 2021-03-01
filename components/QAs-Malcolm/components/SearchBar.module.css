@@ -1,0 +1,9 @@
+.button {
+  className: fa fa-search;
+  height: calc(1.5em + .75rem + 2px);
+  icon: fas fa-search;
+}
+.searchBar {
+  width: 400;
+  sm: '8';
+}
