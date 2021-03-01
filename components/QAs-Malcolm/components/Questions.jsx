@@ -7,10 +7,11 @@ import Q from './Q';
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
+  const id = 18201;
 
   const getQuestions = () => {
     const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=18201',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}`,
 
       method: 'get',
       headers: {
