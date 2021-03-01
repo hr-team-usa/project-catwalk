@@ -25,7 +25,7 @@ function Q(props) {
 
   //WRAP
 
-  const formateDate = (stringDate) => {
+  const formatDate = (stringDate) => {
     const options = {
       year: "numeric",
       month: "long",
@@ -50,9 +50,9 @@ function Q(props) {
   return (
     < Container >
       <Row>
-        <Col><b>
+        <Col><strong>
           Q: {props.question.question_body}
-        </b></Col>
+        </strong></Col>
         <Col sm="2" style={questionStyle}>
           Helpful? <u>Yes</u>({props.question.question_helpfulness})
         </Col>
@@ -87,7 +87,7 @@ function Q(props) {
         <Col sm="3" style={answerStyle}>
           {oneAnswer ? `By ${oneAnswer.answerer_name}` : null}
       &nbsp;
-      {oneAnswer ? formateDate(oneAnswer.date) : null}
+      {oneAnswer ? formatDate(oneAnswer.date) : null}
         </Col>
         <Col sm="3" style={answerStyle}>
           Helpful? <u>Yes</u>({oneAnswer ? oneAnswer.helpfulness : null})
@@ -125,7 +125,7 @@ function Q(props) {
             <Col sm="3" style={answerStyle}>
               {twoAnswer ? `By ${twoAnswer.answerer_name}` : null}
       &nbsp;
-      {twoAnswer ? formateDate(twoAnswer.date) : null}
+      {twoAnswer ? formatDate(twoAnswer.date) : null}
             </Col>
             <Col sm="3" style={answerStyle}>
               Helpful? <u>Yes</u>({twoAnswer ? twoAnswer.helpfulness : null})

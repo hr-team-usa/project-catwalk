@@ -28,7 +28,7 @@ const Comparison = () => {
       .catch((err) => {
         console.log(err);
       })
-      
+
   };
 
   const [productImg, setProductImg] = useState({});
@@ -65,12 +65,12 @@ const Comparison = () => {
     getProducts()
   }, []);
 
-  
+
 
   return (
     <div>
       Comparison Widget
-      {console.log(productImg)}
+      {/* {console.log(productImg)} */}
 
       Related Products
       {productImg &&
@@ -97,7 +97,7 @@ const Comparison = () => {
             border-color: grey;
           }
           .related-products-group {
-            
+
           }
           `}
       </style>
