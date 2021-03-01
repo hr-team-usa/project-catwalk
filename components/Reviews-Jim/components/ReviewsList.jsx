@@ -32,13 +32,24 @@ const ReviewsList = props => {
     setReviewCount(reviewCount + 2);
   }
 
+  const handleSortedChange = (e) => {
+    e.preventDefault();
+    setSorted(e.target.value);
+  }
+
   useEffect(() => {
     getProductReviews(18201, reviewCount, sorted);
   }, [reviewCount, sorted]);
 
   return (
     <div>
-      <div>review-sorting</div>
+      <div>XXX reviews, sorted by
+        <select value={sorted} onChange={(e) => handleSortedChange(e)}>
+          <option value="relevant">Relevant</option>
+          <option value="helpful">Helpful</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
       {reviews.map((review) => <Review key={review.review_id} review={review} />)}
       <button onClick={(e) => addTwoReviews(e)}>More Reviews</button>
       <button>Add a Review +</button>

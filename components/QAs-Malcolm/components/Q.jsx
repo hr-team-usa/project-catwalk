@@ -19,7 +19,7 @@ function Q(props) {
     setTwoAnswer(props.question.answers[two])
   }
 
-  console.log(oneAnswer)
+  // console.log(oneAnswer)
   useEffect(() => {
     parseAnswers();
     // parseQuestions();
