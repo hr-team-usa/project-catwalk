@@ -9,12 +9,10 @@ import styles from './StyleSelector.module.css';
 const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
 
   const handleClick = (i) => {
-    console.log('handleClick has been called with an index of: ', i)
-    console.log('allStyles[i]: ', allStyles[i]);
     setStyleInfo(allStyles[i])
   }
 
-  useEffect(()=> console.log('styleInfo: ', styleInfo), []);
+  // useEffect(()=> console.log('styleInfo: ', styleInfo), []);
 
   return (
     <div>

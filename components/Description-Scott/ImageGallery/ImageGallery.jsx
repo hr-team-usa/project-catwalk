@@ -10,7 +10,7 @@ import Image from 'react-bootstrap/Image';
 import Carousel from 'react-bootstrap/Carousel';
 
 // should pull in productId from global state
-const ImageGallery = () => {
+const ImageGallery = ({ styleInfo }) => {
   // Necessities:
   // productID of selected product -> allows us to fetch the various styles -> allows us to get main image for selected style
   // image thumbnails
@@ -36,24 +36,20 @@ const ImageGallery = () => {
   }
 
   const getImages = () => {
-    axios(options)
-      .then((results) => {
-        var styles = results.data.results;
-        // console.log('results.data: ', results.data);
-        // console.log('styles: ', styles);
-        var defaultStyle = styles.find(style => style['default?'] === true)
-        setMainImageSrc(defaultStyle.photos[0].url);
-        var fullSizeImages = [];
-        var thumbnails = []
 
-        for (var i = 0; i < defaultStyle.photos.length; i++) {
-          fullSizeImages.push(defaultStyle.photos[i].url);
-          thumbnails.push(defaultStyle.photos[i].thumbnail_url);
-        }
-        setFullSizeImages(fullSizeImages);
-        setThumbnails(thumbnails);
-      })
-      .catch((err) => console.error(err))
+    if (styleInfo) {
+      setMainImageSrc(styleInfo.photos[0].url);
+
+      var fullSizeImages = [];
+      var thumbnails = []
+
+      for (var i = 0; i < styleInfo.photos.length; i++) {
+        fullSizeImages.push(styleInfo.photos[i].url);
+        thumbnails.push(styleInfo.photos[i].thumbnail_url);
+      }
+      setFullSizeImages(fullSizeImages);
+      setThumbnails(thumbnails);
+    }
   }
 
   const renderThumbnails = () => {
@@ -74,7 +70,7 @@ const ImageGallery = () => {
 
   useEffect(() => {
     getImages();
-  }, [])
+  }, [styleInfo])
 
   useEffect(() => {
     renderThumbnails();
