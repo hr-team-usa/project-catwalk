@@ -16,10 +16,14 @@ const Price = ({ styleInfo }) => {
       console.log('onSale triggered', styleInfo.sale_price);
       setOnSale(true);
       setSalePrice(`$${styleInfo.sale_price}`);
+    } else {
+      setOnSale(false);
+      setSalePrice('');
     }
   }
 
   useEffect(() => {
+    console.log('styleInfo has changed: ', styleInfo);
     checkPrice();
   }, [styleInfo])
 
