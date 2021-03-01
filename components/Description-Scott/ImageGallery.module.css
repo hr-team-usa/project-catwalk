@@ -1,0 +1,26 @@
+.error {
+  color: white;
+  background-color: red;
+}
+
+div .test {
+  background-color: grey;
+}
+
+.carousel {
+  /* position: absolute;
+  z-index: 0; */
+  width: "320px";
+  height: "400px";
+  margin: "auto";
+}
+
+/* .carousel-item {
+  position: absolute;
+  z-index: 1;
+} */
+
+.carousel-inner {
+  justify-self: auto;
+  align-self: center;
+}
