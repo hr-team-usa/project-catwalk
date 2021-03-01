@@ -1,15 +1,16 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import styles from './ProductInfo.module.css';
+import Price from './Price.jsx';
 
-const ProductInfo = ({ productName, category, description }) => {
+const ProductInfo = ({ productName, category, description, styleInfo}) => {
   var url = 'http://localhost:3000/'
   return (
     <div>
       <div> ***** -- Read all reviews link here</div>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
-      <div className={styles.price}>dynamic price component here</div>
+      <Price styleInfo={styleInfo}/>
       <div>{description}</div>
       <span>
         <a href="https://twitter.com/intent/tweet">

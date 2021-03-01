@@ -39,8 +39,8 @@ const ImageGallery = () => {
     axios(options)
       .then((results) => {
         var styles = results.data.results;
-        console.log('results.data: ', results.data);
-        console.log('styles: ', styles);
+        // console.log('results.data: ', results.data);
+        // console.log('styles: ', styles);
         var defaultStyle = styles.find(style => style['default?'] === true)
         setMainImageSrc(defaultStyle.photos[0].url);
         var fullSizeImages = [];
