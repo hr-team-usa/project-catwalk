@@ -6,10 +6,10 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => (
   <div>
-    <ProductDescription />
-    <Comparison />
+    {/* <ProductDescription /> */}
+    {/* <Comparison /> */}
     <QAs />
-    <Reviews />
+    {/* <Reviews /> */}
   </div>
 );
 
