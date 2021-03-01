@@ -36,7 +36,6 @@ const ImageGallery = ({ styleInfo }) => {
   }
 
   const getImages = () => {
-
     if (styleInfo) {
       setMainImageSrc(styleInfo.photos[0].url);
 
