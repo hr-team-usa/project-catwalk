@@ -40,11 +40,11 @@ function Q(props) {
         <Col>
           A: {oneAnswer ? oneAnswer.body : null}
           <br></br>
-          By {oneAnswer ? oneAnswer.answerer_name : null} {oneAnswer ? oneAnswer.date.slice(0, 10) : null}
         </Col>
       </Row>
     </Container>
   );
 }
+// By {oneAnswer ? oneAnswer.answerer_name : null} {oneAnswer ? oneAnswer.date.slice(0, 10) : null}
 
 export default Q;
