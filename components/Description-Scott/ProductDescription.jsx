@@ -8,32 +8,47 @@ import config from '../../config';
 import { Container, Row, Col } from 'react-bootstrap';
 
 const ProductDescription = () => {
+  // should receive productId state as a prop from index
   var productId = 18078;
   var [productName, setProductName] = useState('');
   var [category, setCategory] = useState('');
   var [description, setDescription] = useState('');
 
+  var [styleInfo, setStyleInfo] = useState('');
+
   const getProduct = () => {
-    const options = {
+    const productRequest = {
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/products/${productId}`,
       method: 'get',
       headers: {
         Authorization: config.TOKEN,
       }
     }
-    axios(options)
-    .then((results)=> {
-      console.log('product results.data: ', results.data);
-      setProductName(results.data.name);
-      setCategory(results.data.category);
-      setDescription(results.data.description);
+    axios(productRequest)
+    .then((productResponse)=> {
+      console.log('productRequest response data: ', productResponse.data);
+      setProductName(productResponse.data.name);
+      setCategory(productResponse.data.category);
+      setDescription(productResponse.data.description);
+    }).catch((err) => console.error(err));
+
+    const stylesRequest = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/products/${productId}/styles`,
+      method: 'get',
+      headers: {
+        Authorization: config.TOKEN,
+      }
+    }
+    axios(stylesRequest)
+    .then((stylesResponse)=> {
+      var defaultStyle = stylesResponse.data.results.find(style => style['default?'] === true)
+      setStyleInfo(defaultStyle);
     }).catch((err) => console.error(err));
   }
 
   useEffect(()=> {
     getProduct();
   }, []);
-  // should receive productId state as a prop from index
   return (
   <div>
     <Container>
@@ -44,7 +59,9 @@ const ProductDescription = () => {
         <Col>
           <ProductInfo productName={productName}
                        category={category}
-                       description={description}/>
+                       description={description}
+                       styleInfo={styleInfo}
+                       />
           <div> Style Selector will go here </div>
           <div> Add to Cart will go here </div>
         </Col>
