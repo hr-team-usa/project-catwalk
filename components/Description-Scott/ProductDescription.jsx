@@ -41,8 +41,8 @@ const ProductDescription = () => {
     }
     axios(stylesRequest)
     .then((stylesResponse)=> {
-      console.log('stylesRequest response data: ', stylesResponse.data.results);
-      setStyleInfo(stylesResponse.data.results[0]);
+      var defaultStyle = stylesResponse.data.results.find(style => style['default?'] === true)
+      setStyleInfo(defaultStyle);
     }).catch((err) => console.error(err));
   }
 
