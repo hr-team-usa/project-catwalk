@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ImageGallery.module.css';
 
 import axios from 'axios';
-import config from '../../config';
+import config from '../../../config';
 
 // import Image from 'next/image'
 import Image from 'react-bootstrap/Image';
