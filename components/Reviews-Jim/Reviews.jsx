@@ -17,7 +17,7 @@ const Reviews = ({ productId }) => (
 );
 
 Reviews.propTypes = {
-  productId: PropTypes.number.isRequired,
+  productId: PropTypes.string.isRequired,
 };
 
 export default Reviews;

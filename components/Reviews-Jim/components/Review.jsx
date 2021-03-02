@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 
 const Review = ({ review }) => (
@@ -58,5 +59,26 @@ const Review = ({ review }) => (
 
   </Container>
 );
+
+Review.propTypes = {
+  review: PropTypes.shape({
+    rating: PropTypes.number.isRequired,
+    reviewer_name: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      url: PropTypes.string.isRequired,
+    })),
+    recommended: PropTypes.bool,
+    response: PropTypes.string,
+    helpfulness: PropTypes.number.isRequired,
+  }),
+};
+
+Review.defaultProps = {
+  review: null,
+};
 
 export default Review;
