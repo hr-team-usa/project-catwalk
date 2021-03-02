@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ReviewsList from './components/ReviewsList';
@@ -14,5 +15,9 @@ const Reviews = ({ productId }) => (
     </Row>
   </Container>
 );
+
+Reviews.propTypes = {
+  productId: PropTypes.number.isRequired,
+};
 
 export default Reviews;
