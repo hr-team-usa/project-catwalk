@@ -1,8 +1,13 @@
 import React from 'react';
+import AddQuestion from './components/AddQuestion';
+import Questions from './components/Questions';
+import QASearchBar from './components/SearchBar';
 
-const QAs = () => (
+const QAs = ({ productId }) => (
   <div>
-    Questions and Answers Widget
+    <QASearchBar />
+    <Questions productId={productId} />
+    <AddQuestion />
   </div>
 );
 

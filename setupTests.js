@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Not totally sure where these go but I'm putting them here for now.
 // https://enzymejs.github.io/enzyme/docs/installation/react-16.html
 
