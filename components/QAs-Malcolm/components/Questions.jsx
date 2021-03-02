@@ -5,12 +5,13 @@ import axios from 'axios';
 import config from '../../../config';
 import Q from './Q';
 
-function Questions() {
+function Questions(props) {
   const [questions, setQuestions] = useState([]);
+  const id = props.productId;
 
   const getQuestions = () => {
     const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=18201',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}`,
 
       method: 'get',
       headers: {
