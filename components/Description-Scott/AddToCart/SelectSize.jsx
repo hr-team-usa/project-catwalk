@@ -8,21 +8,18 @@ const SelectSize = ({ styleInfo }) => {
   const [sizesAvailable, setSizesAvailable] = useState([]);
 
   const populateSKUs = () => {
-    console.log('STYLE INFOOO.skus', styleInfo.skus);
     const sizes = [];
     for (const key in styleInfo.skus) {
       if (styleInfo.skus[key].quantity > 0) {
         sizes.push(styleInfo.skus[key].size);
       }
     }
-    console.log('sizes:', sizes);
     setSizesAvailable(sizes);
     // use this for testing 'out of stock':
     // setSizesAvailable([]);
   };
 
   useEffect(() => {
-    console.log('styleInfo: ', styleInfo);
     setCurrentSize('Select Size');
     populateSKUs();
   }, [styleInfo]);
