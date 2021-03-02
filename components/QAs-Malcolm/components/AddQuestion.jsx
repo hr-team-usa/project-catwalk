@@ -14,8 +14,7 @@ function AddQuestion() {
         </Col>
       </Row>
     </Container>
-  )
-
+  );
 }
 
 export default AddQuestion;
