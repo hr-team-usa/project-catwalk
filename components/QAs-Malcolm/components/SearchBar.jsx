@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React, { useState } from 'react';
-import { Row, Col, Container, Form, Button } from 'react-bootstrap';
+import { Row, Col, Container, Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 import styles from './SearchBar.module.css';
 
 function SearchBar() {
@@ -16,35 +16,39 @@ function SearchBar() {
   //   icon: "fas fa-search"
   // }
 
+  //
+  /* <Form>
+     <Row className="justify-content-md-center">
+       <Col sm='12'>
+         <Form.Control placeholder="Have a question? Search for answers..." className={styles.searchBar} />
+       </Col>
+         <Button className={styles.button}>
+         </Button>
+     </Row>
+   </Form>
+   */
+
   return (
     <Container>
-      <Form>
-        <Row className="justify-content-md-center">
-          <Col sm='12'>
-            <Form.Control placeholder="Have a question? Search for answers..." className={styles.searchBar} />
-          </Col>
-            <Button className={styles.button}>
-            </Button>
-          {/* <Col sm='4'> */}
-          {/* </Col> */}
-        </Row>
-      </Form>
+      <Row>
+        <Col>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Have a question? Search for answers..."
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Append>
+              {/* <Button variant="outline-secondary"><i className="fa fa-search"></i></Button> */}
+              <Button className="fa fa-search"></Button>
+            </InputGroup.Append>
+          </InputGroup>
+
+        </Col>
+      </Row>
     </Container>
   );
 }
 
 export default SearchBar;
 
-// <input className="col-md" placeholder="Have a question? Search for answers..."></input>
-// <button>Search</button>
-/*
-<Container>
-      <Form>
-        <Row >
-          <Col md="auto">
-          <Form.Control placeholder="Have a question? Search for answers..."/>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
-    */
