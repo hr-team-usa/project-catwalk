@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from '../../../config';
 import Review from './Review';
 
-const ReviewsList = props => {
+const ReviewsList = () => {
   const [ reviews, setReviews ] = useState([]);
   const [ reviewCount, setReviewCount ] = useState(2);
   const [ sorted, setSorted ] = useState('relevant');

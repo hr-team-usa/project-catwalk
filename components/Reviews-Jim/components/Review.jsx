@@ -3,11 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const Review = props => {
-
-  const review = props.review;
-
-  return (
+const Review = ({ review }) => (
     <Container>
       <Row>
         <Col>rating: {review.rating}</Col>
@@ -37,7 +33,6 @@ const Review = props => {
       `}</style>
 
     </Container>
-  );
-};
+);
 
 export default Review;
