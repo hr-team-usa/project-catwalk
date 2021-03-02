@@ -5,14 +5,14 @@ import QAs from '../components/QAs-Malcolm/QAs';
 import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => {
-  const [productId, setProductId] = useState(18078); // eslint-disable-line no-unused-vars
+  const [productId, setProductId] = useState(18078);
 
   return (
     <div>
       <ProductDescription productId={productId} />
-      <Comparison />
+      <Comparison productId={productId} setProductId={setProductId} />
       <QAs productId={productId} />
-      <Reviews productId={productId} />
+      <Reviews productId="18201" />
     </div>
   );
 };
