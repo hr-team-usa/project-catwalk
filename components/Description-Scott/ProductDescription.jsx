@@ -6,6 +6,7 @@ import config from '../../config';
 import ImageGallery from './ImageGallery/ImageGallery.jsx';
 import ProductInfo from './ProductInfo/ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelector.jsx';
+import AddToCart from './AddToCart/AddToCart.jsx';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -66,7 +67,7 @@ const ProductDescription = () => {
               styleInfo={styleInfo}
             />
             <StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={setStyleInfo} />
-            <div> Add to Cart will go here </div>
+            <AddToCart styleInfo={styleInfo}/>
           </Col>
         </Row>
       </Container>
