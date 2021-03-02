@@ -1,13 +1,11 @@
-/* eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../../config';
 import Q from './Q';
 
-function Questions(props) {
+function Questions({ productId }) {
   const [questions, setQuestions] = useState([]);
-  const id = props.productId;
+  const id = productId;
 
   const getQuestions = () => {
     const options = {
@@ -24,17 +22,14 @@ function Questions(props) {
       .catch((err) => console.log(err));
   };
 
-
   useEffect(() => {
     getQuestions();
   }, []);
 
   return (
-    <React.Fragment>
-      {questions.map((item, i) => {
-        return <Q question={item} key={item.question_id} answers={item.answers}/>
-      })}
-    </React.Fragment>
+    <>
+      {questions.map((item) => <Q question={item} key={item.question_id} answers={item.answers} />)}
+    </>
   );
 }
 

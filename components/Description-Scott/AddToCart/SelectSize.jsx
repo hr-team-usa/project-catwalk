@@ -1,5 +1,5 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -9,9 +9,12 @@ const SelectSize = ({ styleInfo }) => {
 
   const populateSKUs = () => {
     const sizes = [];
-    for (const key in styleInfo.skus) {
-      if (styleInfo.skus[key].quantity > 0) {
-        sizes.push(styleInfo.skus[key].size);
+    if (styleInfo.skus) {
+      const skus = Object.values(styleInfo.skus);
+      for (let i = 0; i < skus.length; i += 1) {
+        if (skus[i].quantity > 0) {
+          sizes.push(skus[i].size);
+        }
       }
     }
     setSizesAvailable(sizes);
@@ -25,17 +28,23 @@ const SelectSize = ({ styleInfo }) => {
   }, [styleInfo]);
 
   if (sizesAvailable.length === 0) {
-    var emptyStock = (
-      <DropdownButton disabled id="dropdown-basic-button" title='Out of Stock'>
-      </DropdownButton>);
+    // eslint-disable-next-line vars-on-top
+    var emptyStock = ( // eslint-disable-line no-var
+
+      <DropdownButton disabled id="dropdown-basic-button" title="Out of Stock" />);
   } else {
-    var stock = (
+    // eslint-disable-next-line vars-on-top
+    var stock = ( // eslint-disable-line no-var
       <DropdownButton
         id="dropdown-basic-button"
-        title={currentSize}>
+        title={currentSize}
+      >
         {sizesAvailable.map((size, i) => (
-          <Dropdown.Item onClick={() => setCurrentSize(size)}
-            key={i}>{`${size}`}
+          <Dropdown.Item
+            onClick={() => setCurrentSize(size)}
+            key={i} // eslint-disable-line react/no-array-index-key
+          >
+            {`${size}`}
           </Dropdown.Item>
         ))}
       </DropdownButton>
@@ -44,14 +53,22 @@ const SelectSize = ({ styleInfo }) => {
 
   return (
     <div>
+      {/* eslint-disable-next-line block-scoped-var */}
       {sizesAvailable.length > 0 ? stock : emptyStock}
     </div>
-
   );
 };
-export default SelectSize;
 
-// SelectSize.PropTypes.shape({
-//   style_id: PropTypes.number,
-//   name: PropTypes.string,
-// });
+SelectSize.propTypes = {
+  styleInfo: PropTypes.shape({
+    skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  }),
+};
+
+SelectSize.defaultProps = {
+  styleInfo: {
+    skus: null,
+  },
+};
+
+export default SelectSize;
