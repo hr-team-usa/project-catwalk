@@ -21,7 +21,7 @@ const ImageGallery = ({ styleInfo }) => {
   };
 
   const getImages = () => {
-    if (styleInfo) {
+    if (Object.entries(styleInfo)) {
       setMainImageSrc(styleInfo.photos[0].url);
 
       const newFullSizeImages = [];
