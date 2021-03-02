@@ -67,7 +67,7 @@ const ProductDescription = () => {
               styleInfo={styleInfo}
             />
             <StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={setStyleInfo} />
-            <AddToCart />
+            <AddToCart styleInfo={styleInfo}/>
           </Col>
         </Row>
       </Container>

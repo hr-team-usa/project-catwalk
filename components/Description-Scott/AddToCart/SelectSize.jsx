@@ -1,30 +1,60 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-const SelectSize = () => {
-  var [currentSize, setCurrentSize] = useState('Select Size')
-  // hardcoded defaults for now
-  var [sizesAvailable, setSizesAvailable] = useState([15, 16, 17]);
-  var [disableDropdown, setDisableDropdown] = useState(false);
+const SelectSize = ({ styleInfo }) => {
+  const [currentSize, setCurrentSize] = useState('Select Size');
+  const [sizesAvailable, setSizesAvailable] = useState([]);
 
-  const nothingInStock = () => {
-    if(sizesAvailable.length === 0) {
-      setCurrentSize('Out of stock')
-      setDisableDropdown(true);
+  const populateSKUs = () => {
+    console.log('STYLE INFOOO.skus', styleInfo.skus);
+    const sizes = [];
+    for (const key in styleInfo.skus) {
+      if (styleInfo.skus[key].quantity > 0) {
+        sizes.push(styleInfo.skus[key].size);
+      }
     }
+    console.log('sizes:', sizes);
+    setSizesAvailable(sizes);
+    // use this for testing 'out of stock':
+    // setSizesAvailable([]);
+  };
+
+  useEffect(() => {
+    console.log('styleInfo: ', styleInfo);
+    setCurrentSize('Select Size');
+    populateSKUs();
+  }, [styleInfo]);
+
+  if (sizesAvailable.length === 0) {
+    var emptyStock = (
+      <DropdownButton disabled id="dropdown-basic-button" title='Out of Stock'>
+      </DropdownButton>);
+  } else {
+    var stock = (
+      <DropdownButton
+        id="dropdown-basic-button"
+        title={currentSize}>
+        {sizesAvailable.map((size, i) => (
+          <Dropdown.Item onClick={() => setCurrentSize(size)}
+            key={i}>{`${size}`}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
+    );
   }
 
-  useEffect(()=> nothingInStock(), [sizesAvailable])
   return (
-    <DropdownButton disabled={disableDropdown} id="dropdown-basic-button" title={currentSize}>
-        <Dropdown.Item>Select Size</Dropdown.Item>
-      {sizesAvailable.length > 0 ? sizesAvailable.map((size) => (
-        <Dropdown.Item onClick={() => setCurrentSize(size)} key={size}>{`${size}`}</Dropdown.Item>
-      )) : <span/> }
-    </DropdownButton>
+    <div>
+      {sizesAvailable.length > 0 ? stock : emptyStock}
+    </div>
 
-  )
-}
-  export default SelectSize;
+  );
+};
+export default SelectSize;
+
+// SelectSize.PropTypes.shape({
+//   style_id: PropTypes.number,
+//   name: PropTypes.string,
+// });
