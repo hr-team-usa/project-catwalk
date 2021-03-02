@@ -53,10 +53,10 @@ function Q(props) {
         <Col><strong>
           Q: {props.question.question_body}
         </strong></Col>
-        <Col sm="2" style={questionStyle}>
+        <Col sm="auto" style={questionStyle}>
           Helpful? <u>Yes</u>({props.question.question_helpfulness})
         </Col>
-        <Col sm="3" style={resultStyle}>
+        <Col sm="auto" style={resultStyle}>
           <u>Add Answer</u>
         </Col>
       </Row>
@@ -76,6 +76,7 @@ function Q(props) {
                   width={78}
                   height={78}
                   key={i}
+                  thumbnail
                 />
               )
             }) : null) : null
@@ -84,15 +85,15 @@ function Q(props) {
       </Row>
       <br></br>
       <Row >
-        <Col sm="3" style={answerStyle}>
+        <Col sm="auto" style={answerStyle}>
           {oneAnswer ? `By ${oneAnswer.answerer_name}` : null}
       &nbsp;
       {oneAnswer ? formatDate(oneAnswer.date) : null}
         </Col>
-        <Col sm="3" style={answerStyle}>
+        <Col sm="auto" style={answerStyle}>
           Helpful? <u>Yes</u>({oneAnswer ? oneAnswer.helpfulness : null})
         </Col>
-        <Col sm="3" style={resultStyle}>
+        <Col sm="auto" style={resultStyle}>
           <u>Report</u>
         </Col>
       </Row>
@@ -114,6 +115,7 @@ function Q(props) {
                       width={78}
                       height={78}
                       key={i}
+                      thumbnail
                     />
                   )
                 }) : null) : null
@@ -122,15 +124,15 @@ function Q(props) {
           </Row>
           <br></br>
           <Row >
-            <Col sm="3" style={answerStyle}>
+            <Col sm="auto" style={answerStyle}>
               {twoAnswer ? `By ${twoAnswer.answerer_name}` : null}
       &nbsp;
       {twoAnswer ? formatDate(twoAnswer.date) : null}
             </Col>
-            <Col sm="3" style={answerStyle}>
+            <Col sm="auto" style={answerStyle}>
               Helpful? <u>Yes</u>({twoAnswer ? twoAnswer.helpfulness : null})
         </Col>
-            <Col sm="3" style={resultStyle}>
+            <Col sm="auto" style={resultStyle}>
               <u>Report</u>
             </Col>
           </Row><br></br></>
