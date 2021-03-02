@@ -7,7 +7,7 @@ import RatingBreakdown from './RatingBreakdown';
 import Stars from './Stars'
 import config from '../../../config';
 
-const ReviewsBreakdown = props => {
+const ReviewsBreakdown = ({ productId }) => {
 
   const [ rating, setRating ] = useState(null);
 
@@ -44,7 +44,7 @@ const ReviewsBreakdown = props => {
   }
 
   useEffect(() => {
-    getAvgRating(18201);
+    getAvgRating(productId);
   })
 
   return (
