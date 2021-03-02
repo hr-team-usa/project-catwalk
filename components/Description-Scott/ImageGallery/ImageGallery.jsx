@@ -104,10 +104,10 @@ const ImageGallery = ({ styleInfo }) => {
 
 ImageGallery.propTypes = {
   styleInfo: PropTypes.shape({
-    photos: PropTypes.shape({
+    photos: PropTypes.arrayOf(PropTypes.shape({
       url: PropTypes.string,
       thumbnail_url: PropTypes.string,
-    }),
+    })),
   }),
 };
 
