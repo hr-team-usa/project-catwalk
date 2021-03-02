@@ -1,16 +1,15 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './ProductInfo.module.css';
-import Price from './Price.jsx';
+import Price from './Price';
 
 const ProductInfo = ({ productName, category, description, styleInfo}) => {
-  var url = 'http://localhost:3000/'
+  const url = 'http://localhost:3000/';
   return (
     <div>
       <div> ***** -- Read all reviews link here</div>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
-      <Price styleInfo={styleInfo}/>
+      <Price styleInfo={styleInfo} />
       <div>{description}</div>
       <span>
         <a href="https://twitter.com/intent/tweet">
@@ -26,10 +25,8 @@ const ProductInfo = ({ productName, category, description, styleInfo}) => {
         </a>
 
       </span>
-
-
     </div>
-  )
+  );
 };
 
 export default ProductInfo;

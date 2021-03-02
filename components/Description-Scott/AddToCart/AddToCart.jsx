@@ -1,19 +1,20 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import SelectSize from './SelectSize.jsx';
+import React from 'react';
+import SelectSize from './SelectSize';
 
-const AddToCart = ({styleInfo}) => {
-  return (
+const AddToCart = ({ styleInfo }) => (
+  <div>
     <div>
-      <div>
-        <SelectSize styleInfo={styleInfo}/>
-        <span>Quantity Dropdown</span> </div>
-      <div>
-        <span>Add to Cart Button </span>
-        <span> Add to Outfits Button</span>
-      </div>
+      <SelectSize styleInfo={styleInfo} />
+      <span>
+        Quantity Dropdown
+      </span>
+      {' '}
     </div>
-  )
-}
+    <div>
+      <span>Add to Cart Button </span>
+      <span> Add to Outfits Button</span>
+    </div>
+  </div>
+);
 
 export default AddToCart;

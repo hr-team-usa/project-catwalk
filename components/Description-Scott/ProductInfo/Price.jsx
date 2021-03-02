@@ -1,39 +1,39 @@
-/* eslint-disable */
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-
 import styles from './Price.module.css';
 
 const Price = ({ styleInfo }) => {
-  var [originalPrice, setOriginalPrice] = useState('');
-  var [salePrice, setSalePrice] = useState('');
-  var [onSale, setOnSale] = useState(false)
+  const [originalPrice, setOriginalPrice] = useState('');
+  const [salePrice, setSalePrice] = useState('');
+  const [onSale, setOnSale] = useState(false);
 
-  var checkPrice = () => {
+  const checkPrice = () => {
     setOriginalPrice(`$${styleInfo.original_price}`);
 
     if (styleInfo.sale_price) {
-      console.log('onSale triggered', styleInfo.sale_price);
       setOnSale(true);
       setSalePrice(`$${styleInfo.sale_price}`);
     } else {
       setOnSale(false);
       setSalePrice('');
     }
-  }
+  };
 
   useEffect(() => {
-    console.log('styleInfo has changed: ', styleInfo);
+    // eslint-disable-next-line no-console
+    console.log('style(styleInfo) has changed: ', styleInfo);
     checkPrice();
-  }, [styleInfo])
+  }, [styleInfo]);
 
   return (
     <div>
-      {onSale ? <div>
-        <span className={styles.salePrice}>{`${salePrice}`}</span>
-        <span className={styles.originalPrice}>{`${originalPrice}`}</span></div> : (<div >{`${originalPrice}`}</div>)}
+      {onSale ? (
+        <div>
+          <span className={styles.salePrice}>{`${salePrice}`}</span>
+          <span className={styles.originalPrice}>{`${originalPrice}`}</span>
+        </div>
+      ) : (<div>{`${originalPrice}`}</div>)}
     </div>
-  )
-}
+  );
+};
 
 export default Price;
