@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Price.module.css';
 
 const Price = ({ styleInfo }) => {
@@ -34,6 +35,24 @@ const Price = ({ styleInfo }) => {
       ) : (<div>{`${originalPrice}`}</div>)}
     </div>
   );
+};
+
+Price.propTypes = {
+  styleInfo: PropTypes.shape({
+    name: PropTypes.string,
+    style_id: PropTypes.number,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+  }),
+};
+
+Price.defaultProps = {
+  styleInfo: {
+    name: 'style name',
+    style_id: null,
+    original_price: null,
+    sale_price: null,
+  },
 };
 
 export default Price;
