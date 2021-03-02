@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
 import styles from './ImageGallery.module.css';
@@ -90,6 +91,7 @@ const ImageGallery = ({ styleInfo }) => {
               alt="thumbnail product image"
               width={78}
               height={78}
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               onClick={() => setIndex(i)}
             />
@@ -99,4 +101,18 @@ const ImageGallery = ({ styleInfo }) => {
     </div>
   );
 };
+
+ImageGallery.propTypes = {
+  styleInfo: PropTypes.shape({
+    photos: PropTypes.shape({
+      url: PropTypes.string,
+      thumbnail_url: PropTypes.string,
+    }),
+  }),
+};
+
+ImageGallery.defaultProps = {
+  styleInfo: null,
+};
+
 export default ImageGallery;
