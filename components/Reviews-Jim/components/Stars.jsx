@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Rating from '@material-ui/lab/Rating';
 
-const Stars = props => {
+const Stars = ({ rating }) => {
 
   return (
     <div>
-      <Rating className="star-rating" value={Number(props.rating)} precision={0.25} readOnly />
+      <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
     </div>
   );
 };
