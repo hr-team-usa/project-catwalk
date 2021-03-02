@@ -19,6 +19,7 @@ const SelectSize = () => {
   useEffect(()=> nothingInStock(), [sizesAvailable])
   return (
     <DropdownButton disabled={disableDropdown} id="dropdown-basic-button" title={currentSize}>
+        <Dropdown.Item>Select Size</Dropdown.Item>
       {sizesAvailable.length > 0 ? sizesAvailable.map((size) => (
         <Dropdown.Item onClick={() => setCurrentSize(size)} key={size}>{`${size}`}</Dropdown.Item>
       )) : <span/> }
