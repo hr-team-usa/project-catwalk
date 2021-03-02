@@ -1,21 +1,19 @@
-/* eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductBreakdown from './ProductBreakdown';
 import RatingBreakdown from './RatingBreakdown';
-import Stars from './Stars'
+import Stars from './Stars';
 import config from '../../../config';
 
 const ReviewsBreakdown = ({ productId }) => {
-  const [ productMeta, setProductMeta ] = useState(null);
-  const [ rating, setRating ] = useState(null);
-  const [ recommended, setRecommended ] = useState(null);
+  const [productMeta, setProductMeta] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [recommended, setRecommended] = useState(null);
 
-  const getProductMeta = (productId) => {
+  const getProductMeta = (product) => {
     const api = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/meta';
     const options = {
-      url: `${api}?product_id=${productId}`,
+      url: `${api}?product_id=${product}`,
       method: 'get',
       headers: {
         Authorization: config.TOKEN,
@@ -24,7 +22,7 @@ const ReviewsBreakdown = ({ productId }) => {
 
     axios(options)
       .then((res) => {
-        setProductMeta(res.data)
+        setProductMeta(res.data);
       })
       .catch((err) => { console.log(err); });
   };
@@ -32,7 +30,7 @@ const ReviewsBreakdown = ({ productId }) => {
   const ratingCreator = (ratingsObj) => {
     let allRatings = 0;
     let ratingCount = 0;
-    for (let key in ratingsObj) {
+    for (const key in ratingsObj) {
       for (let i = 0; i < ratingsObj[key]; i++) {
         allRatings += Number(key);
         ratingCount++;
@@ -43,11 +41,11 @@ const ReviewsBreakdown = ({ productId }) => {
 
   const reviewPercentage = (ratings, recommended) => {
     let totalRatings = 0;
-    for (let key in ratings) {
+    for (const key in ratings) {
       totalRatings += Number(ratings[key]);
     }
     return setRecommended(Math.floor((Number(recommended) / totalRatings) * 100));
-  }
+  };
 
   useEffect(() => {
     getProductMeta(productId);
@@ -58,13 +56,16 @@ const ReviewsBreakdown = ({ productId }) => {
       ratingCreator(productMeta.ratings);
       reviewPercentage(productMeta.ratings, productMeta.recommended.true);
     }
-  }, [productMeta])
+  }, [productMeta]);
 
   return (
     <div>
       <div><h4>{rating}</h4></div>
       <Stars rating={rating} />
-      <div>{recommended}% of reviews recommend this product</div>
+      <div>
+        {recommended}
+        % of reviews recommend this product
+      </div>
       <RatingBreakdown />
       <ProductBreakdown />
     </div>

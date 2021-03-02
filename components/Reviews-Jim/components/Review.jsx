@@ -11,8 +11,10 @@ const Review = ({ review }) => (
       </Col>
       <Col>
         reviewer:
+        {' '}
         {review.reviewer_name}
         date:
+        {' '}
         {review.date}
       </Col>
     </Row>
