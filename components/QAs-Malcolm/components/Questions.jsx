@@ -5,9 +5,9 @@ import axios from 'axios';
 import config from '../../../config';
 import Q from './Q';
 
-function Questions() {
+function Questions(props) {
   const [questions, setQuestions] = useState([]);
-  const id = 18201;
+  const id = props.productId;
 
   const getQuestions = () => {
     const options = {
