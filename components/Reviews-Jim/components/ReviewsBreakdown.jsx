@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import ProductBreakdown from './ProductBreakdown';
 import RatingBreakdown from './RatingBreakdown';
@@ -72,6 +73,10 @@ const ReviewsBreakdown = ({ productId }) => {
       <ProductBreakdown />
     </div>
   );
+};
+
+ReviewsBreakdown.propTypes = {
+  productId: PropTypes.string.isRequired,
 };
 
 export default ReviewsBreakdown;
