@@ -8,7 +8,7 @@ const App = () => {
   const [productId, setProductId] = useState(18078);
 
   return (
-    <div>
+    <div className="App">
       <ProductDescription productId={productId} />
       <Comparison productId={productId} setProductId={setProductId} />
       <QAs productId={productId} />
