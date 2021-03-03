@@ -12,3 +12,7 @@
 .carousel-inner .carousel-item-left{
   transform: translateX(0);
 }
+
+.App > div {
+  margin-bottom: 75px;
+}

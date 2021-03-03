@@ -69,7 +69,7 @@ const ReviewsBreakdown = ({ productId }) => {
         {recommended}
         % of reviews recommend this product
       </div>
-      <RatingBreakdown />
+      {productMeta ? <RatingBreakdown ratings={productMeta.ratings} /> : null}
       <ProductBreakdown />
     </div>
   );
