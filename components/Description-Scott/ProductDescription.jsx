@@ -14,7 +14,7 @@ const ProductDescription = ({productId}) => {
   const [description, setDescription] = useState('');
 
   const [allStyles, setAllStyles] = useState([]);
-  const [styleInfo, setStyleInfo] = useState('');
+  const [styleInfo, setStyleInfo] = useState({});
 
   const getProduct = () => {
     const productRequest = {

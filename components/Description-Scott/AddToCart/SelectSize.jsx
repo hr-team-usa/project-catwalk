@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -52,14 +53,22 @@ const SelectSize = ({ styleInfo }) => {
 
   return (
     <div>
+      {/* eslint-disable-next-line block-scoped-var */}
       {sizesAvailable.length > 0 ? stock : emptyStock}
     </div>
-
   );
 };
-export default SelectSize;
 
-// SelectSize.PropTypes.shape({
-//   style_id: PropTypes.number,
-//   name: PropTypes.string,
-// });
+SelectSize.propTypes = {
+  styleInfo: PropTypes.shape({
+    skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  }),
+};
+
+SelectSize.defaultProps = {
+  styleInfo: {
+    skus: null,
+  },
+};
+
+export default SelectSize;
