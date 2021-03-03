@@ -10,24 +10,24 @@ import ProductDescription from '../components/Description-Scott/ProductDescripti
 import QAs from '../components/QAs-Malcolm/QAs';
 import AddQuestion from '../components/QAs-Malcolm/components/AddQuestion';
 
-xdescribe('index.js test suite', () => {
+describe('index.js test suite', () => {
   it('runs a basic jest test', () => {
     expect(true).toEqual(true);
   });
 
-  xit('runs a test on our App component with enzyme', () => {
+  it('runs a test on our App component with enzyme', () => {
     const app = shallow(<App />);
 
-    expect(app.contains(<ProductDescription />)).toBeTruthy();
+    expect(app.contains(<ProductDescription productId={18078} />)).toBeTruthy();
   });
 });
 
-xdescribe('QAs test suite', () => {
+describe('QAs test suite', () => {
   it('runs a basic jest test', () => {
     expect(true).toEqual(true);
   });
 
-  it ('runs a test on the QAs component with enzyme', () => {
+  xit ('runs a test on the QAs component with enzyme', () => {
     const qas = shallow(<QAs />);
     expect(qas.contains(<AddQuestion />)).toBeTruthy();
   });
