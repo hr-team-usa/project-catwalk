@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Project Catwalk",
   "main": "config.js",
-  "jest": {
-    "verbose": true
-  },
   "scripts": {
     "test": "jest",
     "dev": "next dev",
