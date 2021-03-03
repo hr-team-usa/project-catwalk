@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ProductInfo.module.css';
 import Price from './Price';
 
@@ -27,6 +28,28 @@ const ProductInfo = ({ productName, category, description, styleInfo}) => {
       </span>
     </div>
   );
+};
+
+ProductInfo.propTypes = {
+  productName: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  styleInfo: PropTypes.shape({
+    name: PropTypes.string,
+    style_id: PropTypes.number,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+  }),
+};
+
+ProductInfo.defaultProps = {
+  description: null,
+  styleInfo: {
+    name: 'style name',
+    style_id: null,
+    original_price: null,
+    sale_price: null,
+  },
 };
 
 export default ProductInfo;
