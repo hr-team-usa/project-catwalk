@@ -4,6 +4,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
+import PropTypes from 'prop-types';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
@@ -20,7 +21,11 @@ function Q(props) {
     parseAnswers();
   }, []);
 
-  // WRAP
+  const handleClick = (e) => {
+    console.log('clicked');
+    // e.target.clicked = true;
+    console.log(e.target.parentNode.clicked);
+  };
 
   const formatDate = (stringDate) => {
     const options = {
@@ -44,118 +49,122 @@ function Q(props) {
     className: 'justify-content-md-right',
     borderRight: '1px solid #ccc',
   };
-  return (
-    <Container>
-      <Row>
-        <Col>
-          <strong>
-            Q:
-            {' '}
-            {props.question.question_body}
-          </strong>
-        </Col>
-        <Col sm="auto" style={questionStyle}>
-          Helpful?
-          {' '}
-          <u>Yes</u>
-          (
-          {props.question.question_helpfulness}
-          )
-        </Col>
-        <Col sm="auto" style={resultStyle}>
-          <u>Add Answer</u>
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col>
-          {oneAnswer ? `A: ${oneAnswer.body}` : null}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {oneAnswer
-            ? (oneAnswer.photos ? oneAnswer.photos.map((img, i) => (
-              <Image
-                src={img}
-                width={78}
-                height={78}
-                key={i}
-                thumbnail
-              />
-            )) : null) : null}
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col sm="auto" style={answerStyle}>
-          {oneAnswer ? `By ${oneAnswer.answerer_name}` : null}
-      &nbsp;
-          {oneAnswer ? formatDate(oneAnswer.date) : null}
-        </Col>
-        <Col sm="auto" style={answerStyle}>
-          Helpful?
-          {' '}
-          <u>Yes</u>
-          (
-          {oneAnswer ? oneAnswer.helpfulness : null}
-          )
-        </Col>
-        <Col sm="auto" style={resultStyle}>
-          <u>Report</u>
-        </Col>
-      </Row>
 
-      <br />
-      {twoAnswer
-        ? (
-          <>
-            <Row>
-              <Col>
-                {twoAnswer ? `A: ${twoAnswer.body}` : null}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {twoAnswer
-                  ? (twoAnswer.photos ? twoAnswer.photos.map((img, i) => (
-                    <Image
-                      src={img}
-                      width={78}
-                      height={78}
-                      key={i}
-                      thumbnail
-                    />
-                  )) : null) : null}
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col sm="auto" style={answerStyle}>
-                {twoAnswer ? `By ${twoAnswer.answerer_name}` : null}
-      &nbsp;
-                {twoAnswer ? formatDate(twoAnswer.date) : null}
-              </Col>
-              <Col sm="auto" style={answerStyle}>
-                Helpful?
-                {' '}
-                <u>Yes</u>
-                (
-                {twoAnswer ? twoAnswer.helpfulness : null}
-                )
-              </Col>
-              <Col sm="auto" style={resultStyle}>
-                <u>Report</u>
-              </Col>
-            </Row>
-            <br />
-          </>
+  const formatAnswer = (answer) => (
+    answer
+      ? (
+        <>
+          <Row>
+            <Col>
+              A:
+              &nbsp;
+              {answer.body}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {
+                answer.photos ? answer.photos.map((img, i) => (
+                  <Image
+                    src={img}
+                    width={78}
+                    height={78}
+                    key={i}
+                    thumbnail
+                  />
+                )) : null
+              }
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col sm="auto" style={answerStyle}>
+              {`By ${answer.answerer_name}`}
+    &nbsp;
+              {formatDate(answer.date)}
+            </Col>
+            <Col sm="auto" style={answerStyle} onClick={handleClick}>
+              Helpful?
+              {' '}
+              <u>Yes</u>
+              (
+              {answer.helpfulness}
+              )
+            </Col>
+            <Col sm="auto" style={resultStyle}>
+              <u>Report</u>
+            </Col>
+          </Row>
+          <br />
+        </>
+      ) : null);
+
+  const formatQuestion = () => (
+    <Row>
+      <Col>
+        <strong>
+          Q:
+          {' '}
+          {props.question.question_body}
+        </strong>
+      </Col>
+      <Col sm="auto" style={questionStyle}>
+        Helpful?
+        {' '}
+        <u>Yes</u>
+        (
+        {props.question.question_helpfulness}
         )
-        : null}
+      </Col>
+      <Col sm="auto" style={resultStyle}>
+        <u>Add Answer</u>
+      </Col>
+    </Row>
 
+  );
+
+  return (
+    <Container id="questionsContainer">
+      {formatQuestion()}
+      <br />
+      {formatAnswer(oneAnswer)}
+      {formatAnswer(twoAnswer)}
     </Container>
   );
 }
-// By {oneAnswer ? oneAnswer.answerer_name : null} {oneAnswer ? oneAnswer.date.slice(0, 10) : null}
+
+Q.propTypes = {
+  question: PropTypes.shape({
+    answers: PropTypes.shape({
+      answerer_name: PropTypes.string,
+      body: PropTypes.string,
+      date: PropTypes.string,
+      helpfulness: PropTypes.number,
+      id: PropTypes.number,
+      photos: PropTypes.arrayOf(PropTypes.shape({
+        url: PropTypes.string,
+      })),
+    }),
+    asker_name: PropTypes.string,
+    question_body: PropTypes.string,
+    question_date: PropTypes.string,
+    question_helpfulness: PropTypes.number,
+  }),
+  answers: PropTypes.shape({
+    answerer_name: PropTypes.string,
+    body: PropTypes.string,
+    date: PropTypes.string,
+    helpfulness: PropTypes.number,
+    id: PropTypes.number,
+    photos: PropTypes.arrayOf(PropTypes.shape({
+      url: PropTypes.string,
+    })),
+  }),
+};
+
+Q.defaultProps = {
+  question: null,
+  answers: null,
+};
 
 export default Q;

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Row, Col, Container, Form, Button } from 'react-bootstrap';
+import React from 'react';
+import {
+  Row, Col, Container, Button,
+} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AddQuestion() {

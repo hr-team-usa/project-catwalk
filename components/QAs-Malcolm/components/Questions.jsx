@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import config from '../../../config';
 import Q from './Q';
 
@@ -32,5 +33,9 @@ function Questions({ productId }) {
     </>
   );
 }
+
+Questions.propTypes = {
+  productId: PropTypes.number.isRequired,
+};
 
 export default Questions;
