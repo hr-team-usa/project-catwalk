@@ -10,7 +10,7 @@ function QASearchBar() {
       <Row>
         <Col>
           <br />
-          <SearchBar placeholder="Have a question? Search for answers..."/>
+          <SearchBar placeholder="Have a question? Search for answers..." />
           <></>
           <br />
         </Col>
