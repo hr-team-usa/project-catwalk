@@ -2,24 +2,30 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import styles from './SelectSize.module.css';
 
-const SelectSize = ({ styleInfo }) => {
+const SelectSize = ({ styleInfo, setSku }) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
   const [sizesAvailable, setSizesAvailable] = useState([]);
 
   const populateSKUs = () => {
-    const sizes = [];
+    const skusAvailable = [];
     if (styleInfo.skus) {
       const skus = Object.values(styleInfo.skus);
       for (let i = 0; i < skus.length; i += 1) {
         if (skus[i].quantity > 0) {
-          sizes.push(skus[i].size);
+          skusAvailable.push(skus[i]);
         }
       }
     }
-    setSizesAvailable(sizes);
+    setSizesAvailable(skusAvailable);
     // use this for testing 'out of stock':
     // setSizesAvailable([]);
+  };
+
+  const clickHandler = (sku) => {
+    setCurrentSize(sku.size);
+    setSku(sku);
   };
 
   useEffect(() => {
@@ -31,20 +37,23 @@ const SelectSize = ({ styleInfo }) => {
     // eslint-disable-next-line vars-on-top
     var emptyStock = ( // eslint-disable-line no-var
 
-      <DropdownButton disabled id="dropdown-basic-button" title="Out of Stock" />);
+      <DropdownButton className={styles.dropdown} disabled id="dropdown-basic-button" title="Out of Stock" />);
   } else {
     // eslint-disable-next-line vars-on-top
     var stock = ( // eslint-disable-line no-var
       <DropdownButton
+        className={styles.dropdown}
         id="dropdown-basic-button"
         title={currentSize}
       >
-        {sizesAvailable.map((size, i) => (
+        {sizesAvailable.map((sku, i) => (
           <Dropdown.Item
-            onClick={() => setCurrentSize(size)}
+            onClick={() => {
+              clickHandler(sku);
+            }}
             key={i} // eslint-disable-line react/no-array-index-key
           >
-            {`${size}`}
+            {`${sku.size}`}
           </Dropdown.Item>
         ))}
       </DropdownButton>
@@ -52,10 +61,10 @@ const SelectSize = ({ styleInfo }) => {
   }
 
   return (
-    <div>
+    <span>
       {/* eslint-disable-next-line block-scoped-var */}
       {sizesAvailable.length > 0 ? stock : emptyStock}
-    </div>
+    </span>
   );
 };
 
@@ -63,6 +72,7 @@ SelectSize.propTypes = {
   styleInfo: PropTypes.shape({
     skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   }),
+  setSku: PropTypes.func.isRequired,
 };
 
 SelectSize.defaultProps = {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../../config';
@@ -8,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({productId}) => {
+const ProductDescription = ({ productId }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -74,6 +75,10 @@ const ProductDescription = ({productId}) => {
       </Container>
     </div>
   );
+};
+
+ProductDescription.propTypes = {
+  productId: PropTypes.number.isRequired,
 };
 
 export default ProductDescription;

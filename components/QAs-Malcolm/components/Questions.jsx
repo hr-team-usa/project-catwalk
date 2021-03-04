@@ -7,7 +7,7 @@ import Q from './Q';
 // eslint-disable-next-line no-unused-vars
 function Questions({ productId }) {
   const [questions, setQuestions] = useState([]);
-  const id = productId;
+  const id = 18078;
 
   const getQuestions = () => {
     const options = {
