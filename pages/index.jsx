@@ -11,7 +11,7 @@ const App = () => {
     <div className="App">
       <ProductDescription productId={productId} />
       <Comparison productId={productId} setProductId={setProductId} />
-      <QAs productId={productId} />
+      <QAs productId="18201" />
       <Reviews productId="18201" />
     </div>
   );

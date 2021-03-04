@@ -150,7 +150,6 @@ function Q(props) {
         <u>Add Answer</u>
       </Col>
     </Row>
-
   );
 
   return (
