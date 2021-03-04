@@ -15,7 +15,6 @@ const AddToCart = ({ styleInfo }) => {
           setSku={setSku}
         />
         <SelectQuantity
-          styleInfo={styleInfo}
           sku={sku}
           setQuantitySelected={setQuantitySelected}
         />

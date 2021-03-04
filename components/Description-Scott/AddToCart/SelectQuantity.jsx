@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 /* eslint-disable */
-const SelectQuantity = ({ styleInfo, sku, setQuantitySelected }) => {
+const SelectQuantity = ({ sku, setQuantitySelected }) => {
   const [currentQuantity, setCurrentQuantity] = useState(1);
   const [quantityAvailable, setQuantityAvailable] = useState(0);
 
@@ -23,7 +23,7 @@ const SelectQuantity = ({ styleInfo, sku, setQuantitySelected }) => {
 
   useEffect(() => {
     checkQuantity();
-  }, [styleInfo]);
+  }, [sku]);
 
   if (quantityAvailable === 0) {
     // eslint-disable-next-line vars-on-top
