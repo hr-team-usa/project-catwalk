@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import styles from './SelectSize.module.css';
 
 const SelectSize = ({ styleInfo, setSku }) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
@@ -36,11 +37,12 @@ const SelectSize = ({ styleInfo, setSku }) => {
     // eslint-disable-next-line vars-on-top
     var emptyStock = ( // eslint-disable-line no-var
 
-      <DropdownButton disabled id="dropdown-basic-button" title="Out of Stock" />);
+      <DropdownButton className={styles.dropdown} disabled id="dropdown-basic-button" title="Out of Stock" />);
   } else {
     // eslint-disable-next-line vars-on-top
     var stock = ( // eslint-disable-line no-var
       <DropdownButton
+        className={styles.dropdown}
         id="dropdown-basic-button"
         title={currentSize}
       >
@@ -59,10 +61,10 @@ const SelectSize = ({ styleInfo, setSku }) => {
   }
 
   return (
-    <div>
+    <span>
       {/* eslint-disable-next-line block-scoped-var */}
       {sizesAvailable.length > 0 ? stock : emptyStock}
-    </div>
+    </span>
   );
 };
 
@@ -70,6 +72,7 @@ SelectSize.propTypes = {
   styleInfo: PropTypes.shape({
     skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   }),
+  setSku: PropTypes.func.isRequired,
 };
 
 SelectSize.defaultProps = {

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-
-/* eslint-disable */
 const SelectQuantity = ({ sku, setQuantitySelected }) => {
   const [currentQuantity, setCurrentQuantity] = useState(1);
   const [quantityAvailable, setQuantityAvailable] = useState(0);
@@ -31,7 +29,7 @@ const SelectQuantity = ({ sku, setQuantitySelected }) => {
 
       <DropdownButton disabled id="dropdown-basic-button" title="-" />);
   } else {
-    let quantities = []
+    const quantities = [];
     for (let q = 1; q <= quantityAvailable; q += 1) {
       if (q > 15) {
         break;
@@ -59,22 +57,23 @@ const SelectQuantity = ({ sku, setQuantitySelected }) => {
   }
 
   return (
-    <div>
+    <span>
       {/* eslint-disable-next-line block-scoped-var */}
       {quantityAvailable > 0 ? stock : emptyStock}
-    </div>
+    </span>
   );
 };
 
 SelectQuantity.propTypes = {
-  styleInfo: PropTypes.shape({
-    skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  sku: PropTypes.shape({
+    quantity: PropTypes.number,
   }),
+  setQuantitySelected: PropTypes.func.isRequired,
 };
 
 SelectQuantity.defaultProps = {
-  styleInfo: {
-    skus: null,
+  sku: {
+    quantity: 0,
   },
 };
 
