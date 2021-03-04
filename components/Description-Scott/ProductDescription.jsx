@@ -80,7 +80,7 @@ const ProductDescription = ({ productId, productRating }) => {
 
 ProductDescription.propTypes = {
   productId: PropTypes.number.isRequired,
-  productRating: PropTypes.number,
+  productRating: PropTypes.string,
 };
 
 ProductDescription.defaultProps = {

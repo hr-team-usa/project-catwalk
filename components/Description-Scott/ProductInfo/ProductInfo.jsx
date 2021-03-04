@@ -8,11 +8,13 @@ const ProductInfo = ({
   productName, category, description, styleInfo, productRating,
 }) => {
   const url = 'http://localhost:3000/';
+  const starsStyle = {
+    display: 'inline',
+  };
   return (
     <div>
-      <Stars rating={productRating} />
-
-      <div> Read all reviews link here</div>
+        <Stars style={starsStyle} rating={productRating} />
+      <span> Read all reviews link here</span>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />
