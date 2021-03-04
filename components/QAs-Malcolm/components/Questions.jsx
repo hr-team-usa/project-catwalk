@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import config from '../../../config';
 import Q from './Q';
 
+// eslint-disable-next-line no-unused-vars
 function Questions({ productId }) {
   const [questions, setQuestions] = useState([]);
   const id = productId;
