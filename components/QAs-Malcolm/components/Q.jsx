@@ -11,8 +11,32 @@ function Q(props) {
   const [twoAnswer, setTwoAnswer] = useState({});
 
   const parseAnswers = () => {
-    const one = Object.keys(props.answers).slice(0, 1);
-    const two = Object.keys(props.answers).slice(1, 2);
+    let one = Object.keys(props.answers).slice(0, 1);
+    let two = Object.keys(props.answers).slice(1, 2);
+    const all = Object.keys(props.answers);
+    const helpfulness = [];
+
+    for (let j = 0; j < all.length; j += 1) {
+      helpfulness.push(props.answers[all[j]].helpfulness);
+    }
+
+    helpfulness.sort((a, b) => b - a);
+    for (let k = 0; k < all.length; k += 1) {
+      if (props.answers[all[k]].helpfulness === helpfulness[0]) {
+        one = all[k];
+      }
+      if (props.answers[all[k]].helpfulness === helpfulness[1]) {
+        two = all[k];
+      }
+    }
+
+    for (let i = 0; i < all.length; i += 1) {
+      if (props.answers[all[i]].answerer_name === 'Seller') {
+        setOneAnswer(props.answers[all[i]]);
+        setTwoAnswer(props.question.answers[one]);
+        return;
+      }
+    }
     setOneAnswer(props.question.answers[one]);
     setTwoAnswer(props.question.answers[two]);
   };
@@ -79,7 +103,13 @@ function Q(props) {
           <br />
           <Row>
             <Col sm="auto" style={answerStyle}>
-              {`By ${answer.answerer_name}`}
+              {answer.answerer_name === 'Seller' ? (
+                <strong>
+                  By
+                  {answer.answerer_name}
+                </strong>
+              ) : `By ${answer.answerer_name}`}
+              {/* {`By ${answer.answerer_name}`} */}
     &nbsp;
               {formatDate(answer.date)}
             </Col>
@@ -120,7 +150,6 @@ function Q(props) {
         <u>Add Answer</u>
       </Col>
     </Row>
-
   );
 
   return (
