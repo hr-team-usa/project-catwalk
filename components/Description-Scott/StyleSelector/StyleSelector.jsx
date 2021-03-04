@@ -43,19 +43,38 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
           <Row key={j}>
             <Col>
               {group.length > 0 ? group.map((style, i) => (
-                <Image
-                  onClick={() => handleClick(i)}
-                  key={style.style_id}
-                  src={style.photos[0].thumbnail_url}
-                  alt="style thumbnail"
-                  width="80"
-                  height="80"
-                  roundedCircle
-                />
+                <>
+                  {style.photos[0].thumbnail_url ?
+                    (
+                      <Image
+                        onClick={() => handleClick(i)}
+                        key={style.style_id}
+                        src={style.photos[0].thumbnail_url}
+                        alt="style thumbnail"
+                        width="80"
+                        height="80"
+                        roundedCircle
+                      />
+                    )
+                    : (
+                      <>
+                        <Image
+                          onClick={() => handleClick(i)}
+                          key={style.style_id}
+                          src="/no-image-icon.png"
+                          alt="style thumbnail"
+                          width="80"
+                          height="80"
+                          roundedCircle
+                        />
+                        <span>{`${style.style_id}`}</span>
+                      </>
+                    )}
+                </>
               )) : null}
             </Col>
           </Row>
-        )) : null }
+        )) : null}
       </Container>
     </div>
   );
