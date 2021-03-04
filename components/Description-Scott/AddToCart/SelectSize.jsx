@@ -3,23 +3,28 @@ import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const SelectSize = ({ styleInfo }) => {
+const SelectSize = ({ styleInfo, setSku }) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
   const [sizesAvailable, setSizesAvailable] = useState([]);
 
   const populateSKUs = () => {
-    const sizes = [];
+    const skusAvailable = [];
     if (styleInfo.skus) {
       const skus = Object.values(styleInfo.skus);
       for (let i = 0; i < skus.length; i += 1) {
         if (skus[i].quantity > 0) {
-          sizes.push(skus[i].size);
+          skusAvailable.push(skus[i]);
         }
       }
     }
-    setSizesAvailable(sizes);
+    setSizesAvailable(skusAvailable);
     // use this for testing 'out of stock':
     // setSizesAvailable([]);
+  };
+
+  const clickHandler = (sku) => {
+    setCurrentSize(sku.size);
+    setSku(sku);
   };
 
   useEffect(() => {
@@ -39,12 +44,14 @@ const SelectSize = ({ styleInfo }) => {
         id="dropdown-basic-button"
         title={currentSize}
       >
-        {sizesAvailable.map((size, i) => (
+        {sizesAvailable.map((sku, i) => (
           <Dropdown.Item
-            onClick={() => setCurrentSize(size)}
+            onClick={() => {
+              clickHandler(sku);
+            }}
             key={i} // eslint-disable-line react/no-array-index-key
           >
-            {`${size}`}
+            {`${sku.size}`}
           </Dropdown.Item>
         ))}
       </DropdownButton>

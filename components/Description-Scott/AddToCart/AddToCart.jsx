@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SelectSize from './SelectSize';
+import SelectQuantity from './SelectQuantity';
 
-const AddToCart = ({ styleInfo }) => (
-  <div>
+/* eslint-disable */
+
+const AddToCart = ({ styleInfo }) => {
+  const [sku, setSku] = useState(null);
+  const [quantitySelected, setQuantitySelected] = useState(null);
+  return (
     <div>
-      <SelectSize styleInfo={styleInfo} />
-      <span>
-        Quantity Dropdown
-      </span>
-      {' '}
+      <div>
+        <SelectSize
+          styleInfo={styleInfo}
+          setSku={setSku}
+        />
+        <SelectQuantity
+          styleInfo={styleInfo}
+          sku={sku}
+          setQuantitySelected={setQuantitySelected}
+        />
+        {' '}
+      </div>
+      <div>
+        <span>Add to Cart Button </span>
+        <span> Add to Outfits Button</span>
+      </div>
     </div>
-    <div>
-      <span>Add to Cart Button </span>
-      <span> Add to Outfits Button</span>
-    </div>
-  </div>
-);
+  )
+}
 
 export default AddToCart;
