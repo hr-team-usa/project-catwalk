@@ -5,9 +5,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import ProductDescription from "../Description-Scott/ProductDescription";
 
 const RelatedProducts = ({products, images}) => {
-    
-    console.log("products", products); // eat me!
-    console.log("images: ", images);
+
+    // console.log("products", products); // eat me!
+    // console.log("images: ", images); // I was so hungry
 
     return (
         <div>
@@ -31,7 +31,7 @@ const RelatedProducts = ({products, images}) => {
              border-color: grey;
            }
            .related-products-group {
-             
+
            }
            `}
             </style>

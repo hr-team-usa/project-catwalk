@@ -6,7 +6,11 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => {
   const [productId, setProductId] = useState(18078);
+<<<<<<< HEAD
   const [productRating, setProductRating] = useState(null);
+=======
+  // 18079 has no photos and is out of stock - good for testing
+>>>>>>> 1627a99a8a7f6216b2850ad637f465b78ba54253
 
   return (
     <div className="App">
