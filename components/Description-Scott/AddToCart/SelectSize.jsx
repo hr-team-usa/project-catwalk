@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Overlay from 'react-bootstrap/Overlay';
 import styles from './SelectSize.module.css';
 
-const SelectSize = ({ styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalidAdd }) => {
+const SelectSize = ({
+  styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalidAdd,
+}) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
   const [sizesAvailable, setSizesAvailable] = useState([]);
   const [active, setActive] = useState(false);
+
+  const [overlayShow, setOverlayShow] = useState(false);
+  const target = useRef(null);
 
   const populateSKUs = () => {
     const skusAvailable = [];
@@ -33,16 +39,18 @@ const SelectSize = ({ styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalid
 
   const clickHandler = (sku) => {
     setInvalidAdd(false);
+    setOverlayShow(false);
     setActive(false);
     setCurrentSize(sku.size);
     setSku(sku);
-    console.log('clickHandler  called, active is: ', active);
   };
 
   useEffect(() => {
     setCurrentSize('Select Size');
+    setSku({ size: 'Select Size', quantity: null });
     if (invalidAdd) {
       setActive(true);
+      setOverlayShow(true);
       setInvalidAdd(false);
     }
     populateSKUs();
@@ -61,7 +69,27 @@ const SelectSize = ({ styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalid
         id="dropdown-basic-button"
         title={currentSize}
         onClick={() => setActive(!active)}
+        ref={target}
       >
+        <Overlay target={target.current} show={overlayShow} placement="top">
+          {({
+            placement, arrowProps, show: _show, popper, ...props
+          }) => (
+            <div
+              {...props}
+              style={{
+                backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                padding: '2px 10px',
+                color: 'white',
+                borderRadius: 3,
+                ...props.style,
+              }}
+            >
+              Please select a size
+            </div>
+          )}
+        </Overlay>
+
         <Dropdown.Item onClick={() => clickHandler({ size: 'Select Size', quantity: null })}>Select Size</Dropdown.Item>
         {sizesAvailable.map((sku, i) => (
           <Dropdown.Item
