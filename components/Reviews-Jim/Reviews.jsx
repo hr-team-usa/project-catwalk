@@ -17,7 +17,11 @@ const Reviews = ({ productId }) => (
 );
 
 Reviews.propTypes = {
-  productId: PropTypes.string.isRequired,
+  productId: PropTypes.string,
+};
+
+Reviews.defaultProps = {
+  productId: null,
 };
 
 export default Reviews;

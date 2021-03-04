@@ -2,15 +2,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Rating from '@material-ui/lab/Rating';
+
+// import NumRating from './NumRating';
 import ProductBreakdown from './ProductBreakdown';
 import RatingBreakdown from './RatingBreakdown';
-import Stars from './Stars';
+// import Stars from './Stars';
 import config from '../../../config';
 
 const ReviewsBreakdown = ({ productId }) => {
   const [productMeta, setProductMeta] = useState(null);
   const [rating, setRating] = useState(null);
   const [recommended, setRecommended] = useState(null);
+  // const [numRatings, setNumRatings] = useState({});
 
   const getProductMeta = (product) => {
     const api = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/meta';
@@ -58,13 +62,15 @@ const ReviewsBreakdown = ({ productId }) => {
     if (productMeta) {
       ratingCreator(productMeta.ratings);
       reviewPercentage(productMeta.ratings, productMeta.recommended.true);
+      // setNumRatings(productMeta.ratings);
     }
   }, [productMeta]);
 
   return (
     <div>
-      <div><h4>{rating}</h4></div>
-      <Stars rating={rating} />
+      <div className="avg-rating">{rating}</div>
+      {/* <NumRating ratings={numRatings} /> */}
+      <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
       <div>
         {recommended}
         % of reviews recommend this product
@@ -76,7 +82,11 @@ const ReviewsBreakdown = ({ productId }) => {
 };
 
 ReviewsBreakdown.propTypes = {
-  productId: PropTypes.string.isRequired,
+  productId: PropTypes.string,
+};
+
+ReviewsBreakdown.defaultProps = {
+  productId: null,
 };
 
 export default ReviewsBreakdown;
