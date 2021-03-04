@@ -6,13 +6,14 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => {
   const [productId, setProductId] = useState(18078);
+  const [productRating, setProductRating] = useState(null);
 
   return (
     <div className="App">
-      <ProductDescription productId={productId} />
+      <ProductDescription productId={productId} productRating={productRating} />
       <Comparison productId={productId} setProductId={setProductId} />
-      <QAs productId={productId} />
-      <Reviews productId="18201" />
+      <QAs productId="18201" />
+      <Reviews productId="18201" setProductRating={setProductRating} />
     </div>
   );
 };
