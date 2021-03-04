@@ -13,7 +13,7 @@ const ProductInfo = ({
   };
   return (
     <div>
-        <Stars style={starsStyle} rating={productRating} />
+      <Stars style={starsStyle} rating={productRating} />
       <span> Read all reviews link here</span>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
@@ -39,6 +39,7 @@ const ProductInfo = ({
 
 ProductInfo.propTypes = {
   productName: PropTypes.string.isRequired,
+  productRating: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   description: PropTypes.string,
   styleInfo: PropTypes.shape({
