@@ -6,8 +6,6 @@ const Add = ({ quantitySelected, isOutOfStock, sku, setInvalidAdd }) => {
 
   const clickHandler = () => {
     if (sku.size === 'Select Size') {
-      console.log('sku.size: ', sku.size);
-      console.log('quantitySelected: ', quantitySelected);
       setInvalidAdd(true);
     } else {
       //Actual add to cart here...
