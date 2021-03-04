@@ -13,6 +13,15 @@ function Q(props) {
   const parseAnswers = () => {
     const one = Object.keys(props.answers).slice(0, 1);
     const two = Object.keys(props.answers).slice(1, 2);
+    const all = Object.keys(props.answers);
+
+    for (let i = 0; i < all.length; i += 1) {
+      if (props.answers[all[i]].answerer_name === 'Seller') {
+        setOneAnswer(props.answers[all[i]]);
+        setTwoAnswer(props.question.answers[one]);
+        return;
+      }
+    }
     setOneAnswer(props.question.answers[one]);
     setTwoAnswer(props.question.answers[two]);
   };
@@ -79,7 +88,13 @@ function Q(props) {
           <br />
           <Row>
             <Col sm="auto" style={answerStyle}>
-              {`By ${answer.answerer_name}`}
+              {answer.answerer_name === 'Seller' ? (
+                <strong>
+                  By
+                  {answer.answerer_name}
+                </strong>
+              ) : `By ${answer.answerer_name}`}
+              {/* {`By ${answer.answerer_name}`} */}
     &nbsp;
               {formatDate(answer.date)}
             </Col>
