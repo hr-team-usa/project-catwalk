@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <ProductDescription productId={productId} />
+      <ProductDescription productId={productId} productRating={productRating} />
       <Comparison productId={productId} setProductId={setProductId} />
       <QAs productId="18201" />
       <Reviews productId="18201" setProductRating={setProductRating} />

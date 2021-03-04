@@ -23,6 +23,7 @@ const Reviews = ({ productId, setProductRating }) => (
 
 Reviews.propTypes = {
   productId: PropTypes.string.isRequired,
+  setProductRating: PropTypes.func.isRequired,
 };
 
 export default Reviews;

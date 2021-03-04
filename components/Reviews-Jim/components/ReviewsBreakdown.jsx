@@ -78,6 +78,7 @@ const ReviewsBreakdown = ({ productId, setProductRating }) => {
 
 ReviewsBreakdown.propTypes = {
   productId: PropTypes.string.isRequired,
+  setProductRating: PropTypes.func.isRequired,
 };
 
 export default ReviewsBreakdown;

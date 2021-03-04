@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ProductInfo.module.css';
 import Price from './Price';
+import Stars from '../../Reviews-Jim/components/Stars';
 
-const ProductInfo = ({ productName, category, description, styleInfo}) => {
+const ProductInfo = ({
+  productName, category, description, styleInfo, productRating,
+}) => {
   const url = 'http://localhost:3000/';
   return (
     <div>
-      <div> ***** -- Read all reviews link here</div>
+      <Stars rating={productRating} />
+
+      <div> Read all reviews link here</div>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />

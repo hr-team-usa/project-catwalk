@@ -9,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({ productId }) => {
+const ProductDescription = ({ productId, productRating }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -60,6 +60,7 @@ const ProductDescription = ({ productId }) => {
           <Col>
             <ProductInfo
               productName={productName}
+              productRating={productRating}
               category={category}
               description={description}
               styleInfo={styleInfo}
@@ -79,6 +80,11 @@ const ProductDescription = ({ productId }) => {
 
 ProductDescription.propTypes = {
   productId: PropTypes.number.isRequired,
+  productRating: PropTypes.number,
+};
+
+ProductDescription.defaultProps = {
+  productRating: null,
 };
 
 export default ProductDescription;
