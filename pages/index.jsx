@@ -9,10 +9,10 @@ const App = () => {
 
   return (
     <div>
-      <ProductDescription productId={productId} />
-      <Comparison productId={productId} setProductId={setProductId} />
-      <QAs productId={productId} />
-      <Reviews productId="18201" />
+      {/* <ProductDescription productId={productId} /> */}
+      {/* <Comparison productId={productId} setProductId={setProductId} /> */}
+      <QAs productId="18201" />
+      {/* <Reviews productId="18201" /> */}
     </div>
   );
 };
