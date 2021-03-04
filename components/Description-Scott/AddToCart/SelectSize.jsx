@@ -4,9 +4,10 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import styles from './SelectSize.module.css';
 
-const SelectSize = ({ styleInfo, setSku, setIsOutOfStock }) => {
+const SelectSize = ({ styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalidAdd }) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
   const [sizesAvailable, setSizesAvailable] = useState([]);
+  const [active, setActive] = useState(false);
 
   const populateSKUs = () => {
     const skusAvailable = [];
@@ -31,14 +32,21 @@ const SelectSize = ({ styleInfo, setSku, setIsOutOfStock }) => {
   };
 
   const clickHandler = (sku) => {
+    setInvalidAdd(false);
+    setActive(false);
     setCurrentSize(sku.size);
     setSku(sku);
+    console.log('clickHandler  called, active is: ', active);
   };
 
   useEffect(() => {
     setCurrentSize('Select Size');
+    if (invalidAdd) {
+      setActive(true);
+      setInvalidAdd(false);
+    }
     populateSKUs();
-  }, [styleInfo]);
+  }, [styleInfo, invalidAdd]);
 
   if (sizesAvailable.length === 0) {
     // eslint-disable-next-line vars-on-top
@@ -49,11 +57,12 @@ const SelectSize = ({ styleInfo, setSku, setIsOutOfStock }) => {
     // eslint-disable-next-line vars-on-top
     var stock = ( // eslint-disable-line no-var
       <DropdownButton
-        className={styles.dropdown}
+        show={active}
         id="dropdown-basic-button"
         title={currentSize}
+        onClick={() => setActive(!active)}
       >
-        <Dropdown.Item onClick={() => clickHandler({size: 'Select Size'})} >Select Size</Dropdown.Item>
+        <Dropdown.Item onClick={() => clickHandler({ size: 'Select Size', quantity: null })}>Select Size</Dropdown.Item>
         {sizesAvailable.map((sku, i) => (
           <Dropdown.Item
             onClick={() => {
@@ -82,6 +91,8 @@ SelectSize.propTypes = {
   }),
   setSku: PropTypes.func.isRequired,
   setIsOutOfStock: PropTypes.func.isRequired,
+  invalidAdd: PropTypes.bool.isRequired,
+  setInvalidAdd: PropTypes.func.isRequired,
 };
 
 SelectSize.defaultProps = {

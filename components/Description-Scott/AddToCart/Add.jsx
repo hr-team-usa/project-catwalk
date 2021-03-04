@@ -2,14 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 /* eslint-disable */
-const Add = ({ quantitySelected, isOutOfStock, sku }) => {
+const Add = ({ quantitySelected, isOutOfStock, sku, setInvalidAdd }) => {
+
+  const clickHandler = () => {
+    if (sku.size === 'Select Size') {
+      console.log('sku.size: ', sku.size);
+      console.log('quantitySelected: ', quantitySelected);
+      setInvalidAdd(true);
+    } else {
+      //Actual add to cart here...
+      alert(`Added to Cart: size - ${sku.size}, quantity: ${quantitySelected}`)
+    }
+  }
 
   if (isOutOfStock) {
     return <></>
   } else {
     return (
       <>
-        <Button variant="success">Add to Cart</Button>{' '}
+        <Button onClick={clickHandler} variant="success">Add to Cart</Button>{' '}
       </>
     )
   }
