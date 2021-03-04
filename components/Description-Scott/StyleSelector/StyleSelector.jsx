@@ -43,9 +43,9 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
           <Row key={j}>
             <Col>
               {group.length > 0 ? group.map((style, i) => (
-                <>
-                  {style.photos[0].thumbnail_url ?
-                    (
+                <span key={style.style_id}>
+                  {style.photos[0].thumbnail_url
+                    ? (
                       <Image
                         onClick={() => handleClick(i)}
                         key={style.style_id}
@@ -57,7 +57,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                       />
                     )
                     : (
-                      <>
+                      < >
                         <Image
                           onClick={() => handleClick(i)}
                           key={style.style_id}
@@ -67,10 +67,18 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                           height="80"
                           roundedCircle
                         />
-                        <span>{`${style.style_id}`}</span>
+                        <span
+                          onClick={() => handleClick(i)}
+                          onKeyUp={() => handleClick(i)}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          {`${style.name}`}
+                        </span>
+                        <br />
                       </>
                     )}
-                </>
+                </span>
               )) : null}
             </Col>
           </Row>
