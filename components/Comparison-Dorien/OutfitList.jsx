@@ -6,8 +6,8 @@ import Carousel from 'react-bootstrap/Carousel';
 
 const OutfitList = ({ products, images }) => {
 
-    console.log("products", products); // eat me!
-    console.log("images: ", images);
+    // console.log("products", products); // eat me!
+    // console.log("images: ", images); //mmm delicious
 
     return (
         <div>
@@ -45,7 +45,7 @@ const OutfitList = ({ products, images }) => {
              border-color: grey;
            }
            .related-products-group {
-             
+
            }
            `}
             </style>
