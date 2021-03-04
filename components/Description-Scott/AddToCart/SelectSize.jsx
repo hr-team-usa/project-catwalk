@@ -4,7 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import styles from './SelectSize.module.css';
 
-const SelectSize = ({ styleInfo, setSku }) => {
+const SelectSize = ({ styleInfo, setSku, setIsOutOfStock }) => {
   const [currentSize, setCurrentSize] = useState('Select Size');
   const [sizesAvailable, setSizesAvailable] = useState([]);
 
@@ -17,10 +17,17 @@ const SelectSize = ({ styleInfo, setSku }) => {
           skusAvailable.push(skus[i]);
         }
       }
+      // skusAvailable.length === 0 ? setIsOutOfStock(true) : setIsOutOfStock(false)
+      if (skusAvailable.length === 0) {
+        setIsOutOfStock(true);
+      } else {
+        setIsOutOfStock(false);
+      }
     }
     setSizesAvailable(skusAvailable);
     // use this for testing 'out of stock':
     // setSizesAvailable([]);
+    // setIsOutOfStock(true);
   };
 
   const clickHandler = (sku) => {
@@ -46,6 +53,7 @@ const SelectSize = ({ styleInfo, setSku }) => {
         id="dropdown-basic-button"
         title={currentSize}
       >
+        <Dropdown.Item onClick={() => clickHandler({size: 'Select Size'})} >Select Size</Dropdown.Item>
         {sizesAvailable.map((sku, i) => (
           <Dropdown.Item
             onClick={() => {
@@ -73,6 +81,7 @@ SelectSize.propTypes = {
     skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   }),
   setSku: PropTypes.func.isRequired,
+  setIsOutOfStock: PropTypes.func.isRequired,
 };
 
 SelectSize.defaultProps = {
