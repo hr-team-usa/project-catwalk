@@ -40,7 +40,7 @@ const Comparison = ({productId}) => {
       // console.log('current Array: ', arr);
       Promise.all(arr)
       .then(results => {
-        console.log('promise Results: ', results)
+        // console.log('promise Results: ', results)
         setProducts(results);
       })
       .catch((err) => {
@@ -74,12 +74,12 @@ const Comparison = ({productId}) => {
     getRelatedProductsId();
   }, [productId]);
 
-  
+
   return (
     <div>
       <Container>
-      {console.log(productImg)}
-      {products.length > 0 && productImg ? 
+      {/* {console.log(productImg)} */}
+      {products.length > 0 && productImg ?
           <RelatedProducts products={products} images={productImg}/>
           : null }
           <OutfitList />

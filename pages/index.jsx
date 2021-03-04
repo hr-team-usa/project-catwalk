@@ -6,6 +6,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => {
   const [productId, setProductId] = useState(18078);
+  // 18079 has no photos and is out of stock - good for testing
 
   return (
     <div className="App">
