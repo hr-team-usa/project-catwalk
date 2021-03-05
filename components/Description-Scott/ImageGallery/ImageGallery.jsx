@@ -16,6 +16,7 @@ const ImageGallery = ({ styleInfo }) => {
   const [expandView, setExpandView] = useState(false);
 
   const handleSelect = (selectedIndex) => {
+    setMainImageSrc(fullSizeImages[selectedIndex]);
     setIndex(selectedIndex);
   };
 
@@ -58,7 +59,6 @@ const ImageGallery = ({ styleInfo }) => {
   };
 
   const expand = () => {
-    console.log('expand has been clicked!');
     setExpandView(!expandView);
   };
 
@@ -95,7 +95,12 @@ const ImageGallery = ({ styleInfo }) => {
 
           )) : null}
         </Carousel>
-        <button onClick={expand} className={styles.expandButton}></button>
+        <button
+          onClick={expand}
+          className={styles.expandButton}
+          type="button"
+          aria-label="expand image"
+        />
       </div>
 
       {/* Thumbnails: */}
@@ -125,17 +130,19 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
-      <Modal show={expandView} onHide={() => setExpandView(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal size="xl" show={expandView} onHide={() => setExpandView(false)}>
+        <Modal.Body>
+          <Image
+            className={styles.mainImage}
+            src={mainImageSrc || '/no-image-icon.png'}
+            alt="expanded main product image"
+            fluid
+          />
+
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setExpandView(false)}>
             Close
-          </Button>
-          <Button variant="primary" onClick={() => setExpandView(false)}>
-            Save Changes
           </Button>
         </Modal.Footer>
 
