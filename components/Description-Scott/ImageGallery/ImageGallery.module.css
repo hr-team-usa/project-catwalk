@@ -13,21 +13,29 @@ div .test {
   /* width: "450px";
   height: "450px";
   margin: "auto"; */
+  width: 500px;
+  height: 500px;
 }
+/* .innerCarousel {
+  width: 500px;
+  height: 500px;
+} */
 
 /* .carousel-item {
   position: absolute;
   z-index: 1;
 } */
-
+/*
 .carousel-inner {
-  justify-self: auto;
-  align-self: center;
-}
+  height: inherit;
+  width: inherit;
+} */
 
 .mainImageContainer {
   position: relative;
-  width: 50%;
+  /* width: inherit; */
+  width: 500px;
+  height: 500px;
 }
 
 .mainImage {

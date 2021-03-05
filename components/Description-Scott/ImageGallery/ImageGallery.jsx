@@ -53,6 +53,10 @@ const ImageGallery = ({ styleInfo }) => {
     setSlides(newSlides);
   };
 
+  const expand = () => {
+    console.log('expand has been clicked!');
+  }
+
   useEffect(() => {
     getImages();
   }, [styleInfo]);
@@ -62,7 +66,7 @@ const ImageGallery = ({ styleInfo }) => {
   }, [thumbnails]);
 
   return (
-    <div className={styles.test}>
+    <>
       <div className={styles.mainImageContainer}>
 
         {/* Main Image: */}
@@ -86,7 +90,7 @@ const ImageGallery = ({ styleInfo }) => {
 
           )) : null}
         </Carousel>
-        <button className={styles.expandButton}></button>
+        <button onClick={expand} className={styles.expandButton}></button>
       </div>
 
       {/* Thumbnails: */}
@@ -116,7 +120,7 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
-    </div>
+    </>
   );
 };
 
