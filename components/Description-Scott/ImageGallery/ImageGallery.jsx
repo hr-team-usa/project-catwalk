@@ -89,6 +89,7 @@ const ImageGallery = ({ styleInfo }) => {
                 className={styles.mainImage}
                 src={image || '/no-image-icon.png'}
                 alt="main product image"
+                onClick={expand}
                 fluid
               />
             </Carousel.Item>
