@@ -9,7 +9,9 @@ const useStyles = makeStyles({
   },
 });
 
-const RatingBreakdown = ({ ratings }) => {
+const RatingBreakdown = ({
+  ratings, selectedRatings, setSelectedRatings, setRatingsLength,
+}) => {
   const classes = useStyles();
   const [percentages, setPercentages] = useState({});
   const findPercentage = (rating, total) => Math.floor((rating / total) * 100);
@@ -31,29 +33,43 @@ const RatingBreakdown = ({ ratings }) => {
     setPercentages(ratingsObj);
   };
 
+  const clickListen = (e, value) => {
+    e.preventDefault();
+    const newRatings = selectedRatings;
+    if (!newRatings.length || !newRatings.includes(value)) {
+      newRatings.push(value);
+      setSelectedRatings(newRatings);
+      setRatingsLength(newRatings.length);
+    } else {
+      newRatings.splice(newRatings.indexOf(value), 1);
+      setSelectedRatings(newRatings);
+      setRatingsLength(newRatings.length);
+    }
+  };
+
   useEffect(() => {
     createBarRatings(ratings);
   }, []);
 
   return (
     <div className={classes.root}>
-      <div>
+      <div role="button" onClick={(e) => clickListen(e, 5)}>
         5 Stars
         <LinearProgress variant="determinate" value={Number(percentages['5'])} />
       </div>
-      <div>
+      <div role="button" onClick={(e) => clickListen(e, 4)}>
         4 Stars
         <LinearProgress variant="determinate" value={Number(percentages['4'])} />
       </div>
-      <div>
+      <div role="button" onClick={(e) => clickListen(e, 3)}>
         3 Stars
         <LinearProgress variant="determinate" value={Number(percentages['3'])} />
       </div>
-      <div>
+      <div role="button" onClick={(e) => clickListen(e, 2)}>
         2 Stars
         <LinearProgress variant="determinate" value={Number(percentages['2'])} />
       </div>
-      <div>
+      <div role="button" onClick={(e) => clickListen(e, 1)}>
         1 Stars
         <LinearProgress variant="determinate" value={Number(percentages['1'])} />
       </div>
@@ -69,10 +85,14 @@ RatingBreakdown.propTypes = {
     4: PropTypes.string,
     5: PropTypes.string,
   }),
+  selectedRatings: PropTypes.arrayOf(PropTypes.number),
+  setSelectedRatings: PropTypes.func.isRequired,
+  setRatingsLength: PropTypes.func.isRequired,
 };
 
 RatingBreakdown.defaultProps = {
   ratings: null,
+  selectedRatings: PropTypes.arrayOf(null),
 };
 
 export default RatingBreakdown;
