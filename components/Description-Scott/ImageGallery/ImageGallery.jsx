@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 import styles from './ImageGallery.module.css';
 
 const ImageGallery = ({ styleInfo }) => {
@@ -10,6 +13,7 @@ const ImageGallery = ({ styleInfo }) => {
   const [thumbnails, setThumbnails] = useState([]);
   const [slides, setSlides] = useState([]);
   const [index, setIndex] = useState(0);
+  const [expandView, setExpandView] = useState(false);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
@@ -55,7 +59,8 @@ const ImageGallery = ({ styleInfo }) => {
 
   const expand = () => {
     console.log('expand has been clicked!');
-  }
+    setExpandView(!expandView);
+  };
 
   useEffect(() => {
     getImages();
@@ -120,6 +125,21 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
+      <Modal show={expandView} onHide={() => setExpandView(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setExpandView(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => setExpandView(false)}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
     </>
   );
 };
