@@ -74,7 +74,7 @@ const ImageGallery = ({ styleInfo }) => {
         {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
           <Carousel.Item key={image}>
             <Image
-              src={image || '/favicon.ico'}
+              src={image || '/no-image-icon.png'}
               alt="main product image"
               fluid
             />
@@ -87,7 +87,7 @@ const ImageGallery = ({ styleInfo }) => {
         <Carousel.Item className={styles.innerCarousel}>
           {slides.length > 0 ? slides.map((slide, i) => (
             <Image
-              src={slide || '/favicon.ico'}
+              src={slide || '/no-image-icon.png'}
               alt="thumbnail product image"
               width={78}
               height={78}

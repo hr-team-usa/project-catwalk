@@ -11,6 +11,7 @@ const SelectQuantity = ({ sku, setQuantitySelected }) => {
     if (sku) {
       setQuantityAvailable(sku.quantity);
       setCurrentQuantity(1);
+      setQuantitySelected(1);
     }
   };
 
@@ -23,7 +24,7 @@ const SelectQuantity = ({ sku, setQuantitySelected }) => {
     checkQuantity();
   }, [sku]);
 
-  if (quantityAvailable === 0) {
+  if (quantityAvailable === 0 || quantityAvailable === null) {
     // eslint-disable-next-line vars-on-top
     var emptyStock = ( // eslint-disable-line no-var
 
