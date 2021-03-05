@@ -10,7 +10,7 @@ import RatingBreakdown from './RatingBreakdown';
 // import Stars from './Stars';
 import config from '../../../config';
 
-const ReviewsBreakdown = ({ productId }) => {
+const ReviewsBreakdown = ({ productId, setProductRating }) => {
   const [productMeta, setProductMeta] = useState(null);
   const [rating, setRating] = useState(null);
   const [recommended, setRecommended] = useState(null);
@@ -42,6 +42,7 @@ const ReviewsBreakdown = ({ productId }) => {
       allRatings += Number(keys[i]) * Number(values[i]);
       ratingCount += Number(values[i]);
     }
+    setProductRating((allRatings / ratingCount).toFixed(1));
     return setRating((allRatings / ratingCount).toFixed(1));
   };
 
@@ -82,11 +83,8 @@ const ReviewsBreakdown = ({ productId }) => {
 };
 
 ReviewsBreakdown.propTypes = {
-  productId: PropTypes.string,
-};
-
-ReviewsBreakdown.defaultProps = {
-  productId: null,
+  productId: PropTypes.string.isRequired,
+  setProductRating: PropTypes.func.isRequired,
 };
 
 export default ReviewsBreakdown;

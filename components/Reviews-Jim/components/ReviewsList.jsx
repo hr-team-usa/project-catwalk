@@ -43,7 +43,7 @@ const ReviewsList = ({ productId }) => {
 
   return (
     <div>
-      <div>
+      <div data-testid="review-count">
         XXX reviews, sorted by
         <select value={sorted} onChange={(e) => handleSortedChange(e)}>
           <option value="relevant">Relevant</option>
