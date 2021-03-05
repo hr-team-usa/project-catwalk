@@ -13,7 +13,10 @@ const QAs = ({ productId }) => (
 );
 
 QAs.propTypes = {
-  productId: PropTypes.number.isRequired,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 export default QAs;

@@ -44,7 +44,10 @@ function Questions({ productId }) {
 }
 
 Questions.propTypes = {
-  productId: PropTypes.number.isRequired,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 export default Questions;
