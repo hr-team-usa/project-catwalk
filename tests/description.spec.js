@@ -8,7 +8,7 @@ import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-xdescribe('product description test suite', () => {
+describe('product description test suite', () => {
 
   describe('Select Size Dropdown tests', () => {
     it('runs a basic jest test', () => {
@@ -36,7 +36,7 @@ xdescribe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={outOfStock} />);
+      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -63,7 +63,7 @@ xdescribe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={styleInfo} />);
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
