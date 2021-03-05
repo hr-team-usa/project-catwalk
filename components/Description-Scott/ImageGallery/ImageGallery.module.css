@@ -10,9 +10,9 @@ div .test {
 .carousel {
   /* position: absolute;
   z-index: 0; */
-  width: "320px";
-  height: "400px";
-  margin: "auto";
+  /* width: "450px";
+  height: "450px";
+  margin: "auto"; */
 }
 
 /* .carousel-item {
@@ -23,4 +23,29 @@ div .test {
 .carousel-inner {
   justify-self: auto;
   align-self: center;
+}
+
+.mainImageContainer {
+  position: relative;
+  width: 50%;
+}
+
+.mainImage {
+  /* width: 100%;
+  height: auto; */
+}
+
+.expandButton {
+    position: absolute;
+    top: 5%;
+    left: 95%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-image: url("/expand.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
 }
