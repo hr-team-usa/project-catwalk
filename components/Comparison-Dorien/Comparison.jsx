@@ -9,7 +9,7 @@ import App from "../../pages";
 
 
 const Comparison = ({productId, setProductId}) => {
-  console.log('productId: ' , productId)
+  // console.log('productId: ' , productId)
   const [products, setProducts] = useState([]);
   const [productImg, setProductImg] = useState(false);
   const [productStyle, setProductStyle] = useState(false);
@@ -83,7 +83,7 @@ const Comparison = ({productId, setProductId}) => {
   return (
     <div>
       <Container>
-      {products.length > 0 && productImg && productStyle ? 
+      {products.length > 0 && productImg && productStyle ?
           <RelatedProducts products={products} images={productImg} style={productStyle} setProductId={setProductId} setProducts={setProducts} setProductImg={setProductImg} setProductStyle={setProductStyle}/>
           : null }
           <OutfitList />
