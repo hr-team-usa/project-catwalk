@@ -13,6 +13,9 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
   const [productReviews, setProductReviews] = useState(null);
   const [productMeta, setProductMeta] = useState(null);
   const [sortStatus, setSortStatus] = useState('relevant');
+  const [renderToggle, setRenderToggle] = useState(false);
+  const [selectedRatings, setSelectedRatings] = useState([]);
+  const [ratingsLength, setRatingsLength] = useState(selectedRatings.length);
 
   const getProductReviews = (product, sort, count = null) => {
     let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/?product_id=${product}&sort=${sort}`;
@@ -32,7 +35,9 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
     axios(options)
       .then((res) => {
         setProductReviews(res.data.results);
-        console.log('Success!');
+      })
+      .then(() => {
+        setRenderToggle(true);
       })
       .catch((err) => { console.log('GET REVIEWS ERROR ', err); });
   };
@@ -57,7 +62,6 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
   const handleSortChange = (e) => {
     e.preventDefault();
     setSortStatus(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -74,6 +78,9 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
             <ReviewsBreakdown
               productMeta={productMeta}
               setProductRating={setProductRating}
+              selectedRatings={selectedRatings}
+              setSelectedRatings={setSelectedRatings}
+              setRatingsLength={setRatingsLength}
             />
           ) : null}
         </Col>
@@ -83,6 +90,10 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
               productReviews={productReviews}
               sortStatus={sortStatus}
               handleSortChange={handleSortChange}
+              renderToggle={renderToggle}
+              setRenderToggle={setRenderToggle}
+              selectedRatings={selectedRatings}
+              ratingsLength={ratingsLength}
             />
           ) : null}
         </Col>

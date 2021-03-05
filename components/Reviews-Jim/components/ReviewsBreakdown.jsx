@@ -6,7 +6,9 @@ import Rating from '@material-ui/lab/Rating';
 import ProductBreakdown from './ProductBreakdown';
 import RatingBreakdown from './RatingBreakdown';
 
-const ReviewsBreakdown = ({ productMeta, setProductRating }) => {
+const ReviewsBreakdown = ({
+  productMeta, setProductRating, selectedRatings, setSelectedRatings, setRatingsLength,
+}) => {
   const [rating, setRating] = useState(null);
   const [recommended, setRecommended] = useState(null);
 
@@ -45,7 +47,12 @@ const ReviewsBreakdown = ({ productMeta, setProductRating }) => {
         {recommended}
         % of reviews recommend this product
       </div>
-      <RatingBreakdown ratings={productMeta.ratings} />
+      <RatingBreakdown
+        ratings={productMeta.ratings}
+        selectedRatings={selectedRatings}
+        setSelectedRatings={setSelectedRatings}
+        setRatingsLength={setRatingsLength}
+      />
       <ProductBreakdown />
     </div>
   );
@@ -65,10 +72,14 @@ ReviewsBreakdown.propTypes = {
     }),
   }),
   setProductRating: PropTypes.func.isRequired,
+  selectedRatings: PropTypes.arrayOf(PropTypes.number),
+  setSelectedRatings: PropTypes.func.isRequired,
+  setRatingsLength: PropTypes.func.isRequired,
 };
 
 ReviewsBreakdown.defaultProps = {
   productMeta: null,
+  selectedRatings: PropTypes.arrayOf(null),
 };
 
 export default ReviewsBreakdown;

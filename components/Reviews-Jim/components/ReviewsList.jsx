@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 
 import Review from './Review';
 
-const ReviewsList = ({ productReviews, sortStatus, handleSortChange }) => {
-  // const [allReviews, setAllReviews] = useState(productReviews);
+const ReviewsList = ({
+  productReviews, sortStatus, handleSortChange,
+  renderToggle, setRenderToggle, selectedRatings, ratingsLength,
+}) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
 
@@ -21,19 +23,37 @@ const ReviewsList = ({ productReviews, sortStatus, handleSortChange }) => {
     }
   };
 
+  const filterReviewList = (reviews, count, ratingArray) => {
+    if (ratingsLength) {
+      const filterArray = [];
+      for (let i = 0; i < count; i += 1) {
+        if (ratingArray.includes(reviews[i].rating)) {
+          filterArray.push(reviews[i]);
+        }
+      }
+      setRenderedReviews(filterArray);
+    } else {
+      renderReviewList(productReviews, reviewCount);
+    }
+  };
+
   const addTwoReviews = (e) => {
     e.preventDefault();
     setReviewCount(reviewCount + 2);
   };
 
   useEffect(() => {
-    // setAllReviews(productReviews);
     renderReviewList(productReviews, reviewCount);
-  }, [reviewCount, sortStatus]);
+    setRenderToggle(false);
+  }, [reviewCount, renderToggle]);
+
+  useEffect(() => {
+    filterReviewList(productReviews, reviewCount, selectedRatings);
+  }, [ratingsLength]);
 
   return (
-    <>
-      <>
+    <div>
+      <div>
         XXX reviews, sorted by
         <select
           value={sortStatus}
@@ -43,11 +63,11 @@ const ReviewsList = ({ productReviews, sortStatus, handleSortChange }) => {
           <option value="helpful">Helpful</option>
           <option value="newest">Newest</option>
         </select>
-      </>
+      </div>
       {renderedReviews.map((review) => <Review key={review.review_id} review={review} />)}
       <button type="button" onClick={(e) => addTwoReviews(e)}>More Reviews</button>
       <button type="button">Add a Review +</button>
-    </>
+    </div>
   );
 };
 
@@ -66,10 +86,17 @@ ReviewsList.propTypes = {
     response: PropTypes.string,
     helpfulness: PropTypes.number.isRequired,
   })),
+  sortStatus: PropTypes.string.isRequired,
+  handleSortChange: PropTypes.func.isRequired,
+  renderToggle: PropTypes.bool.isRequired,
+  setRenderToggle: PropTypes.func.isRequired,
+  selectedRatings: PropTypes.arrayOf(PropTypes.number),
+  ratingsLength: PropTypes.number.isRequired,
 };
 
 ReviewsList.defaultProps = {
   productReviews: null,
+  selectedRatings: PropTypes.arrayOf(null),
 };
 
 export default ReviewsList;
