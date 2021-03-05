@@ -53,6 +53,10 @@ const ImageGallery = ({ styleInfo }) => {
     setSlides(newSlides);
   };
 
+  const expand = () => {
+    console.log('expand has been clicked!');
+  }
+
   useEffect(() => {
     getImages();
   }, [styleInfo]);
@@ -62,26 +66,32 @@ const ImageGallery = ({ styleInfo }) => {
   }, [thumbnails]);
 
   return (
-    <div className={styles.test}>
+    <>
+      <div className={styles.mainImageContainer}>
 
-      {/* Main Image: */}
-      <Carousel
-        className={styles.carousel}
-        indicators={false}
-        interval={null}
-        activeIndex={index}
-        onSelect={handleSelect}
-      >
-        {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
-          <Carousel.Item key={image}>
-            <Image
-              src={image || '/no-image-icon.png'}
-              alt="main product image"
-              fluid
-            />
-          </Carousel.Item>
-        )) : null}
-      </Carousel>
+        {/* Main Image: */}
+        <Carousel
+          className={styles.carousel}
+          indicators={false}
+          interval={null}
+          activeIndex={index}
+          onSelect={handleSelect}
+        >
+
+          {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
+            <Carousel.Item key={image}>
+              <Image
+                className={styles.mainImage}
+                src={image || '/no-image-icon.png'}
+                alt="main product image"
+                fluid
+              />
+            </Carousel.Item>
+
+          )) : null}
+        </Carousel>
+        <button onClick={expand} className={styles.expandButton}></button>
+      </div>
 
       {/* Thumbnails: */}
       <Carousel
@@ -110,7 +120,7 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
-    </div>
+    </>
   );
 };
 
