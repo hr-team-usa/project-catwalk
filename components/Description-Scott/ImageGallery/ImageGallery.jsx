@@ -4,6 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import ReactImageMagnify from 'react-image-magnify';
 
 import styles from './ImageGallery.module.css';
 
@@ -14,6 +15,7 @@ const ImageGallery = ({ styleInfo }) => {
   const [slides, setSlides] = useState([]);
   const [index, setIndex] = useState(0);
   const [expandView, setExpandView] = useState(false);
+  const [zoomView, setZoomView] = useState(false);
 
   const handleSelect = (selectedIndex) => {
     setMainImageSrc(fullSizeImages[selectedIndex]);
@@ -131,14 +133,41 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
-      <Modal size="xl" show={expandView} onHide={() => setExpandView(false)}>
+      <Modal
+        size="xl"
+        show={expandView}
+        onHide={() => setExpandView(false)}
+        onExit={() => setZoomView(false)}
+      >
         <Modal.Body>
-          <Image
-            className={styles.mainImage}
-            src={mainImageSrc || '/no-image-icon.png'}
-            alt="expanded main product image"
-            fluid
-          />
+          {!zoomView
+            ? (
+              <Image
+                className={styles.mainImage}
+                src={mainImageSrc || '/no-image-icon.png'}
+                alt="expanded main product image"
+                fluid
+                onClick={() => setZoomView(!zoomView)}
+              />
+            ) : (
+              <ReactImageMagnify
+              // https://github.com/ethanselzer/react-image-magnify
+                onClick={() => setZoomView(!zoomView)}
+                enlargedImagePosition="over"
+                {...{
+                  smallImage: {
+                    alt: 'zoomed main product image',
+                    isFluidWidth: true,
+                    src: mainImageSrc || '/no-image-icon.png',
+                  },
+                  largeImage: {
+                    src: mainImageSrc || '/no-image-icon.png',
+                    width: 2400,
+                    height: 3600,
+                  },
+                }}
+              />
+            )}
 
         </Modal.Body>
         <Modal.Footer>
