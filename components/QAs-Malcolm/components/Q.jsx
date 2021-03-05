@@ -49,23 +49,22 @@ function Q(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
+    let qaPath = 'answers';
+    if (e.target.parentNode.id.length === 6) {
+      qaPath = 'questions';
+    } else {
+      qaPath = 'answers';
+    }
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.parentNode.id}/helpful`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
       method: 'put',
       headers: {
         Authorization: config.TOKEN,
       },
     };
-    // console.log(e.target.parentNode.qid);
-    // const options2 = {
-    //   url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.parentNode.qid}/answers`,
-    //   method: 'get',
-    //   headers: {
-    //     Authorization: config.TOKEN,
-    //   },
-    // };
+    //GET /qa/questions/:question_id/answers
     axios(options)
-      .then(() => props.getQuestions())
+      .then(() => props.setRender(true))
       .catch((err) => console.log(err));
   };
 
@@ -156,10 +155,10 @@ function Q(props) {
           {props.question.question_body}
         </strong>
       </Col>
-      <Col sm="auto" style={questionStyle}>
+      <Col id={props.question.question_id} sm="auto" style={questionStyle}>
         Helpful?
         {' '}
-        <u>Yes</u>
+        <u onClick={(e) => { handleClick(e); }}>Yes</u>
         (
         {props.question.question_helpfulness}
         )
@@ -208,11 +207,13 @@ Q.propTypes = {
       url: PropTypes.string,
     })),
   }),
+  setRender: PropTypes.func,
 };
 
 Q.defaultProps = {
   question: null,
   answers: null,
+  setRender: null,
 };
 
 export default Q;
