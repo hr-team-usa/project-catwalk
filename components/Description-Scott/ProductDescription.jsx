@@ -9,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({ productId, productRating }) => {
+const ProductDescription = ({ productId, productRating, reviewsRef }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -64,6 +64,7 @@ const ProductDescription = ({ productId, productRating }) => {
               category={category}
               description={description}
               styleInfo={styleInfo}
+              reviewsRef={reviewsRef}
             />
             <StyleSelector
               allStyles={allStyles}
@@ -81,10 +82,13 @@ const ProductDescription = ({ productId, productRating }) => {
 ProductDescription.propTypes = {
   productId: PropTypes.number.isRequired,
   productRating: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  reviewsRef: PropTypes.object,
 };
 
 ProductDescription.defaultProps = {
   productRating: null,
+  reviewsRef: {},
 };
 
 export default ProductDescription;

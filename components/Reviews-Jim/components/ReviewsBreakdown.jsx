@@ -1,37 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Rating from '@material-ui/lab/Rating';
 
-// import NumRating from './NumRating';
 import ProductBreakdown from './ProductBreakdown';
 import RatingBreakdown from './RatingBreakdown';
-// import Stars from './Stars';
-import config from '../../../config';
 
-const ReviewsBreakdown = ({ productId, setProductRating }) => {
-  const [productMeta, setProductMeta] = useState(null);
+const ReviewsBreakdown = ({ productMeta, setProductRating }) => {
   const [rating, setRating] = useState(null);
   const [recommended, setRecommended] = useState(null);
-  // const [numRatings, setNumRatings] = useState({});
-
-  const getProductMeta = (product) => {
-    const api = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/meta';
-    const options = {
-      url: `${api}?product_id=${product}`,
-      method: 'get',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-    };
-
-    axios(options)
-      .then((res) => {
-        setProductMeta(res.data);
-      })
-      .catch((err) => { console.log(err); });
-  };
 
   const ratingCreator = (ratingsObj) => {
     let allRatings = 0;
@@ -56,35 +33,42 @@ const ReviewsBreakdown = ({ productId, setProductRating }) => {
   };
 
   useEffect(() => {
-    getProductMeta(productId);
+    ratingCreator(productMeta.ratings);
+    reviewPercentage(productMeta.ratings, productMeta.recommended.true);
   }, []);
-
-  useEffect(() => {
-    if (productMeta) {
-      ratingCreator(productMeta.ratings);
-      reviewPercentage(productMeta.ratings, productMeta.recommended.true);
-      // setNumRatings(productMeta.ratings);
-    }
-  }, [productMeta]);
 
   return (
     <div>
       <div className="avg-rating">{rating}</div>
-      {/* <NumRating ratings={numRatings} /> */}
       <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
       <div>
         {recommended}
         % of reviews recommend this product
       </div>
-      {productMeta ? <RatingBreakdown ratings={productMeta.ratings} /> : null}
+      <RatingBreakdown ratings={productMeta.ratings} />
       <ProductBreakdown />
     </div>
   );
 };
 
 ReviewsBreakdown.propTypes = {
-  productId: PropTypes.string.isRequired,
+  productMeta: PropTypes.shape({
+    ratings: PropTypes.shape({
+      1: PropTypes.string,
+      2: PropTypes.string,
+      3: PropTypes.string,
+      4: PropTypes.string,
+      5: PropTypes.string,
+    }),
+    recommended: PropTypes.shape({
+      true: PropTypes.string,
+    }),
+  }),
   setProductRating: PropTypes.func.isRequired,
+};
+
+ReviewsBreakdown.defaultProps = {
+  productMeta: null,
 };
 
 export default ReviewsBreakdown;
