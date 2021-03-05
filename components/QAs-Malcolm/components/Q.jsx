@@ -5,6 +5,8 @@ import { Row, Col, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import config from '../../../config';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
@@ -46,9 +48,25 @@ function Q(props) {
   }, []);
 
   const handleClick = (e) => {
-    console.log('clicked');
-    // e.target.clicked = true;
-    console.log(e.target.parentNode.clicked);
+    e.preventDefault();
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.parentNode.id}/helpful`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    // console.log(e.target.parentNode.qid);
+    // const options2 = {
+    //   url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.parentNode.qid}/answers`,
+    //   method: 'get',
+    //   headers: {
+    //     Authorization: config.TOKEN,
+    //   },
+    // };
+    axios(options)
+      .then(() => props.getQuestions())
+      .catch((err) => console.log(err));
   };
 
   const formatDate = (stringDate) => {
@@ -113,10 +131,10 @@ function Q(props) {
     &nbsp;
               {formatDate(answer.date)}
             </Col>
-            <Col sm="auto" style={answerStyle} onClick={handleClick}>
+            <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
               Helpful?
               {' '}
-              <u>Yes</u>
+              <u onClick={(e) => { handleClick(e); }}>Yes</u>
               (
               {answer.helpfulness}
               )
@@ -175,6 +193,7 @@ Q.propTypes = {
       })),
     }),
     asker_name: PropTypes.string,
+    question_id: PropTypes.number,
     question_body: PropTypes.string,
     question_date: PropTypes.string,
     question_helpfulness: PropTypes.number,

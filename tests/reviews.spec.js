@@ -10,7 +10,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('Reviews Component', () => {
+xdescribe('Reviews Component', () => {
   it('should expect true to equal true', () => {
     expect(true).toEqual(true);
   });

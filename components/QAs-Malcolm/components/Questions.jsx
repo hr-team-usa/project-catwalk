@@ -8,10 +8,11 @@ import Q from './Q';
 function Questions({ productId }) {
   const [questions, setQuestions] = useState([]);
   const id = productId;
+  const count = 'count=4';
 
   const getQuestions = () => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}&count=4`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}&${count}`,
 
       method: 'get',
       headers: {
@@ -30,7 +31,14 @@ function Questions({ productId }) {
 
   return (
     <>
-      {questions.map((item) => <Q question={item} key={item.question_id} answers={item.answers} />)}
+      {questions.map((item) => (
+        <Q
+          question={item}
+          key={item.question_id}
+          answers={item.answers}
+          // getQuestions={getQuestions}
+        />
+      ))}
     </>
   );
 }
