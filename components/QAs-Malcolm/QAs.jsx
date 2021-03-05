@@ -6,9 +6,9 @@ import QASearchBar from './components/SearchBar';
 
 const QAs = ({ productId }) => (
   <div>
-    <QASearchBar />
+    <QASearchBar productId={productId} />
     <Questions productId={productId} />
-    <AddQuestion />
+    <AddQuestion productId={productId} />
   </div>
 );
 

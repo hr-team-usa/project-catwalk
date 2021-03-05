@@ -8,7 +8,7 @@ import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-describe('product description test suite', () => {
+xdescribe('product description test suite', () => {
 
   describe('Select Size Dropdown tests', () => {
     it('runs a basic jest test', () => {
