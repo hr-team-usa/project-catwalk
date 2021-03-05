@@ -25,7 +25,7 @@ const ProductInfo = ({
         role="button"
         tabIndex={0}
       >
-        Read all reviews link here
+        <u>Read all reviews</u>
       </span>
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
