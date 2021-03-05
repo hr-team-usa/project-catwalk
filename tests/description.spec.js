@@ -36,7 +36,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={outOfStock} />);
+      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -63,7 +63,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={styleInfo} />);
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
 
       mockUseEffect.mockClear();
       wrapper.setProps();

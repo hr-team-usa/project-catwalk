@@ -64,7 +64,6 @@ const Comparison = ({productId, setProductId}) => {
           }
           objStyle[item.data.product_id] = item.data.results[0];
         })
-        console.log('objStyle: ', objStyle)
         setProductImg(obj);
         setProductStyle(objStyle);
       })
@@ -79,7 +78,8 @@ const Comparison = ({productId, setProductId}) => {
 
 
 
-  console.log("comparison Style: ", productStyle)
+
+
   return (
     <div>
       <Container>

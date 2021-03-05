@@ -5,8 +5,6 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from './price.module.css';
 
 const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle}) => {
-    console.log("products", products); // eat me!
-    console.log('product Style: ', style);
 
     let changeProduct = (itemId) => {
         setProductId(itemId)
@@ -14,7 +12,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
         setProductImg(false)
         setProductStyle(false)
     }
-
 
     return (
         <div>
@@ -54,7 +51,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
              border-color: grey;
            }
            .related-products-group {
-             
+
            }
            `}
             </style>
