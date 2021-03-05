@@ -5,8 +5,8 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 
 const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
   const [styles, setStyles] = useState([]);
-  const handleClick = (i) => {
-    setStyleInfo(allStyles[i]);
+  const handleClick = (styleId) => {
+    setStyleInfo(allStyles.find((style) => style.style_id === styleId));
   };
 
   const groupByFours = () => {
@@ -47,7 +47,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                   {style.photos[0].thumbnail_url
                     ? (
                       <Image
-                        onClick={() => handleClick(i)}
+                        onClick={() => handleClick(style.style_id)}
                         key={style.style_id}
                         src={style.photos[0].thumbnail_url}
                         alt="style thumbnail"
@@ -59,7 +59,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                     : (
                       < >
                         <Image
-                          onClick={() => handleClick(i)}
+                          onClick={() => handleClick(style.style_id)}
                           key={style.style_id}
                           src="/no-image-icon.png"
                           alt="style thumbnail"
