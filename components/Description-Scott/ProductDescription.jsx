@@ -9,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({ productId, productRating, reviewsRef }) => {
+const ProductDescription = ({ productId, productRating, reviewsRef, setProductNameGlobal }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -28,6 +28,7 @@ const ProductDescription = ({ productId, productRating, reviewsRef }) => {
     axios(productRequest)
       .then((productResponse) => {
         setProductName(productResponse.data.name);
+        setProductNameGlobal(productResponse.data.name);
         setCategory(productResponse.data.category);
         setDescription(productResponse.data.description);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
@@ -42,14 +43,21 @@ const ProductDescription = ({ productId, productRating, reviewsRef }) => {
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
-        const defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        let defaultStyle;
+
+        if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
+          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          defaultStyle = stylesResponse.data.results[0];
+        }
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
   };
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [productId]);
   return (
     <div>
       <Container>

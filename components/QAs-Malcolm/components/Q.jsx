@@ -1,22 +1,32 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
+import AddAnswer from './AddAnswer';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
   const [clicked, setClicked] = useState(false);
+  const [show, setShow] = useState(false);
+  const [moreAnswers, setMoreAnswers] = useState(false);
+  const [allAnswers, setAllAnswers] = useState([]);
+  const [moreAnsBtn, setMoreAnsBtn] = useState(false);
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
     let two = Object.keys(props.answers).slice(1, 2);
     const all = Object.keys(props.answers);
+    if (all.length > 2) {
+      setMoreAnswers(true);
+    }
     const helpfulness = [];
 
     for (let j = 0; j < all.length; j += 1) {
@@ -42,6 +52,7 @@ function Q(props) {
     }
     setOneAnswer(props.question.answers[one]);
     setTwoAnswer(props.question.answers[two]);
+    setAllAnswers(all);
   };
 
   useEffect(() => {
@@ -97,6 +108,7 @@ function Q(props) {
   };
 
   const formatAnswer = (answer) => (
+
     answer
       ? (
         <>
@@ -127,12 +139,11 @@ function Q(props) {
             <Col sm="auto" style={answerStyle}>
               {answer.answerer_name === 'Seller' ? (
                 <strong>
-                  By
+                  By &nbsp;
                   {answer.answerer_name}
                 </strong>
               ) : `By ${answer.answerer_name}`}
-              {/* {`By ${answer.answerer_name}`} */}
-    &nbsp;
+      &nbsp;
               {formatDate(answer.date)}
             </Col>
             <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
@@ -149,7 +160,8 @@ function Q(props) {
           </Row>
           <br />
         </>
-      ) : null);
+      ) : null
+  );
 
   const formatQuestion = () => (
     <Row>
@@ -169,7 +181,14 @@ function Q(props) {
         )
       </Col>
       <Col sm="auto" style={resultStyle}>
-        <u>Add Answer</u>
+        <u onClick={() => setShow(true)}>Add Answer</u>
+        <AddAnswer
+          variant="primary"
+          show={show}
+          onHide={() => setShow(false)}
+          productId={props.productId}
+          questionId={props.question.question_id}
+        />
       </Col>
     </Row>
   );
@@ -178,8 +197,16 @@ function Q(props) {
     <Container id="questionsContainer">
       {formatQuestion()}
       <br />
+      {moreAnsBtn ? formatAnswer(...allAnswers) : null}
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
+      <Row>
+        <Col>
+          {moreAnswers
+            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(true)}>Load More Answers</Button> : null}
+        </Col>
+      </Row>
+      <br />
     </Container>
   );
 }
@@ -213,6 +240,10 @@ Q.propTypes = {
     })),
   }),
   setRender: PropTypes.func,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 Q.defaultProps = {
