@@ -24,11 +24,12 @@ function AddAnswer(props) {
     if (e.target.name === 'email') {
       setEmail(e.target.value);
     }
+
   };
 
   const submitQ = () => {
     const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
       method: 'post',
       headers: {
         Authorization: config.TOKEN,
@@ -37,7 +38,7 @@ function AddAnswer(props) {
         body: answer,
         name,
         email,
-        product_id: props.productId,
+        photos: [],
       },
     };
 
@@ -98,6 +99,11 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
+                <Button>
+                  Upload Your Photos
+                </Button>
+                <br />
+                <br />
                 <Button variant="primary" type="submit" onClick={() => submitQ()}>
                   Submit
                 </Button>

@@ -177,6 +177,7 @@ function Q(props) {
           show={show}
           onHide={() => setShow(false)}
           productId={props.productId}
+          questionId={props.question.question_id}
         />
       </Col>
     </Row>
