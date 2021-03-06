@@ -7,18 +7,12 @@
 .checkmark {
   position: absolute;
   z-index: 1;
-  /* top: 5%;
-  left: 95%; */
-  /* transform: translate(-20%, -20%); */
   transform: translate(-100%, 0%);
-  /* -ms-transform: translate(-50%, -50%); */
-  /* background-image: url("/check-mark.png"); */
+  -ms-transform: translate(-100%, 0%);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: white;
   height: 20px;
   width: 20px;
-  /* border: solid; */
   border-width: 1px;
-
 }
