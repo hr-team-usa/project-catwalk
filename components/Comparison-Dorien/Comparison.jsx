@@ -9,7 +9,7 @@ import App from "../../pages";
 
 
 const Comparison = ({productId, setProductId}) => {
-  // console.log('productId: ' , productId)
+
   const [products, setProducts] = useState([]);
   const [productImg, setProductImg] = useState(false);
   const [productStyle, setProductStyle] = useState(false);
@@ -75,9 +75,6 @@ const Comparison = ({productId, setProductId}) => {
   useEffect(() => {
     getRelatedProductsId()
   }, [productId]);
-
-
-
 
 
   return (
