@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line object-curly-newline
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import styleSheet from './StyleSelector.module.css';
 
 const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
   const [styles, setStyles] = useState([]);
+
   const handleClick = (styleId) => {
     setStyleInfo(allStyles.find((style) => style.style_id === styleId));
   };
@@ -46,15 +48,24 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                 <span key={style.style_id}>
                   {style.photos[0].thumbnail_url
                     ? (
-                      <Image
-                        onClick={() => handleClick(style.style_id)}
-                        key={style.style_id}
-                        src={style.photos[0].thumbnail_url}
-                        alt="style thumbnail"
-                        width="80"
-                        height="80"
-                        roundedCircle
-                      />
+                      <>
+                        <Image
+                          className={styleSheet.selectedThumbnail}
+                          onClick={() => handleClick(style.style_id)}
+                          key={style.style_id}
+                          src={style.photos[0].thumbnail_url}
+                          alt="style thumbnail"
+                          width="80"
+                          height="80"
+                          roundedCircle
+                        />
+                        <Image
+                          hidden={false}
+                          className={styleSheet.checkmark}
+                          roundedCircle
+
+                        />
+                      </>
                     )
                     : (
                       < >
