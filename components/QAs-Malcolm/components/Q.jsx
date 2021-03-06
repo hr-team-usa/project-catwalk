@@ -11,6 +11,7 @@ import config from '../../../config';
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
+  const [clicked, setClicked] = useState(false);
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
@@ -49,23 +50,27 @@ function Q(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    let qaPath = 'answers';
-    if (e.target.parentNode.id.length === 6) {
-      qaPath = 'questions';
+    if (clicked === false) {
+      let qaPath = 'answers';
+      if (e.target.parentNode.id.length === 6) {
+        qaPath = 'questions';
+      } else {
+        qaPath = 'answers';
+      }
+      const options = {
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
+        method: 'put',
+        headers: {
+          Authorization: config.TOKEN,
+        },
+      };
+      axios(options)
+        .then(() => props.setRender(true))
+        .then(() => setClicked(true))
+        .catch((err) => console.log(err));
     } else {
-      qaPath = 'answers';
+      window.alert("We're glad you found this helpful!");
     }
-    const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
-      method: 'put',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-    };
-    //GET /qa/questions/:question_id/answers
-    axios(options)
-      .then(() => props.setRender(true))
-      .catch((err) => console.log(err));
   };
 
   const formatDate = (stringDate) => {
