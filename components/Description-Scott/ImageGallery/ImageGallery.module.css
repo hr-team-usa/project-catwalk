@@ -18,9 +18,10 @@ div .test {
 }
 
 .carouselExpanded {
-  width: 1120px;
+  width: 1110px;
   height: 650px;
   z-index: 2;
+  background-color:white;
 }
 
 .carouselZoomed {
@@ -28,9 +29,9 @@ div .test {
   height: 100vh;
 }
 
-.imageExpanded {
+/* .imageExpanded {
   width:fit-content;
-}
+} */
 /* .innerCarousel {
   width: 500px;
   height: 500px;

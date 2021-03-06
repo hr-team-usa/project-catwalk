@@ -76,6 +76,14 @@ const ImageGallery = ({ styleInfo }) => {
     }
   };
 
+  // const handleKeyDown = (e) => {
+  //   if (e.keyCode === 27) {
+  //     console.log('esc pressed');
+  //     setExpandView(false);
+  //     setZoomView(false);
+  //   }
+  // };
+
   useEffect(() => {
     getImages();
   }, [styleInfo]);
