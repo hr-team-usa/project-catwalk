@@ -10,9 +10,6 @@ function AddQuestion() {
     <Container>
       <Row>
         <Col>
-          <Button>MORE ANSWERED QUESTIONS</Button>
-        </Col>
-        <Col>
           <Button>ADD A QUESTION +</Button>
         </Col>
       </Row>
