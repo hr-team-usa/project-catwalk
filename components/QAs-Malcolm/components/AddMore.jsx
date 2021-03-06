@@ -16,7 +16,8 @@ function AddMore() {
           <Button>MORE ANSWERED QUESTIONS</Button>
         </Col>
         <Col>
-          <AddQuestion show={show} onHide={() => setShow(false)} />
+          <Button onClick={() => setShow(true)}>ADD A QUESTION +</Button>
+          <AddQuestion variant="primary" show={show} onHide={() => setShow(false)} />
         </Col>
       </Row>
     </Container>
