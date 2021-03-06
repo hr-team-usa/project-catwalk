@@ -36,6 +36,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
 
   return (
     <div>
+      {console.log('styleInfo', styleInfo)}
       <Container>
         <h5>
           Style &gt;
@@ -60,10 +61,11 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                           roundedCircle
                         />
                         <Image
-                          hidden={false}
+                          hidden={!(styleInfo.style_id === style.style_id)}
+                          src="/check-mark.png"
                           className={styleSheet.checkmark}
+                          fluid
                           roundedCircle
-
                         />
                       </>
                     )
