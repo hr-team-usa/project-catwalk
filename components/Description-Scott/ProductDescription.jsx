@@ -44,11 +44,12 @@ const ProductDescription = ({ productId, productRating, reviewsRef, setProductNa
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
         let defaultStyle;
-        if (stylesResponse.data.results.length === 1) {
+
+        if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
+          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        } else {
           // eslint-disable-next-line prefer-destructuring
           defaultStyle = stylesResponse.data.results[0];
-        } else {
-          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
         }
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console

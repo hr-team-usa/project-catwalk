@@ -1,0 +1,18 @@
+.selectedThumbnail {
+  border-style: double;
+  border-color: black;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  z-index: 1;
+  transform: translate(-100%, 0%);
+  -ms-transform: translate(-100%, 0%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: white;
+  height: 20px;
+  width: 20px;
+  border-width: 1px;
+}
