@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import ReactImageMagnify from 'react-image-magnify';
 
 import styles from './ImageGallery.module.css';
@@ -16,6 +14,7 @@ const ImageGallery = ({ styleInfo }) => {
   const [index, setIndex] = useState(0);
   const [expandView, setExpandView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
+  const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   const handleSelect = (selectedIndex) => {
     setMainImageSrc(fullSizeImages[selectedIndex]);
@@ -61,7 +60,20 @@ const ImageGallery = ({ styleInfo }) => {
   };
 
   const expand = () => {
-    setExpandView(!expandView);
+    if (!expandView) {
+      // defaultView -> expandView
+      setCarouselStyle(styles.carouselExpanded);
+      setExpandView(!expandView);
+    } else if (!zoomView) {
+      // expandedView -> zoomView
+      setCarouselStyle(styles.carouselZoomed);
+      setZoomView(!zoomView);
+    } else {
+      // -> defaultView
+      setCarouselStyle(styles.carousel);
+      setExpandView(false);
+      setZoomView(false);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +90,8 @@ const ImageGallery = ({ styleInfo }) => {
 
         {/* Main Image: */}
         <Carousel
-          className={styles.carousel}
+          // className={!expandView ? styles.carousel : styles.carouselExpanded}
+          className={carouselStyle}
           indicators={false}
           interval={null}
           activeIndex={index}
@@ -87,13 +100,43 @@ const ImageGallery = ({ styleInfo }) => {
 
           {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
             <Carousel.Item key={image}>
-              <Image
-                className={styles.mainImage}
-                src={image || '/no-image-icon.png'}
-                alt="main product image"
-                onClick={expand}
-                fluid
-              />
+              {!zoomView
+                ? (
+                  <Image
+                    className={styles.mainImage}
+                    src={image || '/no-image-icon.png'}
+                    alt="main product image"
+                    onClick={expand}
+                    fluid
+                  />
+                )
+                : (
+                  <div onClick={expand} onKeyUp={expand} role="button" tabIndex={0}>
+                    <ReactImageMagnify
+                      // https://github.com/ethanselzer/react-image-magnify
+                      // onClick={() => {
+                      //   console.log('click event heard');
+                      //   setZoomView(!zoomView)}
+                      // }
+                      enlargedImagePosition="over"
+                      style={{ zIndex: 2, }}
+                      enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
+                      enlargedImageStyle={{ position: 'fixed' }}
+                      {...{
+                        smallImage: {
+                          alt: 'zoomed main product image',
+                          isFluidWidth: true,
+                          src: mainImageSrc || '/no-image-icon.png',
+                        },
+                        largeImage: {
+                          src: mainImageSrc || '/no-image-icon.png',
+                          width: 2400,
+                          height: 3600,
+                        },
+                      }}
+                    />
+                  </div>
+                )}
             </Carousel.Item>
 
           )) : null}
@@ -133,50 +176,6 @@ const ImageGallery = ({ styleInfo }) => {
           </Carousel.Item>
         )) : null}
       </Carousel>
-      <Modal
-        size="xl"
-        show={expandView}
-        onHide={() => setExpandView(false)}
-        onExit={() => setZoomView(false)}
-      >
-        <Modal.Body>
-          {!zoomView
-            ? (
-              <Image
-                className={styles.mainImage}
-                src={mainImageSrc || '/no-image-icon.png'}
-                alt="expanded main product image"
-                fluid
-                onClick={() => setZoomView(!zoomView)}
-              />
-            ) : (
-              <ReactImageMagnify
-              // https://github.com/ethanselzer/react-image-magnify
-                onClick={() => setZoomView(!zoomView)}
-                enlargedImagePosition="over"
-                {...{
-                  smallImage: {
-                    alt: 'zoomed main product image',
-                    isFluidWidth: true,
-                    src: mainImageSrc || '/no-image-icon.png',
-                  },
-                  largeImage: {
-                    src: mainImageSrc || '/no-image-icon.png',
-                    width: 2400,
-                    height: 3600,
-                  },
-                }}
-              />
-            )}
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setExpandView(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-
-      </Modal>
     </>
   );
 };
