@@ -7,13 +7,13 @@ import Q from './Q';
 // eslint-disable-next-line no-unused-vars
 function Questions({ productId }) {
   const [questions, setQuestions] = useState([]);
+  const [render, setRender] = useState(false);
   const id = productId;
   const count = 'count=4';
 
   const getQuestions = () => {
     const options = {
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}&${count}`,
-
       method: 'get',
       headers: {
         Authorization: config.TOKEN,
@@ -27,7 +27,8 @@ function Questions({ productId }) {
 
   useEffect(() => {
     getQuestions();
-  }, []);
+    setRender(false);
+  }, [render]);
 
   return (
     <>
@@ -36,7 +37,10 @@ function Questions({ productId }) {
           question={item}
           key={item.question_id}
           answers={item.answers}
-          // getQuestions={getQuestions}
+          setRender={setRender}
+          id={id}
+          count={count}
+          setQuestions={setQuestions}
         />
       ))}
     </>

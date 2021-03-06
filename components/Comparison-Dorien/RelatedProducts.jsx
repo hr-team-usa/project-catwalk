@@ -12,14 +12,12 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     let arrayOfArrayProducts = [];
     let arrayOfProducts = [];
     let copyOfProducts = products.slice();
-    console.log("copy of product: ", copyOfProducts);
-    console.log(Math.ceil(copyOfProducts.length / 4));
+
     for (let i = 0; i <= Math.ceil(copyOfProducts.length / 4); i++) {
         arrayOfProducts.push(copyOfProducts.splice(0, 4));
         arrayOfArrayProducts.push(arrayOfProducts);
         arrayOfProducts = [];
     }
-    console.log("array of array products", arrayOfArrayProducts);
     let changeProduct = (itemId) => {
         setProductId(itemId)
         setProducts([])
@@ -38,7 +36,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
                                 <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
                                 <Card.Title>{item.data.name}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
-                                {console.log("Styles in Related: ", style)}
                                 {style &&
                                     style[item.data.id.toString()].sale_price ? (
                                         <Card.Text>
