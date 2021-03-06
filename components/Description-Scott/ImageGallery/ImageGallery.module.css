@@ -10,17 +10,65 @@ div .test {
 .carousel {
   /* position: absolute;
   z-index: 0; */
-  width: "320px";
-  height: "400px";
-  margin: "auto";
+  /* width: "450px";
+  height: "450px";
+  margin: "auto"; */
+  width: 500px;
+  height: 500px;
 }
+
+.carouselExpanded {
+  width: 1000px;
+  height: 500px;
+  z-index: 2;
+}
+
+.carouselZoomed {
+  width: 100vh;
+  height: 100vh;
+}
+
+.imageExpanded {
+  width:fit-content;
+}
+/* .innerCarousel {
+  width: 500px;
+  height: 500px;
+} */
 
 /* .carousel-item {
   position: absolute;
   z-index: 1;
 } */
-
+/*
 .carousel-inner {
-  justify-self: auto;
-  align-self: center;
+  height: inherit;
+  width: inherit;
+} */
+
+.mainImageContainer {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+/* .mainImage {
+  width:fit-content;
+  height: fit-content;
+} */
+
+.expandButton {
+    position: absolute;
+    z-index: 3;
+    top: 5%;
+    left: 8%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-image: url("/expand.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
 }

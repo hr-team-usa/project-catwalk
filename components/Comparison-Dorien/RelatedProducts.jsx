@@ -6,9 +6,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from './price.module.css';
 import { CarouselItem } from "react-bootstrap";
 
-const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle }) => {
-    console.log("products", products.length); // eat me!
-    console.log('product Style: ', style);
+
+const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle}) => {
 
     // in order to make multiple slides in carousel
     let arrayOfArrayProducts = [];
@@ -29,7 +28,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
         setProductStyle(false)
     }
 
-
     return (
         <div>
             Related Products
@@ -41,7 +39,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
                                 <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
                                 <Card.Title>{item.data.name}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
-                                {console.log("Styles in Related: ", style)}
                                 {style &&
                                     style[item.data.id.toString()].sale_price ? (
                                         <Card.Text>
@@ -70,7 +67,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
              border-color: grey;
            }
            .related-products-group {
-             
+
            }
            `}
             </style>

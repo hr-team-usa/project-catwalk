@@ -6,14 +6,17 @@ import QASearchBar from './components/SearchBar';
 
 const QAs = ({ productId }) => (
   <div>
-    <QASearchBar />
+    <QASearchBar productId={productId} />
     <Questions productId={productId} />
-    <AddQuestion />
+    <AddQuestion productId={productId} />
   </div>
 );
 
 QAs.propTypes = {
-  productId: PropTypes.number.isRequired,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 export default QAs;
