@@ -36,7 +36,6 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
 
   return (
     <div>
-      {console.log('styleInfo', styleInfo)}
       <Container>
         <h5>
           Style &gt;
