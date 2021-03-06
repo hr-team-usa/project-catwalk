@@ -13,14 +13,12 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     let arrayOfArrayProducts = [];
     let arrayOfProducts = [];
     let copyOfProducts = products.slice();
-    console.log("copy of product: ", copyOfProducts);
-    console.log(Math.ceil(copyOfProducts.length / 4));
+
     for (let i = 0; i <= Math.ceil(copyOfProducts.length / 4); i++) {
         arrayOfProducts.push(copyOfProducts.splice(0, 4));
         arrayOfArrayProducts.push(arrayOfProducts);
         arrayOfProducts = [];
     }
-    console.log("array of array products", arrayOfArrayProducts);
     let changeProduct = (itemId) => {
         setProductId(itemId)
         setProducts([])
