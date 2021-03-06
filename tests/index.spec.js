@@ -11,7 +11,7 @@ import QAs from '../components/QAs-Malcolm/QAs';
 import AddQuestion from '../components/QAs-Malcolm/components/AddQuestion';
 
 xdescribe('index.js test suite', () => {
-  it('runs a basic jest test', () => {
+  xit('runs a basic jest test', () => {
     expect(true).toEqual(true);
   });
 
@@ -23,7 +23,7 @@ xdescribe('index.js test suite', () => {
 });
 
 xdescribe('QAs test suite', () => {
-  it('runs a basic jest test', () => {
+  xit('runs a basic jest test', () => {
     expect(true).toEqual(true);
   });
 
