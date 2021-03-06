@@ -11,6 +11,7 @@ import config from '../../../config';
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
+  const [clicked, setClicked] = useState(false);
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
@@ -49,24 +50,27 @@ function Q(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.parentNode.id}/helpful`,
-      method: 'put',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-    };
-    // console.log(e.target.parentNode.qid);
-    // const options2 = {
-    //   url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.parentNode.qid}/answers`,
-    //   method: 'get',
-    //   headers: {
-    //     Authorization: config.TOKEN,
-    //   },
-    // };
-    axios(options)
-      .then(() => props.getQuestions())
-      .catch((err) => console.log(err));
+    if (clicked === false) {
+      let qaPath = 'answers';
+      if (e.target.parentNode.id.length === 6) {
+        qaPath = 'questions';
+      } else {
+        qaPath = 'answers';
+      }
+      const options = {
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
+        method: 'put',
+        headers: {
+          Authorization: config.TOKEN,
+        },
+      };
+      axios(options)
+        .then(() => props.setRender(true))
+        .then(() => setClicked(true))
+        .catch((err) => console.log(err));
+    } else {
+      window.alert("We're glad you found this helpful!");
+    }
   };
 
   const formatDate = (stringDate) => {
@@ -156,10 +160,10 @@ function Q(props) {
           {props.question.question_body}
         </strong>
       </Col>
-      <Col sm="auto" style={questionStyle}>
+      <Col id={props.question.question_id} sm="auto" style={questionStyle}>
         Helpful?
         {' '}
-        <u>Yes</u>
+        <u onClick={(e) => { handleClick(e); }}>Yes</u>
         (
         {props.question.question_helpfulness}
         )
@@ -208,11 +212,13 @@ Q.propTypes = {
       url: PropTypes.string,
     })),
   }),
+  setRender: PropTypes.func,
 };
 
 Q.defaultProps = {
   question: null,
   answers: null,
+  setRender: null,
 };
 
 export default Q;

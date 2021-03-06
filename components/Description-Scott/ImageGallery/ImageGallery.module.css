@@ -16,6 +16,21 @@ div .test {
   width: 500px;
   height: 500px;
 }
+
+.carouselExpanded {
+  width: 1000px;
+  height: 500px;
+  z-index: 2;
+}
+
+.carouselZoomed {
+  width: 100vh;
+  height: 100vh;
+}
+
+.imageExpanded {
+  width:fit-content;
+}
 /* .innerCarousel {
   width: 500px;
   height: 500px;
@@ -33,20 +48,20 @@ div .test {
 
 .mainImageContainer {
   position: relative;
-  /* width: inherit; */
   width: 500px;
   height: 500px;
 }
 
-.mainImage {
-  /* width: 100%;
-  height: auto; */
-}
+/* .mainImage {
+  width:fit-content;
+  height: fit-content;
+} */
 
 .expandButton {
     position: absolute;
+    z-index: 3;
     top: 5%;
-    left: 95%;
+    left: 8%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     background-image: url("/expand.png");

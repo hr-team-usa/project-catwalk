@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
+import ReactImageMagnify from 'react-image-magnify';
+
 import styles from './ImageGallery.module.css';
 
 const ImageGallery = ({ styleInfo }) => {
@@ -10,8 +12,12 @@ const ImageGallery = ({ styleInfo }) => {
   const [thumbnails, setThumbnails] = useState([]);
   const [slides, setSlides] = useState([]);
   const [index, setIndex] = useState(0);
+  const [expandView, setExpandView] = useState(false);
+  const [zoomView, setZoomView] = useState(false);
+  const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   const handleSelect = (selectedIndex) => {
+    setMainImageSrc(fullSizeImages[selectedIndex]);
     setIndex(selectedIndex);
   };
 
@@ -54,8 +60,21 @@ const ImageGallery = ({ styleInfo }) => {
   };
 
   const expand = () => {
-    console.log('expand has been clicked!');
-  }
+    if (!expandView) {
+      // defaultView -> expandView
+      setCarouselStyle(styles.carouselExpanded);
+      setExpandView(!expandView);
+    } else if (!zoomView) {
+      // expandedView -> zoomView
+      setCarouselStyle(styles.carouselZoomed);
+      setZoomView(!zoomView);
+    } else {
+      // -> defaultView
+      setCarouselStyle(styles.carousel);
+      setExpandView(false);
+      setZoomView(false);
+    }
+  };
 
   useEffect(() => {
     getImages();
@@ -71,7 +90,8 @@ const ImageGallery = ({ styleInfo }) => {
 
         {/* Main Image: */}
         <Carousel
-          className={styles.carousel}
+          // className={!expandView ? styles.carousel : styles.carouselExpanded}
+          className={carouselStyle}
           indicators={false}
           interval={null}
           activeIndex={index}
@@ -80,17 +100,53 @@ const ImageGallery = ({ styleInfo }) => {
 
           {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
             <Carousel.Item key={image}>
-              <Image
-                className={styles.mainImage}
-                src={image || '/no-image-icon.png'}
-                alt="main product image"
-                fluid
-              />
+              {!zoomView
+                ? (
+                  <Image
+                    className={styles.mainImage}
+                    src={image || '/no-image-icon.png'}
+                    alt="main product image"
+                    onClick={expand}
+                    fluid
+                  />
+                )
+                : (
+                  <div onClick={expand} onKeyUp={expand} role="button" tabIndex={0}>
+                    <ReactImageMagnify
+                      // https://github.com/ethanselzer/react-image-magnify
+                      // onClick={() => {
+                      //   console.log('click event heard');
+                      //   setZoomView(!zoomView)}
+                      // }
+                      enlargedImagePosition="over"
+                      style={{ zIndex: 2, }}
+                      enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
+                      enlargedImageStyle={{ position: 'fixed' }}
+                      {...{
+                        smallImage: {
+                          alt: 'zoomed main product image',
+                          isFluidWidth: true,
+                          src: mainImageSrc || '/no-image-icon.png',
+                        },
+                        largeImage: {
+                          src: mainImageSrc || '/no-image-icon.png',
+                          width: 2400,
+                          height: 3600,
+                        },
+                      }}
+                    />
+                  </div>
+                )}
             </Carousel.Item>
 
           )) : null}
         </Carousel>
-        <button onClick={expand} className={styles.expandButton}></button>
+        <button
+          onClick={expand}
+          className={styles.expandButton}
+          type="button"
+          aria-label="expand image"
+        />
       </div>
 
       {/* Thumbnails: */}

@@ -3,6 +3,7 @@ import {
   Row, Col, Container, Button,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from 'react-bootstrap/Modal';
 
 function AddQuestion() {
   return (
