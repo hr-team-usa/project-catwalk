@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddQuestion from './components/AddQuestion';
+import AddMore from './components/AddMore';
 import Questions from './components/Questions';
 import QASearchBar from './components/SearchBar';
 
@@ -8,7 +8,7 @@ const QAs = ({ productId }) => (
   <div>
     <QASearchBar productId={productId} />
     <Questions productId={productId} />
-    <AddQuestion productId={productId} />
+    <AddMore productId={productId} />
   </div>
 );
 
