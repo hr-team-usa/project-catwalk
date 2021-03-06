@@ -1,13 +1,51 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, Container, Button, Form
+  Row, Col, Container, Button, Form,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import config from '../../../config';
 
 function AddQuestion(props) {
+  const [question, setQuestion] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleChange = (e) => {
+    if (e.target.name === 'formQuestion') {
+      setQuestion(e.target.value);
+    }
+    if (e.target.name === 'name') {
+      setName(e.target.value);
+    }
+    if (e.target.name === 'email') {
+      setEmail(e.target.value);
+    }
+  };
+
+  const submitQ = () => {
+    const options = {
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions',
+      method: 'post',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+      data: {
+        body: question,
+        name,
+        email,
+        product_id: props.productId,
+      },
+    };
+
+    axios(options)
+      .then(() => { props.onHide(); })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -20,25 +58,47 @@ function AddQuestion(props) {
           <Row>
             <Col>
               <Form>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Group
+                  controlId="exampleForm.ControlTextarea1"
+                  variant="error"
+                  maxLength={1000}
+                  onChange={(e) => { handleChange(e); }}
+                >
                   <Form.Label>Your Question *</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="formQuestion"
+                  />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group onChange={(e) => { handleChange(e); }}>
                   <Form.Label>What is your nickname *</Form.Label>
-                  <Form.Control type="name" placeholder="Example: jackson11!" />
+                  <Form.Control
+                    type="name"
+                    placeholder="Example: jackson11!"
+                    maxLength={60}
+                    name="name"
+                  />
                   <Form.Text className="text-muted">
                     For privacy reasons, do not use your full name or email address
                   </Form.Text>
                 </Form.Group>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group
+                  controlId="formBasicEmail"
+                  onChange={(e) => { handleChange(e); }}
+                >
                   <Form.Label>Email address *</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    maxLength={60}
+                    name="email"
+                  />
                   <Form.Text className="text-muted">
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" onClick={() => submitQ()}>
                   Submit
                 </Button>
               </Form>
@@ -56,5 +116,9 @@ function AddQuestion(props) {
 AddQuestion.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 export default AddQuestion;
