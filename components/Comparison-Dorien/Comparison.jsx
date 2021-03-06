@@ -9,7 +9,6 @@ import App from "../../pages";
 
 
 const Comparison = ({productId, setProductId}) => {
-
   const [products, setProducts] = useState([]);
   const [productImg, setProductImg] = useState(false);
   const [productStyle, setProductStyle] = useState(false);
@@ -24,8 +23,10 @@ const Comparison = ({productId, setProductId}) => {
     }
     axios(options)
       .then((result) => {
-       getRelatedProducts(result.data);
-       getRelatedImages(result.data);
+        if (result.data.length !== 0) {
+          getRelatedProducts(result.data);
+          getRelatedImages(result.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -75,7 +76,6 @@ const Comparison = ({productId, setProductId}) => {
   useEffect(() => {
     getRelatedProductsId()
   }, [productId]);
-
 
   return (
     <div>
