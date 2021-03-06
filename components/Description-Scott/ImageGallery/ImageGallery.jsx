@@ -12,14 +12,14 @@ const ImageGallery = ({ styleInfo }) => {
   const [thumbnails, setThumbnails] = useState([]);
   const [slides, setSlides] = useState([]);
   const [index, setIndex] = useState(0);
+
+  const [view, setView] = useState('default');
+
   const [expandView, setExpandView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
-  const handleSelect = (selectedIndex) => {
-    setMainImageSrc(fullSizeImages[selectedIndex]);
-    setIndex(selectedIndex);
-  };
+  // ------------------ POPULATE STATE FUNCTIONS ------------------
 
   const getImages = () => {
     if (Object.entries(styleInfo).length > 0) {
@@ -59,7 +59,54 @@ const ImageGallery = ({ styleInfo }) => {
     setSlides(newSlides);
   };
 
+  const renderCarouselItem = (image) => {
+    switch (view) {
+      case 'default' || 'expanded':
+        return (
+          <Image
+            className={styles.mainImage}
+            src={image || '/no-image-icon.png'}
+            alt="main product image"
+            onClick={expand}
+            fluid
+          />
+        )
+      case 'zoomed':
+        return (
+          <div></div>
+        )
+    }
+  }
+
+  // ------------------ EVENT HANDLERS ------------------
+
+  const handleSelect = (selectedIndex) => {
+    setMainImageSrc(fullSizeImages[selectedIndex]);
+    setIndex(selectedIndex);
+  };
+
   const expand = () => {
+    switch (view) {
+      case 'default':
+        console.log('default to expanded');
+        setCarouselStyle(styles.carouselExpanded);
+        setView('expanded')
+        break;
+      case 'expanded':
+        console.log('expanded to zoomed');
+        setCarouselStyle(styles.carouselZoomed);
+        setView('zoomed');
+        break;
+      case 'zoomed':
+        console.log('zoomed to default');
+        setCarouselStyle(styles.carousel);
+        setView('default');
+        break;
+      default:
+        setCarouselStyle(styles.carousel);
+        setView('default');
+    }
+
     if (!expandView) {
       // defaultView -> expandView
       setCarouselStyle(styles.carouselExpanded);
@@ -98,7 +145,6 @@ const ImageGallery = ({ styleInfo }) => {
 
         {/* Main Image: */}
         <Carousel
-          // className={!expandView ? styles.carousel : styles.carouselExpanded}
           className={carouselStyle}
           indicators={false}
           interval={null}
