@@ -59,25 +59,6 @@ const ImageGallery = ({ styleInfo }) => {
     setSlides(newSlides);
   };
 
-  const renderCarouselItem = (image) => {
-    switch (view) {
-      case 'default' || 'expanded':
-        return (
-          <Image
-            className={styles.mainImage}
-            src={image || '/no-image-icon.png'}
-            alt="main product image"
-            onClick={expand}
-            fluid
-          />
-        )
-      case 'zoomed':
-        return (
-          <div></div>
-        )
-    }
-  }
-
   // ------------------ EVENT HANDLERS ------------------
 
   const handleSelect = (selectedIndex) => {
@@ -88,19 +69,12 @@ const ImageGallery = ({ styleInfo }) => {
   const expand = () => {
     switch (view) {
       case 'default':
-        console.log('default to expanded');
         setCarouselStyle(styles.carouselExpanded);
-        setView('expanded')
+        setView('expanded');
         break;
       case 'expanded':
-        console.log('expanded to zoomed');
         setCarouselStyle(styles.carouselZoomed);
         setView('zoomed');
-        break;
-      case 'zoomed':
-        console.log('zoomed to default');
-        setCarouselStyle(styles.carousel);
-        setView('default');
         break;
       default:
         setCarouselStyle(styles.carousel);
@@ -123,13 +97,49 @@ const ImageGallery = ({ styleInfo }) => {
     }
   };
 
-  // const handleKeyDown = (e) => {
-  //   if (e.keyCode === 27) {
-  //     console.log('esc pressed');
-  //     setExpandView(false);
-  //     setZoomView(false);
-  //   }
-  // };
+  // ------------------ CONDITIONAL RENDERING FUNCTIONS ------------------
+
+  const renderCarouselItem = (image) => {
+    switch (view) {
+      case 'default':
+      case 'expanded':
+        return (
+          <Image
+            className={styles.mainImage}
+            src={image || '/no-image-icon.png'}
+            alt="main product image"
+            onClick={expand}
+            fluid
+          />
+        );
+      case 'zoomed':
+        return (
+          <div onClick={expand} onKeyUp={expand} role="button" tabIndex={0}>
+            <ReactImageMagnify
+              // https://github.com/ethanselzer/react-image-magnify
+              enlargedImagePosition="over"
+              style={{ zIndex: 2 }}
+              enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
+              enlargedImageStyle={{ position: 'fixed' }}
+              {...{
+                smallImage: {
+                  alt: 'zoomed main product image',
+                  isFluidWidth: true,
+                  src: mainImageSrc || '/no-image-icon.png',
+                },
+                largeImage: {
+                  src: mainImageSrc || '/no-image-icon.png',
+                  width: 2400,
+                  height: 3600,
+                },
+              }}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     getImages();
@@ -154,49 +164,20 @@ const ImageGallery = ({ styleInfo }) => {
 
           {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
             <Carousel.Item key={image}>
-              {!zoomView
-                ? (
-                  <Image
-                    className={styles.mainImage}
-                    src={image || '/no-image-icon.png'}
-                    alt="main product image"
-                    onClick={expand}
-                    fluid
-                  />
-                )
-                : (
-                  <div onClick={expand} onKeyUp={expand} role="button" tabIndex={0}>
-                    <ReactImageMagnify
-                      // https://github.com/ethanselzer/react-image-magnify
-                      // onClick={() => {
-                      //   console.log('click event heard');
-                      //   setZoomView(!zoomView)}
-                      // }
-                      enlargedImagePosition="over"
-                      style={{ zIndex: 2, }}
-                      enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
-                      enlargedImageStyle={{ position: 'fixed' }}
-                      {...{
-                        smallImage: {
-                          alt: 'zoomed main product image',
-                          isFluidWidth: true,
-                          src: mainImageSrc || '/no-image-icon.png',
-                        },
-                        largeImage: {
-                          src: mainImageSrc || '/no-image-icon.png',
-                          width: 2400,
-                          height: 3600,
-                        },
-                      }}
-                    />
-                  </div>
-                )}
+              {renderCarouselItem(image)}
             </Carousel.Item>
 
           )) : null}
         </Carousel>
         <button
-          onClick={expand}
+          onClick={() => {
+            if (view === 'default') {
+              expand();
+            } else {
+              setCarouselStyle(styles.carousel);
+              setView('default');
+            }
+          }}
           className={styles.expandButton}
           type="button"
           aria-label="expand image"
@@ -216,6 +197,7 @@ const ImageGallery = ({ styleInfo }) => {
           <Carousel.Item key={i} className={styles.innerCarousel}>
             {slide.length > 0 ? slide.map((srcObj) => (
               <Image
+                className={styles.thumbnailImage}
                 src={srcObj.src || '/no-image-icon.png'}
                 alt="thumbnail product image"
                 width={78}

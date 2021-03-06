@@ -1,18 +1,4 @@
-.error {
-  color: white;
-  background-color: red;
-}
-
-div .test {
-  background-color: grey;
-}
-
 .carousel {
-  /* position: absolute;
-  z-index: 0; */
-  /* width: "450px";
-  height: "450px";
-  margin: "auto"; */
   width: 500px;
   height: 500px;
 }
@@ -29,34 +15,22 @@ div .test {
   height: 100vh;
 }
 
-/* .imageExpanded {
-  width:fit-content;
-} */
-/* .innerCarousel {
-  width: 500px;
-  height: 500px;
+.mainImage {
+  width: 100%;
+  height: 100%;
+}
+
+/* .thumbnailImage {
+  width: 100%;
+  height: 100%;
 } */
 
-/* .carousel-item {
-  position: absolute;
-  z-index: 1;
-} */
-/*
-.carousel-inner {
-  height: inherit;
-  width: inherit;
-} */
 
 .mainImageContainer {
   position: relative;
   width: 500px;
   height: 500px;
 }
-
-/* .mainImage {
-  width:fit-content;
-  height: fit-content;
-} */
 
 .expandButton {
     position: absolute;
