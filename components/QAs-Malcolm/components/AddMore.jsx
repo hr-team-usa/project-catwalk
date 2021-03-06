@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
 import AddQuestion from './AddQuestion';
 
-function AddMore({ productId }) {
+function AddMore({ productId, productName }) {
   const [show, setShow] = useState(false);
 
   return (
@@ -23,6 +23,7 @@ function AddMore({ productId }) {
             show={show}
             onHide={() => setShow(false)}
             productId={productId}
+            productName={productName}
           />
         </Col>
       </Row>
@@ -35,6 +36,7 @@ AddMore.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 export default AddMore;
