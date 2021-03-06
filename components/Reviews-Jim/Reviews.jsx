@@ -88,6 +88,7 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
           {productReviews ? (
             <ReviewsList
               productReviews={productReviews}
+              characteristics={Object.keys(productMeta.characteristics)}
               sortStatus={sortStatus}
               handleSortChange={handleSortChange}
               renderToggle={renderToggle}
