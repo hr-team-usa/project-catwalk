@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
+import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import Review from './Review';
+import NewReviewForm from './NewReviewForm';
 
 const ReviewsList = ({
   productReviews, sortStatus, handleSortChange,
@@ -10,6 +12,7 @@ const ReviewsList = ({
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
+  const [show, setShow] = useState(false);
 
   const renderReviewList = (reviews, count) => {
     const renderArray = [];
@@ -65,8 +68,9 @@ const ReviewsList = ({
         </select>
       </div>
       {renderedReviews.map((review) => <Review key={review.review_id} review={review} />)}
-      <button type="button" onClick={(e) => addTwoReviews(e)}>More Reviews</button>
-      <button type="button">Add a Review +</button>
+      <Button onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
+      <Button onClick={() => setShow(true)}>Add a Review +</Button>
+      <NewReviewForm show={show} onHide={() => setShow(false)} />
     </div>
   );
 };
