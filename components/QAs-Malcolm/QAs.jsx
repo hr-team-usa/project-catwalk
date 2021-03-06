@@ -4,11 +4,11 @@ import AddMore from './components/AddMore';
 import Questions from './components/Questions';
 import QASearchBar from './components/SearchBar';
 
-const QAs = ({ productId }) => (
+const QAs = ({ productId, productName }) => (
   <div>
     <QASearchBar productId={productId} />
     <Questions productId={productId} />
-    <AddMore productId={productId} />
+    <AddMore productId={productId} productName={productName} />
   </div>
 );
 
@@ -17,6 +17,7 @@ QAs.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 export default QAs;

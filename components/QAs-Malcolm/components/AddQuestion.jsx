@@ -50,7 +50,9 @@ function AddQuestion(props) {
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Ask Your Question About the ~productName~
+          Ask Your Question About the
+          {' '}
+          {props.productName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
@@ -120,5 +122,6 @@ AddQuestion.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 export default AddQuestion;

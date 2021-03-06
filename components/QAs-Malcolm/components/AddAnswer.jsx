@@ -24,7 +24,6 @@ function AddAnswer(props) {
     if (e.target.name === 'email') {
       setEmail(e.target.value);
     }
-
   };
 
   const submitQ = () => {
