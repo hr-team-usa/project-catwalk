@@ -11,14 +11,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <ProductDescription
+      {/* <ProductDescription
         productId={productId}
         productRating={productRating}
         reviewsRef={reviewsRef}
-      />
-      <Comparison productId={productId} setProductId={setProductId} />
+      /> */}
+      {/* <Comparison productId={productId} setProductId={setProductId} /> */}
       <QAs productId={productId} />
-      <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} />
+      {/* <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} /> */}
     </div>
   );
 };

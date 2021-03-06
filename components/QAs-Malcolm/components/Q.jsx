@@ -1,17 +1,19 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
+import AddAnswer from './AddAnswer';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
   const [clicked, setClicked] = useState(false);
+  const [show, setShow] = useState(false);
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
@@ -169,7 +171,13 @@ function Q(props) {
         )
       </Col>
       <Col sm="auto" style={resultStyle}>
-        <u>Add Answer</u>
+        <u onClick={() => setShow(true)}>Add Answer</u>
+        <AddAnswer
+          variant="primary"
+          show={show}
+          onHide={() => setShow(false)}
+          productId={props.productId}
+        />
       </Col>
     </Row>
   );
