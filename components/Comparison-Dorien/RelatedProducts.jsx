@@ -7,8 +7,6 @@ import styles from './price.module.css';
 import { CarouselItem } from "react-bootstrap";
 
 const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle }) => {
-    console.log("products", products.length); // eat me!
-    console.log('product Style: ', style);
 
     // in order to make multiple slides in carousel
     let arrayOfArrayProducts = [];
@@ -28,7 +26,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
         setProductImg(false)
         setProductStyle(false)
     }
-
 
     return (
         <div>
@@ -70,7 +67,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
              border-color: grey;
            }
            .related-products-group {
-             
+
            }
            `}
             </style>

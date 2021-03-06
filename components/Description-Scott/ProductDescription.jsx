@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../../config';
@@ -8,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({productId}) => {
+const ProductDescription = ({ productId, productRating, reviewsRef }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -59,9 +60,11 @@ const ProductDescription = ({productId}) => {
           <Col>
             <ProductInfo
               productName={productName}
+              productRating={productRating}
               category={category}
               description={description}
               styleInfo={styleInfo}
+              reviewsRef={reviewsRef}
             />
             <StyleSelector
               allStyles={allStyles}
@@ -74,6 +77,18 @@ const ProductDescription = ({productId}) => {
       </Container>
     </div>
   );
+};
+
+ProductDescription.propTypes = {
+  productId: PropTypes.number.isRequired,
+  productRating: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  reviewsRef: PropTypes.object,
+};
+
+ProductDescription.defaultProps = {
+  productRating: null,
+  reviewsRef: {},
 };
 
 export default ProductDescription;
