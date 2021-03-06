@@ -43,14 +43,20 @@ const ProductDescription = ({ productId, productRating, reviewsRef, setProductNa
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
-        const defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        let defaultStyle;
+        if (stylesResponse.data.results.length === 1) {
+          // eslint-disable-next-line prefer-destructuring
+          defaultStyle = stylesResponse.data.results[0];
+        } else {
+          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        }
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
   };
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [productId]);
   return (
     <div>
       <Container>
