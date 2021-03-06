@@ -23,8 +23,10 @@ const Comparison = ({productId, setProductId}) => {
     }
     axios(options)
       .then((result) => {
-       getRelatedProducts(result.data);
-       getRelatedImages(result.data);
+        if (result.data.length !== 0) {
+          getRelatedProducts(result.data);
+          getRelatedImages(result.data);
+        }
       })
       .catch((err) => {
         console.log(err);
