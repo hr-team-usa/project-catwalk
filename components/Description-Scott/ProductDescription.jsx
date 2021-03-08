@@ -10,7 +10,9 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
 const ProductDescription = ({
-  productId, productRating, reviewsRef, setCurrentProductData, setCurrentStyleData
+  productId, productRating, reviewsRef,
+  setCurrentProductData, setCurrentStyleData,
+  setProductNameGlobal,
 }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
@@ -33,6 +35,7 @@ const ProductDescription = ({
       .then((productResponse) => {
         setCurrentProductData(productResponse.data);
         setProductName(productResponse.data.name);
+        setProductNameGlobal(productResponse.data.name);
         setCategory(productResponse.data.category);
         setDescription(productResponse.data.description);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
@@ -48,6 +51,7 @@ const ProductDescription = ({
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
         let defaultStyle;
+
         if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
           defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
         } else {
@@ -106,6 +110,9 @@ ProductDescription.propTypes = {
   productRating: PropTypes.string,
   // eslint-disable-next-line react/forbid-prop-types
   reviewsRef: PropTypes.object,
+  setCurrentProductData: PropTypes.func.isRequired,
+  setCurrentStyleData: PropTypes.func.isRequired,
+  setProductNameGlobal: PropTypes.func.isRequired,
 };
 
 ProductDescription.defaultProps = {

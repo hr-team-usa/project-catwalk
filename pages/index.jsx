@@ -6,6 +6,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 
 const App = () => {
   const [productId, setProductId] = useState(18078);
+  const [productName, setProductName] = useState('Camo Onesie');
   const [productRating, setProductRating] = useState(null);
   const [currentProductData, setCurrentProductData] = useState(null);
   const [currentStyleData, setCurrentStyleData] = useState(null);
@@ -18,6 +19,7 @@ const App = () => {
         productId={productId}
         productRating={productRating}
         reviewsRef={reviewsRef}
+        setProductNameGlobal={setProductName}
         setCurrentProductData={setCurrentProductData}
         setCurrentStyleData={setCurrentStyleData}
       />
@@ -27,8 +29,8 @@ const App = () => {
         currentProductData={currentProductData}
         currentStyleData={currentStyleData}
       />
-      <QAs productId={productId} />
-      <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} />
+      <QAs productId={productId} productName={productName} />
+      <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} productName={productName} />
     </div>
   );
 };
