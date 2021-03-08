@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 
 import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx';
+import Add from '../components/Description-Scott/AddToCart/Add.jsx'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -36,7 +37,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
+      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -63,7 +64,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -90,5 +91,67 @@ describe('product description test suite', () => {
         - lots of the info online is NOT written with jest methods, so you'll need to find the equivalent syntax here (ie. .toHaveLength, .toBe, etc.)
       */
     })
+
+    xit('displays only in-stock styles in the dropdown when clicked', () => {
+      const styleInfo = {
+        style_id: 96887,
+        name: "Forest Green & Black",
+        skus: {
+          560837: { quantity: 6, size: "XS" },
+          560838: { quantity: 0, size: "S" },
+          560839: { quantity: 9, size: "M" },
+        },
+      }
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+      expect(mockUseEffect).toHaveBeenCalled();
+
+      // simulate a click of the DropdownButton
+      // expec the number of dropdown items to be three ("XS, M, and Select Size")
+      console.log('wrapper ', wrapper.debug());
+
+      const dropdown = wrapper.find('DropdownButton');
+
+      const dropdownButton = dropdown.find('Dropdown');
+      dropdown.simulate('click');
+      // after clicking, four buttons should be rendered
+
+      expect(dropdown.find('DropdownItem')).toHaveLength(4);
+    })
   })
+
+  describe('Add to Cart button tests', () => {
+
+    it('displays a button when items are in stock', () => {
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={false} sku={null} setInvalidAdd={() => { }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const button = wrapper.find('button')
+      expect(button).toHaveLength(1);
+    });
+
+    it('does not display a button when items are out of stock', () => {
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={true} sku={null} setInvalidAdd={() => { }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const button = wrapper.find('button')
+      expect(button).toHaveLength(0);
+    });
+  })
+
 })
