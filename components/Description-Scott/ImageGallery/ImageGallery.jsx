@@ -15,8 +15,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   const [view, setView] = useState('default');
 
-  const [expandView, setExpandView] = useState(false);
-  const [zoomView, setZoomView] = useState(false);
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   // ------------------ POPULATE STATE FUNCTIONS ------------------
@@ -82,21 +80,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         setView('default');
         setIsExpanded(false);
     }
-
-    // if (!expandView) {
-    //   // defaultView -> expandView
-    //   setCarouselStyle(styles.carouselExpanded);
-    //   setExpandView(!expandView);
-    // } else if (!zoomView) {
-    //   // expandedView -> zoomView
-    //   setCarouselStyle(styles.carouselZoomed);
-    //   setZoomView(!zoomView);
-    // } else {
-    //   // -> defaultView
-    //   setCarouselStyle(styles.carousel);
-    //   setExpandView(false);
-    //   setZoomView(false);
-    // }
   };
 
   // ------------------ CONDITIONAL RENDERING FUNCTIONS ------------------
@@ -172,14 +155,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           )) : null}
         </Carousel>
         <button
-          onClick={() => {
-            if (view === 'default') {
-              expand();
-            } else {
-              setCarouselStyle(styles.carousel);
-              setView('default');
-            }
-          }}
+          onClick={() => expand()}
           className={styles.expandButton}
           type="button"
           aria-label="expand image"
@@ -224,6 +200,7 @@ ImageGallery.propTypes = {
       thumbnail_url: PropTypes.string,
     })),
   }),
+  setIsExpanded: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {
