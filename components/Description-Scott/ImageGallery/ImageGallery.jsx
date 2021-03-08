@@ -183,7 +183,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
                 // eslint-disable-next-line react/no-array-index-key
                 key={srcObj.index}
                 onClick={() => handleSelect(srcObj.index)}
-                style={srcObj.index === index ? { 'border-style': 'double' } : null}
+                style={srcObj.index === index ? { borderStyle: 'double' } : null}
               />
             )) : null}
           </Carousel.Item>
