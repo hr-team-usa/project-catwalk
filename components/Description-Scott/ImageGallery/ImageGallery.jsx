@@ -87,10 +87,20 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const renderCarouselItem = (image) => {
     switch (view) {
       case 'default':
+        return (
+          <Image
+            className={styles.mainImage}
+            src={image || '/no-image-icon.png'}
+            alt="main product image"
+            onClick={expand}
+            fluid
+          />
+        );
       case 'expanded':
         return (
           <Image
             className={styles.mainImage}
+            style={{ cursor: 'zoom-in' }}
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
