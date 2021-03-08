@@ -85,6 +85,19 @@ function Q(props) {
     }
   };
 
+  const report = (e) => {
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/helpful`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => { e.target.innerHTML = 'Reported'; })
+      .catch((err) => console.log(err));
+  };
+
   const formatDate = (stringDate) => {
     const options = {
       year: 'numeric',
@@ -156,7 +169,7 @@ function Q(props) {
               )
             </Col>
             <Col sm="auto" style={resultStyle}>
-              <u>Report</u>
+              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
