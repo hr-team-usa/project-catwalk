@@ -165,7 +165,15 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           )) : null}
         </Carousel>
         <button
-          onClick={() => expand()}
+          onClick={() => {
+            if (view === 'expanded') {
+              setCarouselStyle(styles.carousel);
+              setView('default');
+              setIsExpanded(false);
+            } else {
+              expand();
+            }
+          }}
           className={styles.expandButton}
           type="button"
           aria-label="expand image"
