@@ -6,7 +6,7 @@ import ReactImageMagnify from 'react-image-magnify';
 
 import styles from './ImageGallery.module.css';
 
-const ImageGallery = ({ styleInfo }) => {
+const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [mainImageSrc, setMainImageSrc] = useState('');
   const [fullSizeImages, setFullSizeImages] = useState([]);
   const [thumbnails, setThumbnails] = useState([]);
@@ -15,8 +15,6 @@ const ImageGallery = ({ styleInfo }) => {
 
   const [view, setView] = useState('default');
 
-  const [expandView, setExpandView] = useState(false);
-  const [zoomView, setZoomView] = useState(false);
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   // ------------------ POPULATE STATE FUNCTIONS ------------------
@@ -46,7 +44,7 @@ const ImageGallery = ({ styleInfo }) => {
       const currentSlide = [];
       let j = i;
       let counter = 0;
-      while (currentSlide.length < 8 && counter < thumbnails.length) {
+      while (currentSlide.length < 7 && counter < thumbnails.length) {
         currentSlide.push({ src: thumbnails[j], index: j });
         j += 1;
         counter += 1;
@@ -71,6 +69,7 @@ const ImageGallery = ({ styleInfo }) => {
       case 'default':
         setCarouselStyle(styles.carouselExpanded);
         setView('expanded');
+        setIsExpanded(true);
         break;
       case 'expanded':
         setCarouselStyle(styles.carouselZoomed);
@@ -79,21 +78,7 @@ const ImageGallery = ({ styleInfo }) => {
       default:
         setCarouselStyle(styles.carousel);
         setView('default');
-    }
-
-    if (!expandView) {
-      // defaultView -> expandView
-      setCarouselStyle(styles.carouselExpanded);
-      setExpandView(!expandView);
-    } else if (!zoomView) {
-      // expandedView -> zoomView
-      setCarouselStyle(styles.carouselZoomed);
-      setZoomView(!zoomView);
-    } else {
-      // -> defaultView
-      setCarouselStyle(styles.carousel);
-      setExpandView(false);
-      setZoomView(false);
+        setIsExpanded(false);
     }
   };
 
@@ -102,10 +87,20 @@ const ImageGallery = ({ styleInfo }) => {
   const renderCarouselItem = (image) => {
     switch (view) {
       case 'default':
+        return (
+          <Image
+            className={styles.mainImage}
+            src={image || '/no-image-icon.png'}
+            alt="main product image"
+            onClick={expand}
+            fluid
+          />
+        );
       case 'expanded':
         return (
           <Image
             className={styles.mainImage}
+            style={{ cursor: 'zoom-in' }}
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
@@ -118,7 +113,7 @@ const ImageGallery = ({ styleInfo }) => {
             <ReactImageMagnify
               // https://github.com/ethanselzer/react-image-magnify
               enlargedImagePosition="over"
-              style={{ zIndex: 2 }}
+              style={{ zIndex: 4, cursor: 'zoom-out' }}
               enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
               enlargedImageStyle={{ position: 'fixed' }}
               {...{
@@ -163,7 +158,7 @@ const ImageGallery = ({ styleInfo }) => {
         >
 
           {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
-            <Carousel.Item key={image}>
+            <Carousel.Item key={image} style={{ height: '100%' }}>
               {renderCarouselItem(image)}
             </Carousel.Item>
 
@@ -171,11 +166,12 @@ const ImageGallery = ({ styleInfo }) => {
         </Carousel>
         <button
           onClick={() => {
-            if (view === 'default') {
-              expand();
-            } else {
+            if (view === 'expanded') {
               setCarouselStyle(styles.carousel);
               setView('default');
+              setIsExpanded(false);
+            } else {
+              expand();
             }
           }}
           className={styles.expandButton}
@@ -194,19 +190,18 @@ const ImageGallery = ({ styleInfo }) => {
         onSelect={handleSelect}
       >
         {slides.length > 0 ? slides.map((slide, i) => (
-          <Carousel.Item key={i} className={styles.innerCarousel}>
+          <Carousel.Item key={i} style={{ height: '78px' }}>
             {slide.length > 0 ? slide.map((srcObj) => (
               <Image
                 className={styles.thumbnailImage}
                 src={srcObj.src || '/no-image-icon.png'}
                 alt="thumbnail product image"
-                width={78}
-                height={78}
+                // width={78}
+                // height={78}
                 // eslint-disable-next-line react/no-array-index-key
                 key={srcObj.index}
-                // onClick={handleSelect}
                 onClick={() => handleSelect(srcObj.index)}
-                fluid
+                style={srcObj.index === index ? { borderStyle: 'double' } : null}
               />
             )) : null}
           </Carousel.Item>
@@ -223,6 +218,7 @@ ImageGallery.propTypes = {
       thumbnail_url: PropTypes.string,
     })),
   }),
+  setIsExpanded: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {
