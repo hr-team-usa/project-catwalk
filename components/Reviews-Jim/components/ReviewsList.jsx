@@ -8,7 +8,8 @@ import NewReviewForm from './NewReviewForm';
 
 const ReviewsList = ({
   productReviews, sortStatus, handleSortChange, characteristics,
-  renderToggle, setRenderToggle, selectedRatings, ratingsLength, productName,
+  renderToggle, setRenderToggle, selectedRatings, ratingsLength,
+  productName, productId,
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
@@ -75,6 +76,7 @@ const ReviewsList = ({
         characteristics={characteristics}
         show={show}
         onHide={() => setShow(false)}
+        productId={productId}
       />
     </div>
   );
@@ -103,16 +105,18 @@ ReviewsList.propTypes = {
   ratingsLength: PropTypes.number.isRequired,
   characteristics: PropTypes.objectOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      value: PropTypes.string.isRequired,
+      id: PropTypes.number,
+      value: PropTypes.string,
     }),
-  ).isRequired,
+  ),
   productName: PropTypes.string.isRequired,
+  productId: PropTypes.number.isRequired,
 };
 
 ReviewsList.defaultProps = {
   productReviews: null,
   selectedRatings: PropTypes.arrayOf(null),
+  characteristics: PropTypes.objectOf(null),
 };
 
 export default ReviewsList;

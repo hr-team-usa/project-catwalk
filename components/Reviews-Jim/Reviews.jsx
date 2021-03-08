@@ -9,7 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ReviewsList from './components/ReviewsList';
 import ReviewsBreakdown from './components/ReviewsBreakdown';
 
-const Reviews = ({ productId, setProductRating, reviewsRef, productName }) => {
+const Reviews = ({
+  productId, setProductRating, reviewsRef, productName,
+}) => {
   const [productReviews, setProductReviews] = useState(null);
   const [productMeta, setProductMeta] = useState(null);
   const [sortStatus, setSortStatus] = useState('relevant');
@@ -67,7 +69,7 @@ const Reviews = ({ productId, setProductRating, reviewsRef, productName }) => {
   useEffect(() => {
     getProductReviews(productId, sortStatus);
     getProductMeta(productId);
-  }, [sortStatus]);
+  }, [sortStatus, productId]);
 
   return (
     <Container>
@@ -96,6 +98,7 @@ const Reviews = ({ productId, setProductRating, reviewsRef, productName }) => {
               selectedRatings={selectedRatings}
               ratingsLength={ratingsLength}
               productName={productName}
+              productId={productId}
             />
           ) : null}
         </Col>

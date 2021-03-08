@@ -78,7 +78,7 @@ const renderCharacteristics = (char) => {
 };
 
 const NewReviewForm = ({
-  show, onHide, characteristics, productName,
+  show, onHide, characteristics, productName, productId,
 }) => {
   const [validated, setValidated] = useState(false);
   const [rating, setRating] = useState(0);
@@ -89,17 +89,32 @@ const NewReviewForm = ({
   const [email, setEmail] = useState('');
 
   const sendReview = () => {
-    // post request goes here
-  };
+    const options = {
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
+      method: 'post',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+      body: {
+        product_id: productId,
+        rating,
+        summary,
+        body,
+        recommend: recommended,
+        name: nickname,
+        email,
+        photos: [],
+      },
+    };
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
+    axios(options)
+      .then((res) => {
+        console.log('Review Sent! ', res);
+      })
+      .then(() => {
+        onHide();
+      })
+      .catch((err) => { console.log('POST REVIEW ERROR ', err); });
   };
 
   return (
@@ -170,7 +185,7 @@ const NewReviewForm = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button>Submit Review</Button>
+        <Button onClick={sendReview}>Submit Review</Button>
         <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
@@ -183,11 +198,12 @@ NewReviewForm.propTypes = {
   onHide: PropTypes.func.isRequired,
   characteristics: PropTypes.objectOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      value: PropTypes.string.isRequired,
+      id: PropTypes.number,
+      value: PropTypes.string,
     }),
   ).isRequired,
   productName: PropTypes.string.isRequired,
+  productId: PropTypes.number.isRequired,
 };
 
 export default NewReviewForm;
