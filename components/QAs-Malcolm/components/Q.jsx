@@ -19,6 +19,7 @@ function Q(props) {
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
+  const [btnTxt, setBtnTxt] = useState('Load More Answers');
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
@@ -193,17 +194,23 @@ function Q(props) {
     </Row>
   );
 
+  const formatAll = () => {
+    for (let i = 0; i < allAnswers.length; i += 1) {
+      return formatAnswer(props.question.answers[allAnswers[i]]);
+    }
+  };
+
   return (
     <Container id="questionsContainer">
       {formatQuestion()}
       <br />
-      {moreAnsBtn ? formatAnswer(...allAnswers) : null}
+      {moreAnsBtn ? formatAll() : null}
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
       <Row>
         <Col>
           {moreAnswers
-            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(true)}>Load More Answers</Button> : null}
+            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
         </Col>
       </Row>
       <br />
