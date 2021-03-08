@@ -9,7 +9,9 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({ productId, productRating, reviewsRef }) => {
+const ProductDescription = ({
+  productId, productRating, reviewsRef, setCurrentProductData, setCurrentStyleData
+}) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -29,6 +31,7 @@ const ProductDescription = ({ productId, productRating, reviewsRef }) => {
     };
     axios(productRequest)
       .then((productResponse) => {
+        setCurrentProductData(productResponse.data);
         setProductName(productResponse.data.name);
         setCategory(productResponse.data.category);
         setDescription(productResponse.data.description);
@@ -54,6 +57,12 @@ const ProductDescription = ({ productId, productRating, reviewsRef }) => {
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
   };
+
+  useEffect(() => {
+    if (styleInfo) {
+      setCurrentStyleData(styleInfo);
+    }
+  }, [styleInfo]);
 
   useEffect(() => {
     getProduct();

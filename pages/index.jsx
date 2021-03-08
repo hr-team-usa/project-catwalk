@@ -7,6 +7,9 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 const App = () => {
   const [productId, setProductId] = useState(18078);
   const [productRating, setProductRating] = useState(null);
+  const [currentProductData, setCurrentProductData] = useState(null);
+  const [currentStyleData, setCurrentStyleData] = useState(null);
+
   const reviewsRef = useRef();
 
   return (
@@ -15,8 +18,15 @@ const App = () => {
         productId={productId}
         productRating={productRating}
         reviewsRef={reviewsRef}
+        setCurrentProductData={setCurrentProductData}
+        setCurrentStyleData={setCurrentStyleData}
       />
-      <Comparison productId={productId} setProductId={setProductId} />
+      <Comparison
+        productId={productId}
+        setProductId={setProductId}
+        currentProductData={currentProductData}
+        currentStyleData={currentStyleData}
+      />
       <QAs productId={productId} />
       <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} />
     </div>
