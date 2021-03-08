@@ -6,19 +6,66 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from './price.module.css';
 import { CarouselItem } from "react-bootstrap";
 
-
-const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle}) => {
+const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle }) => {
 
     // in order to make multiple slides in carousel
     let arrayOfArrayProducts = [];
     let arrayOfProducts = [];
     let copyOfProducts = products.slice();
 
+    if (products.length === 0) {
+        products = [
+            {
+                data: {
+                    id: 18079,
+                    name: "null",
+                    category: "null"
+                }
+            },
+            {
+                data: {
+                    id: 18079,
+                    name: "null",
+                    category: "null"
+                }
+            },
+            {
+                data: {
+                    id: 18079,
+                    name: "null",
+                    category: "null"
+                }
+            },
+            {
+                data: {
+                    id: 18079,
+                    name: "null",
+                    category: "null"
+                }
+            },
+        ];
+    }
     for (let i = 0; i <= Math.ceil(copyOfProducts.length / 4); i++) {
-        arrayOfProducts.push(copyOfProducts.splice(0, 4));
+        arrayOfProducts = copyOfProducts.splice(0, 4);
+        console.log("array of products: ", arrayOfProducts);
+        if (arrayOfProducts.length < 4) {
+            while (arrayOfProducts.length < 4) {
+                arrayOfProducts.push({
+                    data: {
+                        id: 18079,
+                        name: "Out of stock",
+                        category: "null"
+                    }
+                })
+            }
+        }
         arrayOfArrayProducts.push(arrayOfProducts);
         arrayOfProducts = [];
     }
+
+
+    console.log("related array of products: ", arrayOfArrayProducts);
+
     let changeProduct = (itemId) => {
         setProductId(itemId)
         setProducts([])
@@ -28,32 +75,36 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
 
     return (
         <div>
+
             Related Products
             {products &&
                 <Carousel>
-                    <CardDeck className="related-products-group">
-                    {products.map((item, index) => (
-                            <Card key={index} className="related-products" style={{ width: '5rem' }} onClick={() => changeProduct(item.data.id)}>
-                                <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
-                                <Card.Title>{item.data.name}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
-                                {style &&
-                                    style[item.data.id.toString()].sale_price ? (
-                                        <Card.Text>
-                                            <span className={styles.salePrice}>{style[item.data.id.toString()].sale_price}</span>
-                                            <span className={styles.originalPrice}>{style[item.data.id.toString()].original_price}</span>
-                                        </Card.Text>
-                                    ) :
-                                    <Card.Text>
-                                        <span>{style[item.data.id.toString()].original_price}</span>
-                                    </Card.Text>
-
-                                }
-                            </Card>))}
-                    </CardDeck>
+                    {arrayOfArrayProducts.map((array, index) => (
+                        <Carousel.Item key={index}>
+                            <CardDeck>
+                                {array.map((item, index) => (
+                                    <Card key={index} className="related-products" style={{ width: '5rem' }} onClick={() => changeProduct(item.data.id)}>
+                                        <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
+                                        <Card.Title>{item.data.name}</Card.Title>
+                                        <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
+                                        {style &&
+                                            style[item.data.id.toString()].sale_price || style[item.data.id.toString()] !== undefined ? (
+                                                <Card.Text>
+                                                    <span className={styles.salePrice}>{style[item.data.id.toString()].sale_price}</span>
+                                                    <span className={styles.originalPrice}>{style[item.data.id.toString()].original_price}</span>
+                                                </Card.Text>
+                                            ) :
+                                            <Card.Text>
+                                                <span>{style[item.data.id.toString()].original_price}</span>
+                                            </Card.Text>
+                                        }
+                                    </Card>
+                                ))}
+                            </CardDeck>
+                        </Carousel.Item>
+                    ))}
                 </Carousel>
             }
-            
             <style>
                 {`
            .related-image {
@@ -67,6 +118,9 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
            .related-products-group {
 
            }
+           .carousel-control-next, .carousel-control-prev {
+            width: -1%;
+            }
            `}
             </style>
         </div>
