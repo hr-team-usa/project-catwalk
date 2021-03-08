@@ -18,12 +18,17 @@
 .mainImage {
   width: 100%;
   height: 100%;
+  /* cursor: zoom-in; */
 }
-
-/* .thumbnailImage {
-  width: 100%;
-  height: 100%;
+/*
+.carouselItem {
+  height: 100%
 } */
+
+.thumbnailImage {
+  width: 14%;
+  height: 100%;
+}
 
 
 .mainImageContainer {
