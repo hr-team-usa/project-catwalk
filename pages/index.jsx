@@ -18,9 +18,20 @@ const App = () => {
         reviewsRef={reviewsRef}
         setProductNameGlobal={setProductName}
       />
-      <Comparison productId={productId} setProductId={setProductId} />
-      <QAs productId={productId} productName={productName} />
-      <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} productName={productName} />
+      <Comparison
+        productId={productId}
+        setProductId={setProductId}
+      />
+      <QAs
+        productId={productId}
+        productName={productName}
+      />
+      <Reviews
+        productId={productId}
+        reviewsRef={reviewsRef}
+        setProductRating={setProductRating}
+        productName={productName}
+      />
     </div>
   );
 };

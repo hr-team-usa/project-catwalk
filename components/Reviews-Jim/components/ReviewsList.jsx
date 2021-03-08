@@ -8,7 +8,7 @@ import NewReviewForm from './NewReviewForm';
 
 const ReviewsList = ({
   productReviews, sortStatus, handleSortChange, characteristics,
-  renderToggle, setRenderToggle, selectedRatings, ratingsLength,
+  renderToggle, setRenderToggle, selectedRatings, ratingsLength, productName,
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
@@ -71,6 +71,7 @@ const ReviewsList = ({
       <Button onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
       <Button onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm
+        productName={productName}
         characteristics={characteristics}
         show={show}
         onHide={() => setShow(false)}
@@ -100,13 +101,18 @@ ReviewsList.propTypes = {
   setRenderToggle: PropTypes.func.isRequired,
   selectedRatings: PropTypes.arrayOf(PropTypes.number),
   ratingsLength: PropTypes.number.isRequired,
-  characteristics: PropTypes.arrayOf(PropTypes.string),
+  characteristics: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 ReviewsList.defaultProps = {
   productReviews: null,
   selectedRatings: PropTypes.arrayOf(null),
-  characteristics: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ReviewsList;

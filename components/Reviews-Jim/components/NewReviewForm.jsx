@@ -8,7 +8,79 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
 
-const NewReviewForm = ({ show, onHide, characteristics }) => {
+const renderCharacteristics = (char) => {
+  if (char === 'Size') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick1" label="A size too small" value="1" />
+        <Form.Check inline type="radio" name="char-pick1" label="½ a size too small" value="2" />
+        <Form.Check inline type="radio" name="char-pick1" label="Perfect" value="3" />
+        <Form.Check inline type="radio" name="char-pick1" label="½ a size too big" value="4" />
+        <Form.Check inline type="radio" name="char-pick1" label="A size too wide" value="5" />
+      </>
+    );
+  }
+  if (char === 'Width') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick2" label="Too narrow" value="1" />
+        <Form.Check inline type="radio" name="char-pick2" label="Slightly narrow" value="2" />
+        <Form.Check inline type="radio" name="char-pick2" label="Perfect" value="3" />
+        <Form.Check inline type="radio" name="char-pick2" label="Slightly wide" value="4" />
+        <Form.Check inline type="radio" name="char-pick2" label="Too wide" value="5" />
+      </>
+    );
+  }
+  if (char === 'Comfort') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick3" label="Uncomfortable" value="1" />
+        <Form.Check inline type="radio" name="char-pick3" label="Slightly comfortable" value="2" />
+        <Form.Check inline type="radio" name="char-pick3" label="Ok" value="3" />
+        <Form.Check inline type="radio" name="char-pick3" label="Comfortable" value="4" />
+        <Form.Check inline type="radio" name="char-pick3" label="Perfect" value="5" />
+      </>
+    );
+  }
+  if (char === 'Quality') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick4" label="Poor" value="1" />
+        <Form.Check inline type="radio" name="char-pick4" label="Below average" value="2" />
+        <Form.Check inline type="radio" name="char-pick4" label="What I expected" value="3" />
+        <Form.Check inline type="radio" name="char-pick4" label="Pretty great" value="4" />
+        <Form.Check inline type="radio" name="char-pick4" label="Perfect" value="5" />
+      </>
+    );
+  }
+  if (char === 'Length') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick5" label="Runs short" value="1" />
+        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly short" value="2" />
+        <Form.Check inline type="radio" name="char-pick5" label="Perfect" value="3" />
+        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly long" value="4" />
+        <Form.Check inline type="radio" name="char-pick5" label="Runs too long" value="5" />
+      </>
+    );
+  }
+  if (char === 'Fit') {
+    return (
+      <>
+        <Form.Check inline type="radio" name="char-pick6" label="Runs tight" value="1" />
+        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly tight" value="2" />
+        <Form.Check inline type="radio" name="char-pick6" label="Perfect" value="3" />
+        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly loose" value="4" />
+        <Form.Check inline type="radio" name="char-pick6" label="Runs loose" value="5" />
+      </>
+    );
+  }
+};
+
+const NewReviewForm = ({
+  show, onHide, characteristics, productName,
+}) => {
+  const [validated, setValidated] = useState(false);
   const [rating, setRating] = useState(0);
   const [recommended, setRecommended] = useState(false);
   const [summary, setSummary] = useState('');
@@ -18,6 +90,16 @@ const NewReviewForm = ({ show, onHide, characteristics }) => {
 
   const sendReview = () => {
     // post request goes here
+  };
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
   };
 
   return (
@@ -32,7 +114,9 @@ const NewReviewForm = ({ show, onHide, characteristics }) => {
         <Modal.Title id="contained-modal-title-vcenter">
           Write Your Review
           <br />
-          About the PRODUCT NAME
+          About the
+          {' '}
+          {productName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -51,11 +135,18 @@ const NewReviewForm = ({ show, onHide, characteristics }) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Do you recommend this product? *</Form.Label>
-            <Form.Check type="radio" label="Yes" />
-            <Form.Check type="radio" label="No" />
+            <Form.Check type="radio" name="recommend" label="Yes" onChange={() => setRecommended(true)} />
+            <Form.Check type="radio" name="recommend" label="No" onChange={() => setRecommended(false)} />
           </Form.Group>
           <Form.Group>
             <Form.Label>Characteristics</Form.Label>
+            <br />
+            {Object.keys(characteristics).map((characteristic, i) => (
+              <div key={i}>
+                <Form.Label>{characteristic}</Form.Label>
+                <Form.Group>{renderCharacteristics(characteristic)}</Form.Group>
+              </div>
+            ))}
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
@@ -90,11 +181,13 @@ const NewReviewForm = ({ show, onHide, characteristics }) => {
 NewReviewForm.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
-  characteristics: PropTypes.arrayOf(PropTypes.string),
-};
-
-NewReviewForm.defaultProps = {
-  characteristics: PropTypes.arrayOf(PropTypes.string),
+  characteristics: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 export default NewReviewForm;
