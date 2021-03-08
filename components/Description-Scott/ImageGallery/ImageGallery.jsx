@@ -113,7 +113,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             <ReactImageMagnify
               // https://github.com/ethanselzer/react-image-magnify
               enlargedImagePosition="over"
-              style={{ zIndex: 2 }}
+              style={{ zIndex: 4, cursor: 'zoom-out' }}
               enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
               enlargedImageStyle={{ position: 'fixed' }}
               {...{
