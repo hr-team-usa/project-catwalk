@@ -17,6 +17,8 @@ const ProductDescription = ({ productId, productRating, reviewsRef, setProductNa
   const [allStyles, setAllStyles] = useState([]);
   const [styleInfo, setStyleInfo] = useState({});
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const getProduct = () => {
     const productRequest = {
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/products/${productId}`,
@@ -63,23 +65,28 @@ const ProductDescription = ({ productId, productRating, reviewsRef, setProductNa
       <Container>
         <Row>
           <Col>
-            <ImageGallery styleInfo={styleInfo} />
+            <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
           <Col>
-            <ProductInfo
-              productName={productName}
-              productRating={productRating}
-              category={category}
-              description={description}
-              styleInfo={styleInfo}
-              reviewsRef={reviewsRef}
-            />
-            <StyleSelector
-              allStyles={allStyles}
-              styleInfo={styleInfo}
-              setStyleInfo={setStyleInfo}
-            />
-            <AddToCart styleInfo={styleInfo} />
+            {isExpanded ? null
+              : (
+                <>
+                  <ProductInfo
+                    productName={productName}
+                    productRating={productRating}
+                    category={category}
+                    description={description}
+                    styleInfo={styleInfo}
+                    reviewsRef={reviewsRef}
+                  />
+                  <StyleSelector
+                    allStyles={allStyles}
+                    styleInfo={styleInfo}
+                    setStyleInfo={setStyleInfo}
+                  />
+                  <AddToCart styleInfo={styleInfo} />
+                </>
+              )}
           </Col>
         </Row>
       </Container>
