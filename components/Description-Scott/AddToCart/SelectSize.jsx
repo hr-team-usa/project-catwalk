@@ -65,6 +65,7 @@ const SelectSize = ({
     // eslint-disable-next-line vars-on-top
     var stock = ( // eslint-disable-line no-var
       <DropdownButton
+        style={{ width: '120px' }}
         show={active}
         id="dropdown-basic-button"
         title={currentSize}

@@ -4,25 +4,36 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
 import AddQuestion from './AddQuestion';
 
-function AddMore({ productId }) {
+function AddMore({ productId, productName, setCount, count }) {
   const [show, setShow] = useState(false);
+
+  const handleChange = (e) => {
+    if (count === '&count=4') {
+      setCount('');
+      e.target.innerHTML = 'LESS ANSWERED QUESTIONS';
+    }
+    if (count === '') {
+      setCount('&count=4');
+      e.target.innerHTML = 'MORE ANSWERED QUESTIONS';
+    }
+  };
 
   return (
     <Container>
       <Row>
         <Col>
-          <Button>MORE ANSWERED QUESTIONS</Button>
+          <Button onClick={(e) => handleChange(e)}>MORE ANSWERED QUESTIONS</Button>
         </Col>
         <Col>
-          <Button onClick={() => setShow(true)}>ADD A QUESTION +</Button>
+          <Button id="addQBtn" onClick={() => setShow(true)}>ADD A QUESTION +</Button>
           <AddQuestion
             variant="primary"
             show={show}
             onHide={() => setShow(false)}
             productId={productId}
+            productName={productName}
           />
         </Col>
       </Row>
@@ -35,6 +46,7 @@ AddMore.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 export default AddMore;

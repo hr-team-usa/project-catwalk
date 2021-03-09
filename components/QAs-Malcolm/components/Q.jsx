@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, Fragment } from 'react';
@@ -14,11 +16,19 @@ function Q(props) {
   const [twoAnswer, setTwoAnswer] = useState({});
   const [clicked, setClicked] = useState(false);
   const [show, setShow] = useState(false);
+  const [moreAnswers, setMoreAnswers] = useState(false);
+  const [allAnswers, setAllAnswers] = useState([]);
+  const [moreAnsBtn, setMoreAnsBtn] = useState(false);
+
+  const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
     let two = Object.keys(props.answers).slice(1, 2);
     const all = Object.keys(props.answers);
+    if (all.length > 2) {
+      setMoreAnswers(true);
+    }
     const helpfulness = [];
 
     for (let j = 0; j < all.length; j += 1) {
@@ -44,6 +54,7 @@ function Q(props) {
     }
     setOneAnswer(props.question.answers[one]);
     setTwoAnswer(props.question.answers[two]);
+    setAllAnswers(all);
   };
 
   useEffect(() => {
@@ -75,6 +86,19 @@ function Q(props) {
     }
   };
 
+  const report = (e) => {
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => { e.target.innerHTML = 'Reported'; })
+      .catch((err) => console.log(err));
+  };
+
   const formatDate = (stringDate) => {
     const options = {
       year: 'numeric',
@@ -99,6 +123,7 @@ function Q(props) {
   };
 
   const formatAnswer = (answer) => (
+
     answer
       ? (
         <>
@@ -129,12 +154,11 @@ function Q(props) {
             <Col sm="auto" style={answerStyle}>
               {answer.answerer_name === 'Seller' ? (
                 <strong>
-                  By
+                  By &nbsp;
                   {answer.answerer_name}
                 </strong>
               ) : `By ${answer.answerer_name}`}
-              {/* {`By ${answer.answerer_name}`} */}
-    &nbsp;
+      &nbsp;
               {formatDate(answer.date)}
             </Col>
             <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
@@ -146,12 +170,13 @@ function Q(props) {
               )
             </Col>
             <Col sm="auto" style={resultStyle}>
-              <u>Report</u>
+              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
         </>
-      ) : null);
+      ) : null
+  );
 
   const formatQuestion = () => (
     <Row>
@@ -183,12 +208,26 @@ function Q(props) {
     </Row>
   );
 
+  const formatAll = () => {
+    for (let i = 0; i < allAnswers.length; i += 1) {
+      return formatAnswer(props.question.answers[allAnswers[i]]);
+    }
+  };
+
   return (
     <Container id="questionsContainer">
       {formatQuestion()}
       <br />
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
+      {moreAnsBtn ? formatAll() : null}
+      <Row>
+        <Col>
+          {moreAnswers
+            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
+        </Col>
+      </Row>
+      <br />
     </Container>
   );
 }
@@ -222,6 +261,10 @@ Q.propTypes = {
     })),
   }),
   setRender: PropTypes.func,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 Q.defaultProps = {

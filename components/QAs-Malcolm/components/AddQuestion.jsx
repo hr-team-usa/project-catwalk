@@ -50,7 +50,9 @@ function AddQuestion(props) {
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Ask Your Question About the ~productName~
+          Ask Your Question About the
+          {' '}
+          {props.productName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
@@ -98,7 +100,7 @@ function AddQuestion(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button className="submitQBtn" variant="primary" type="submit" onClick={() => submitQ()}>
                   Submit
                 </Button>
               </Form>
@@ -120,5 +122,6 @@ AddQuestion.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  productName: PropTypes.string.isRequired,
 };
 export default AddQuestion;
