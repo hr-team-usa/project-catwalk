@@ -29,8 +29,16 @@ const App = () => {
         currentProductData={currentProductData}
         currentStyleData={currentStyleData}
       />
-      <QAs productId={productId} productName={productName} />
-      <Reviews productId="18201" reviewsRef={reviewsRef} setProductRating={setProductRating} productName={productName} />
+      <QAs
+        productId={productId}
+        productName={productName}
+      />
+      <Reviews
+        productId={productId}
+        reviewsRef={reviewsRef}
+        setProductRating={setProductRating}
+        productName={productName}
+      />
     </div>
   );
 };
