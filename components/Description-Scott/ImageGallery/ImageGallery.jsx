@@ -24,13 +24,13 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     height: '100%',
     width: '100%',
     border: 'double',
-    'box-shadow': '8px 5px 5px black',
+    boxShadow: '8px 5px 5px black',
   };
 
   const defaultThumbStyle = {
     height: '100%',
     width: '100%',
-    'box-shadow': '5px 2.5px 2.5px black',
+    boxShadow: '5px 2.5px 2.5px black',
   };
 
   // ------------------ POPULATE STATE FUNCTIONS ------------------
