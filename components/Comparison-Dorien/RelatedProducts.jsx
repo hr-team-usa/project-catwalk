@@ -47,7 +47,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     }
     for (let i = 0; i <= Math.ceil(copyOfProducts.length / 4); i++) {
         arrayOfProducts = copyOfProducts.splice(0, 4);
-        console.log("array of products: ", arrayOfProducts);
+        // console.log("array of products: ", arrayOfProducts);
         if (arrayOfProducts.length < 4) {
             while (arrayOfProducts.length < 4) {
                 arrayOfProducts.push({
@@ -64,7 +64,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     }
 
 
-    console.log("related array of products: ", arrayOfArrayProducts);
+    // console.log("related array of products: ", arrayOfArrayProducts);
 
     let changeProduct = (itemId) => {
         setProductId(itemId)

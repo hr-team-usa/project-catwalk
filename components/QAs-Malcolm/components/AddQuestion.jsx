@@ -100,7 +100,7 @@ function AddQuestion(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button className="submitQBtn" variant="primary" type="submit" onClick={() => submitQ()}>
                   Submit
                 </Button>
               </Form>

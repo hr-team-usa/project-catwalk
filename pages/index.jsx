@@ -8,6 +8,9 @@ const App = () => {
   const [productId, setProductId] = useState(18078);
   const [productName, setProductName] = useState('Camo Onesie');
   const [productRating, setProductRating] = useState(null);
+  const [currentProductData, setCurrentProductData] = useState(null);
+  const [currentStyleData, setCurrentStyleData] = useState(null);
+
   const reviewsRef = useRef();
 
   return (
@@ -17,10 +20,14 @@ const App = () => {
         productRating={productRating}
         reviewsRef={reviewsRef}
         setProductNameGlobal={setProductName}
+        setCurrentProductData={setCurrentProductData}
+        setCurrentStyleData={setCurrentStyleData}
       />
       <Comparison
         productId={productId}
         setProductId={setProductId}
+        currentProductData={currentProductData}
+        currentStyleData={currentStyleData}
       />
       <QAs
         productId={productId}
