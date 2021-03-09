@@ -6,7 +6,7 @@ import Carousel from 'react-bootstrap/Carousel';
 const OutfitList = ({ products, images }) => (
   <div>
     Outfit Products
-    <Carousel>
+    <Carousel interval={null}>
       <Carousel.Item>
         <CardDeck className="outfit-group">
           <Card className="outfit-products" style={{ width: '5rem' }}>
