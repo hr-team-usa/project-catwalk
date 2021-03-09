@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import config from '../../config';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import RelatedProducts from './RelatedProducts';
-import OutfitList from './OutfitList';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import RelatedProducts from './components/RelatedProducts';
+import OutfitList from './components/OutfitList';
 
 const Comparison = ({ productId, setProductId }) => {
   const [products, setProducts] = useState([]);
   const [productImg, setProductImg] = useState(false);
   const [productStyle, setProductStyle] = useState(false);
+  const [multiProductMeta, setMultiProductMeta] = useState(null);
+  const [multiRating, setMultiRating] = useState(null);
 
   const getRelatedProductsId = () => {
     const options = {
@@ -25,6 +27,11 @@ const Comparison = ({ productId, setProductId }) => {
           let arrayOfRelatedProducts = [...new Set(result.data)];
           getRelatedProducts(arrayOfRelatedProducts);
           getRelatedImages(arrayOfRelatedProducts);
+          getMultiProductMeta(arrayOfRelatedProducts);
+        } else {
+          getRelatedProducts([18079, 18080, 18085, 18084]);
+          getRelatedImages([18079, 18080, 18085, 18084]);
+          getMultiProductMeta([18079, 18080, 18085, 18084]);
         }
       })
       .catch((err) => {
@@ -66,12 +73,39 @@ const Comparison = ({ productId, setProductId }) => {
           objStyle[item.data.product_id] = item.data.results[0];
         });
         setProductImg(obj);
-
         setProductStyle(objStyle);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getMultiProductMeta = (productIds) => {
+    const obj = {};
+    const arr = [];
+    productIds.map((product) => {
+      arr.push(axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/meta?product_id=${product}`, { headers: { Authorization: config.TOKEN } }));
+    });
+    Promise.all(arr)
+      .then((results) => {
+        results.map((metaData) => {
+          obj[metaData.data.product_id] = multiRatingCreator(metaData.data.ratings);
+        });
+        setMultiRating(obj);
+      });
+  };
+
+  const multiRatingCreator = (ratingsObj) => {
+    let allRatings = 0;
+    let ratingCount = 0;
+    let obj = {};
+    const keys = Object.keys(ratingsObj);
+    const values = Object.values(ratingsObj);
+    for (let i = 0; i < keys.length; i += 1) {
+      allRatings += Number(keys[i]) * Number(values[i]);
+      ratingCount += Number(values[i]);
+    }
+    return (allRatings / ratingCount).toFixed(1);
   };
 
   useEffect(() => {
@@ -81,12 +115,13 @@ const Comparison = ({ productId, setProductId }) => {
   return (
     <div>
       <Container>
-        {products.length > 0 && productImg && productStyle
+        {products.length > 0 && productImg && productStyle && multiRating
           ? (
             <RelatedProducts
               products={products}
               images={productImg}
               style={productStyle}
+              ratings={multiRating}
               setProductId={setProductId}
               setProducts={setProducts}
               setProductImg={setProductImg}
