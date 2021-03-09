@@ -18,15 +18,19 @@ const ProductInfo = ({
 
   return (
     <div>
-      <Stars style={starsStyle} rating={productRating} />
-      <span
-        onClick={() => scrollToReviews(reviewsRef)}
-        onKeyUp={() => scrollToReviews(reviewsRef)}
-        role="button"
-        tabIndex={0}
-      >
-        <u>Read all reviews</u>
-      </span>
+      {productRating !== 0 ? (
+        <>
+          <Stars style={starsStyle} rating={productRating} />
+          <span
+            onClick={() => scrollToReviews(reviewsRef)}
+            onKeyUp={() => scrollToReviews(reviewsRef)}
+            role="button"
+            tabIndex={0}
+          >
+            <u>Read all reviews</u>
+          </span>
+        </>
+      ) : null}
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />
