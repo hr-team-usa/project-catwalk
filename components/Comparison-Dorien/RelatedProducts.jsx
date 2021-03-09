@@ -5,11 +5,12 @@ import Carousel from 'react-bootstrap/Carousel';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import styles from './price.module.css';
 import Comparison_Modal from './Comparison-Modal';
+import { arrayOf } from 'prop-types';
 
 const RelatedProducts = ({
   products, images, style, setProductId, setProducts, setProductImg, setProductStyle,
 }) => {
-  // in order to make multiple slides in carousel
+// in order to make multiple slides in carousel
   const arrayOfArrayProducts = [];
   let arrayOfProducts = [];
   const copyOfProducts = products.slice();
@@ -20,28 +21,28 @@ const RelatedProducts = ({
         data: {
           id: 18079,
           name: 'null',
-          category: 'null',
+          category: null,
         },
       },
       {
         data: {
           id: 18079,
           name: 'null',
-          category: 'null',
+          category: null,
         },
       },
       {
         data: {
           id: 18079,
           name: 'null',
-          category: 'null',
+          category: null,
         },
       },
       {
         data: {
           id: 18079,
           name: 'null',
-          category: 'null',
+          category: null,
         },
       },
     ];
@@ -58,10 +59,12 @@ const RelatedProducts = ({
           },
         });
       }
+      style['18079'] = { style_id: 96893, name: 'Black Lenses & Black Frame', original_price: '69.00}' };
     }
     arrayOfArrayProducts.push(arrayOfProducts);
     arrayOfProducts = [];
   }
+
 
   const changeProduct = (itemId) => {
     setProductId(itemId);
@@ -70,13 +73,13 @@ const RelatedProducts = ({
     setProductStyle(false);
   };
 
+    // debugger;
   return (
     <>
-
       Related Products
       {products
                 && (
-                <Carousel>
+                <Carousel interval={null}>
                   {arrayOfArrayProducts.map((array, index) => (
                     <Carousel.Item key={index}>
                       <CardDeck>
@@ -85,26 +88,28 @@ const RelatedProducts = ({
                             placement="right"
                             delay={{ show: 250, hide: 400 }}
                             overlay={Comparison_Modal}
+                            key={index}
                           >
                             <Card key={index} className="related-products" style={{ width: '5rem' }} onClick={() => changeProduct(item.data.id)}>
                               <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
                               <Card.Title>{item.data.name}</Card.Title>
                               <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
-                              {style && style[item.data.id.toString()].sale_price &&
-                              style[item.data.id.toString()] !== undefined ? (
-                                <Card.Text>
-                                  <span className={styles.salePrice}>
-                                    {style[item.data.id.toString()].sale_price}
-                                  </span>
-                                  <span className={styles.originalPrice}>
-                                    {style[item.data.id.toString()].original_price}
-                                  </span>
-                                </Card.Text>
+                              {
+                                style[item.data.id.toString()] === undefined ? (
+                                  <Card.Text>
+                                    <span className={styles.salePrice}>
+                                      {style[item.data.id.toString()].sale_price}
+                                    </span>
+                                    <span className={styles.originalPrice}>
+                                      {style[item.data.id.toString()].original_price}
+                                    </span>
+                                  </Card.Text>
                                 ) : (
                                   <Card.Text>
                                     <span>{style[item.data.id.toString()].original_price}</span>
                                   </Card.Text>
-                                )}
+                                )
+                          }
                             </Card>
                           </OverlayTrigger>
                         ))}
@@ -132,7 +137,7 @@ const RelatedProducts = ({
            `}
       </style>
     </>
-  );
+  )
 };
 
 export default RelatedProducts;
