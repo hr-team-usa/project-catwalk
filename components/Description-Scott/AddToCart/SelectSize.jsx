@@ -73,8 +73,8 @@ const SelectSize = ({
       >
         <Overlay target={target.current} show={overlayShow} placement="top">
           {({
-            placement, arrowProps, show: _show, popper, ...props
-          }) => (
+            placement, arrowprops, show: _show, popper, ...props
+          }) => ( // made this arrowprops lowercase to rid error -Jim -MichaelScott
             <div
               {...props}
               style={{

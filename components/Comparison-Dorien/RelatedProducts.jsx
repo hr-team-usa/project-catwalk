@@ -13,7 +13,7 @@ const RelatedProducts = ({
   const arrayOfArrayProducts = [];
   let arrayOfProducts = [];
   const copyOfProducts = products.slice();
-  
+
   if (products.length === 0) {
     products = [
       {

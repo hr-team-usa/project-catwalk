@@ -167,22 +167,24 @@ const NewReviewForm = ({
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
-            <Form.Control type="" placeholder="Summary" onChange={(e) => setSummary(e.target.value)} />
+            <Form.Control type="" placeholder="Example: Best purchase ever!" onChange={(e) => setSummary(e.target.value)} />
           </Form.Group>
           <Form.Group>
             <Form.Label>Review body *</Form.Label>
-            <Form.Control type="" placeholder="Body" onChange={(e) => setBody(e.target.value)} />
+            <Form.Control type="" placeholder="Why did you like the product or not?" onChange={(e) => setBody(e.target.value)} />
           </Form.Group>
           <Form.Group>
             <Form.File id="" label="Upload your photos" />
           </Form.Group>
           <Form.Group>
             <Form.Label>What is your nickname?</Form.Label>
-            <Form.Control type="" placeholder="Nickname" onChange={(e) => setNickname(e.target.value)} />
+            <Form.Control type="" placeholder="Example: jackson11!" onChange={(e) => setNickname(e.target.value)} />
+            <Form.Text>For privacy reasons, do not use your full name or email address</Form.Text>
           </Form.Group>
           <Form.Group>
             <Form.Label>Your email</Form.Label>
-            <Form.Control type="email" placeholder="Email address" onChange={(e) => setEmail(e.target.value)} />
+            <Form.Control type="email" placeholder="Example: jackson11@email.com" onChange={(e) => setEmail(e.target.value)} />
+            <Form.Text>For authentication reasons, you will not be emailed</Form.Text>
           </Form.Group>
         </Form>
       </Modal.Body>
