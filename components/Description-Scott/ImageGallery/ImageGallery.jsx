@@ -81,6 +81,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const expand = () => {
     switch (view) {
       case 'default':
+      case 'zoomed':
         setCarouselStyle(styles.carouselExpanded);
         setView('expanded');
         setIsExpanded(true);
@@ -154,7 +155,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
                 },
                 largeImage: {
                   src: mainImageSrc || '/no-image-icon.png',
-                  width: 2400,
+                  width: 2500,
                   height: 3600,
                 },
               }}
@@ -239,7 +240,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
                 <Card.Img
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
                   src={thumbnailObj.thumbnail}
-                  onClick={() => setIndex(thumbnailObj.index)}
+                  onClick={() => handleSelect(thumbnailObj.index)}
                 />
               </Card>
             ))
