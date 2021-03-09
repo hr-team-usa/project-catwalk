@@ -8,6 +8,7 @@ import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx
 import Add from '../components/Description-Scott/AddToCart/Add.jsx';
 import Price from '../components/Description-Scott/ProductInfo/Price.jsx';
 import StyleSelector from '../components/Description-Scott/StyleSelector/StyleSelector.jsx';
+import ProductInfo from '../components/Description-Scott/ProductInfo/ProductInfo.jsx';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -255,7 +256,7 @@ describe('product description test suite', () => {
       // React.useEffect = mockUseEffect;
 
       const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {
-      // how do we update the styleInfo prop that is passed to the StyleSelector component???
+        // how do we update the styleInfo prop that is passed to the StyleSelector component???
       }} />);
 
       // mockUseEffect.mockClear();
@@ -281,6 +282,48 @@ describe('product description test suite', () => {
 
       // console.logs placed in handleClick show that it is being called with the new styleId, but this doesnt change the styleInfo prop that is passed into our component.
 
+    })
+  })
+
+  describe('Product Info component tests', () => {
+
+    it('displays Stars component if productRating is not 0', () => {
+
+      const wrapper = mount(<ProductInfo
+        productName='Parachute Pants'
+        category='pants'
+        description='very comfortable pants'
+        styleInfo={{
+          style_id: 96887,
+          name: "Forest Green & Black",
+          original_price: "200.00",
+          sale_price: null,
+        }}
+        productRating='3.4'
+        reviewsref={null}
+      />);
+
+      const stars = wrapper.find('Stars')
+      expect(stars).toHaveLength(1);
+    })
+
+    it('does not display Stars component if productRating is 0', () => {
+
+      const wrapper = mount(<ProductInfo
+        productName='Parachute Pants'
+        category='pants'
+        description='very comfortable pants'
+        styleInfo={{
+          style_id: 96887,
+          name: "Forest Green & Black",
+          original_price: "200.00",
+          sale_price: null,
+        }}
+        productRating='0'
+        reviewsref={null}
+      />);
+
+      expect(wrapper.find('Stars')).toHaveLength(0);
     })
   })
 

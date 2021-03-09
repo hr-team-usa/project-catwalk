@@ -23,7 +23,7 @@ const ProductInfo = ({
 
   return (
     <div>
-      {productRating !== 0 ? (
+      {productRating !== '0' ? (
         <>
           <Stars style={starsStyle} rating={productRating} />
           <span
