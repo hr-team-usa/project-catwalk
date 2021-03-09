@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import Divider from '@material-ui/core/Divider';
 import config from '../../config';
 
 import ImageGallery from './ImageGallery/ImageGallery';
 import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
+
+
 
 const ProductDescription = ({ productId, productRating, reviewsRef, setProductNameGlobal }) => {
   const [productName, setProductName] = useState('');
@@ -71,20 +74,29 @@ const ProductDescription = ({ productId, productRating, reviewsRef, setProductNa
             {isExpanded ? null
               : (
                 <>
-                  <ProductInfo
-                    productName={productName}
-                    productRating={productRating}
-                    category={category}
-                    description={description}
-                    styleInfo={styleInfo}
-                    reviewsRef={reviewsRef}
-                  />
-                  <StyleSelector
-                    allStyles={allStyles}
-                    styleInfo={styleInfo}
-                    setStyleInfo={setStyleInfo}
-                  />
-                  <AddToCart styleInfo={styleInfo} />
+                  <Divider style={{ marginTop: '10px' }} />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <ProductInfo
+                      productName={productName}
+                      productRating={productRating}
+                      category={category}
+                      description={description}
+                      styleInfo={styleInfo}
+                      reviewsRef={reviewsRef}
+                    />
+                  </div>
+                  <Divider />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <StyleSelector
+                      allStyles={allStyles}
+                      styleInfo={styleInfo}
+                      setStyleInfo={setStyleInfo}
+                    />
+                  </div>
+                  <Divider />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <AddToCart styleInfo={styleInfo} />
+                  </div>
                 </>
               )}
           </Col>

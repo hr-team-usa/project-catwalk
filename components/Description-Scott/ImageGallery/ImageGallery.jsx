@@ -190,7 +190,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         onSelect={handleSelect}
       >
         {slides.length > 0 ? slides.map((slide, i) => (
-          <Carousel.Item key={i} style={{ height: '78px' }}>
+          <Carousel.Item key={i} style={{ height: '78px', display: 'flex', justifyContent: 'space-evenly' }}>
             {slide.length > 0 ? slide.map((srcObj) => (
               <Image
                 className={styles.thumbnailImage}
