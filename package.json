@@ -35,7 +35,12 @@
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.0",
     "react-dom": "^17.0.1",
+<<<<<<< HEAD
     "react-image-magnify": "^2.1.1"
+=======
+    "react-image-magnify": "^2.7.4",
+    "react-share": "^4.4.0"
+>>>>>>> cec843343b19413e08949b8cb2709312b72a6463
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",
@@ -49,6 +54,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^26.6.3",
+    "moxios": "^0.4.0",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^17.0.1"
   },
