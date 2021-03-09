@@ -28,6 +28,7 @@ const App = () => {
         setProductId={setProductId}
         currentProductData={currentProductData}
         currentStyleData={currentStyleData}
+        productRating={productRating}
       />
       <QAs
         productId={productId}
