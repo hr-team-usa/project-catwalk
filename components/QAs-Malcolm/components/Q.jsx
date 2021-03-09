@@ -88,7 +88,7 @@ function Q(props) {
 
   const report = (e) => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/helpful`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
       method: 'put',
       headers: {
         Authorization: config.TOKEN,
