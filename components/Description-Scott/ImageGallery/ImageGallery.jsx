@@ -222,21 +222,30 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
       {/* Thumbnails: */}
       {view === 'default' ? (
-        <CardColumns style={{ columnCount: 1 }}>
-          {thumbCarousel.length > 0 ? thumbCarousel[0].map((thumbnailObj) => (
-            <Card
-              key={thumbnailObj.index}
-              style={{ height: '78px', width: '78px' }}
-            >
-              <Card.Img
-                style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
-                src={thumbnailObj.thumbnail}
-                onClick={() => setIndex(thumbnailObj.index)}
-              />
-            </Card>
-          ))
-            : null}
-        </CardColumns>
+        <div style={{
+          width: '80px',
+          height: '500px',
+          position: 'absolute',
+          top: '5%',
+          left: '5%',
+        }}
+        >
+          <CardColumns style={{ columnCount: 1 }}>
+            {thumbCarousel.length > 0 ? thumbCarousel[0].map((thumbnailObj) => (
+              <Card
+                key={thumbnailObj.index}
+                style={{ height: '65px', width: '65px' }}
+              >
+                <Card.Img
+                  style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
+                  src={thumbnailObj.thumbnail}
+                  onClick={() => setIndex(thumbnailObj.index)}
+                />
+              </Card>
+            ))
+              : null}
+          </CardColumns>
+        </div>
       ) : null}
     </>
   );
