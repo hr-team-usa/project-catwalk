@@ -181,32 +181,35 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       </div>
 
       {/* Thumbnails: */}
-      <Carousel
-        indicators={false}
-        // controls={false}
-        interval={null}
-        // onSelect={handleSelect}
-        activeIndex={index}
-        onSelect={handleSelect}
-      >
-        {slides.length > 0 ? slides.map((slide, i) => (
-          <Carousel.Item key={i} style={{ height: '78px', display: 'flex', justifyContent: 'space-evenly' }}>
-            {slide.length > 0 ? slide.map((srcObj) => (
-              <Image
-                className={styles.thumbnailImage}
-                src={srcObj.src || '/no-image-icon.png'}
-                alt="thumbnail product image"
-                // width={78}
-                // height={78}
-                // eslint-disable-next-line react/no-array-index-key
-                key={srcObj.index}
-                onClick={() => handleSelect(srcObj.index)}
-                style={srcObj.index === index ? { borderStyle: 'double' } : null}
-              />
-            )) : null}
-          </Carousel.Item>
-        )) : null}
-      </Carousel>
+      {view === 'default' ? (
+
+        <Carousel
+          indicators={false}
+          // controls={false}
+          interval={null}
+          // onSelect={handleSelect}
+          activeIndex={index}
+          onSelect={handleSelect}
+        >
+          {slides.length > 0 ? slides.map((slide, i) => (
+            <Carousel.Item key={i} style={{ height: '78px', display: 'flex', justifyContent: 'space-evenly' }}>
+              {slide.length > 0 ? slide.map((srcObj) => (
+                <Image
+                  className={styles.thumbnailImage}
+                  src={srcObj.src || '/no-image-icon.png'}
+                  alt="thumbnail product image"
+                  // width={78}
+                  // height={78}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={srcObj.index}
+                  onClick={() => handleSelect(srcObj.index)}
+                  style={srcObj.index === index ? { borderStyle: 'double' } : null}
+                />
+              )) : null}
+            </Carousel.Item>
+          )) : null}
+        </Carousel>
+      ) : null}
     </>
   );
 };
