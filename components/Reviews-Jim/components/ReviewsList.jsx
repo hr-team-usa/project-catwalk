@@ -7,8 +7,9 @@ import Review from './Review';
 import NewReviewForm from './NewReviewForm';
 
 const ReviewsList = ({
-  productReviews, sortStatus, handleSortChange,
+  productReviews, sortStatus, handleSortChange, characteristics,
   renderToggle, setRenderToggle, selectedRatings, ratingsLength,
+  productName, productId,
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
@@ -68,9 +69,15 @@ const ReviewsList = ({
         </select>
       </div>
       {renderedReviews.map((review) => <Review key={review.review_id} review={review} />)}
-      <Button onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
+      <Button id="more-reviews-btn" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
       <Button onClick={() => setShow(true)}>Add a Review +</Button>
-      <NewReviewForm show={show} onHide={() => setShow(false)} />
+      <NewReviewForm
+        productName={productName}
+        characteristics={characteristics}
+        show={show}
+        onHide={() => setShow(false)}
+        productId={productId}
+      />
     </div>
   );
 };
@@ -96,11 +103,20 @@ ReviewsList.propTypes = {
   setRenderToggle: PropTypes.func.isRequired,
   selectedRatings: PropTypes.arrayOf(PropTypes.number),
   ratingsLength: PropTypes.number.isRequired,
+  characteristics: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      value: PropTypes.string,
+    }),
+  ),
+  productName: PropTypes.string.isRequired,
+  productId: PropTypes.number.isRequired,
 };
 
 ReviewsList.defaultProps = {
   productReviews: null,
   selectedRatings: PropTypes.arrayOf(null),
+  characteristics: PropTypes.objectOf(null),
 };
 
 export default ReviewsList;

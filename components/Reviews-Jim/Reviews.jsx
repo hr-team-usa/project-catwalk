@@ -9,7 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ReviewsList from './components/ReviewsList';
 import ReviewsBreakdown from './components/ReviewsBreakdown';
 
-const Reviews = ({ productId, setProductRating, reviewsRef }) => {
+const Reviews = ({
+  productId, setProductRating, reviewsRef, productName,
+}) => {
   const [productReviews, setProductReviews] = useState(null);
   const [productMeta, setProductMeta] = useState(null);
   const [sortStatus, setSortStatus] = useState('relevant');
@@ -67,14 +69,14 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
   useEffect(() => {
     getProductReviews(productId, sortStatus);
     getProductMeta(productId);
-  }, [sortStatus]);
+  }, [sortStatus, productId]);
 
   return (
     <Container>
-      <h3 ref={reviewsRef}>Ratings & Reviews</h3>
+      <h3 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h3>
       <Row>
         <Col xs={4}>
-          {productMeta ? (
+          {(productReviews && productMeta) ? (
             <ReviewsBreakdown
               productMeta={productMeta}
               setProductRating={setProductRating}
@@ -85,15 +87,18 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
           ) : null}
         </Col>
         <Col>
-          {productReviews ? (
+          {(productReviews && productMeta) ? (
             <ReviewsList
               productReviews={productReviews}
+              characteristics={productMeta.characteristics}
               sortStatus={sortStatus}
               handleSortChange={handleSortChange}
               renderToggle={renderToggle}
               setRenderToggle={setRenderToggle}
               selectedRatings={selectedRatings}
               ratingsLength={ratingsLength}
+              productName={productName}
+              productId={productId}
             />
           ) : null}
         </Col>
@@ -103,10 +108,11 @@ const Reviews = ({ productId, setProductRating, reviewsRef }) => {
 };
 
 Reviews.propTypes = {
-  productId: PropTypes.string.isRequired,
+  productId: PropTypes.number.isRequired,
   setProductRating: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   reviewsRef: PropTypes.object,
+  productName: PropTypes.string.isRequired,
 };
 
 Reviews.defaultProps = {
