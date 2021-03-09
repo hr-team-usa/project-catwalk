@@ -43,6 +43,7 @@ function AddAnswer(props) {
 
     axios(options)
       .then(() => { props.onHide(); })
+      .then(() => console.log('created in db'))
       .catch((err) => console.log(err));
   };
 
@@ -125,5 +126,6 @@ AddAnswer.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  questionId: PropTypes.number.isRequired,
 };
 export default AddAnswer;
