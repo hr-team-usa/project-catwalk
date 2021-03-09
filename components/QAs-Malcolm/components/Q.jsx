@@ -19,7 +19,8 @@ function Q(props) {
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
-  const [btnTxt, setBtnTxt] = useState('Load More Answers');
+
+  const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
@@ -217,9 +218,9 @@ function Q(props) {
     <Container id="questionsContainer">
       {formatQuestion()}
       <br />
-      {moreAnsBtn ? formatAll() : null}
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
+      {moreAnsBtn ? formatAll() : null}
       <Row>
         <Col>
           {moreAnswers
