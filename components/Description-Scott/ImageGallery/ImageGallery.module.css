@@ -42,14 +42,32 @@
     position: absolute;
     z-index: 3;
     top: 5%;
-    left: 8%;
+    /* left: 95%; */
+    /* right: -5%; */
+    right: 3%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     background-image: url("/expand.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-color: transparent;
-    padding: 12px 24px;
+    padding: 12px 12px;
     border: none;
     cursor: pointer;
+    /* filter: invert(1); */
+}
+
+.upArrow {
+  position: relative;
+  left: 25%;
+  background-image: url("/up-arrow.png");
+  height: 10px;
+  width: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  padding: 12px 12px;
+  border: none;
+  cursor: pointer;
+  /* filter: invert(1); */
 }

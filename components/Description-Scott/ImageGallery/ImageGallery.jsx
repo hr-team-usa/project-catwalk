@@ -12,9 +12,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [mainImageSrc, setMainImageSrc] = useState('');
   const [fullSizeImages, setFullSizeImages] = useState([]);
   const [thumbnails, setThumbnails] = useState([]);
-  const [slides, setSlides] = useState([]);
 
   const [thumbCarousel, setThumbCarousel] = useState([]);
+  const [thumbSliderIndex, setThumbSliderIndex] = useState(0);
 
   const [index, setIndex] = useState(0);
 
@@ -51,29 +51,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       setFullSizeImages(newFullSizeImages);
       setThumbnails(newThumbnails);
     }
-  };
-
-  // returns an array of arrays, the inner arrays contain src for each thumbnail image
-  const renderThumbnails = () => {
-    setIndex(0);
-
-    const newSlides = [];
-
-    for (let i = 0; i < thumbnails.length; i += 1) {
-      const currentSlide = [];
-      let j = i;
-      let counter = 0;
-      while (currentSlide.length < 7 && counter < thumbnails.length) {
-        currentSlide.push({ src: thumbnails[j], index: j });
-        j += 1;
-        counter += 1;
-        if (j === thumbnails.length) {
-          j = 0;
-        }
-      }
-      newSlides.push(currentSlide);
-    }
-    setSlides(newSlides);
   };
 
   const groupBySevens = () => {
@@ -118,6 +95,22 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         setView('default');
         setIsExpanded(false);
     }
+  };
+
+  const thumbnailScroll = (direction) => {
+    let newIndex = thumbSliderIndex;
+    if (direction === 'down') {
+      newIndex -= 1;
+      if (newIndex < 0) {
+        newIndex = thumbCarousel.length - 1;
+      }
+    } else {
+      newIndex += 1;
+      if (newIndex === thumbCarousel.length) {
+        newIndex = 0;
+      }
+    }
+    setThumbSliderIndex(newIndex);
   };
 
   // ------------------ CONDITIONAL RENDERING FUNCTIONS ------------------
@@ -179,14 +172,12 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   }, [styleInfo]);
 
   useEffect(() => {
-    renderThumbnails();
     groupBySevens();
   }, [thumbnails]);
 
   return (
     <>
       <div className={styles.mainImageContainer}>
-        {console.log('activeIndex: ', index)}
 
         {/* Main Image: */}
         <Carousel
@@ -231,10 +222,19 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         }}
         >
           <CardColumns style={{ columnCount: 1 }}>
-            {thumbCarousel.length > 0 ? thumbCarousel[0].map((thumbnailObj) => (
+            {thumbCarousel.length > 1 ? (
+              <button
+                onClick={() => thumbnailScroll('up')}
+                className={styles.upArrow}
+                type="button"
+                aria-label="up thumbnails"
+                style={{ top: '-5px' }}
+              />
+            ) : null}
+            {thumbCarousel.length > 0 ? thumbCarousel[thumbSliderIndex].map((thumbnailObj) => (
               <Card
                 key={thumbnailObj.index}
-                style={{ height: '65px', width: '65px' }}
+                style={{ height: '60px', width: '60px' }}
               >
                 <Card.Img
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
@@ -244,6 +244,16 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
               </Card>
             ))
               : null}
+
+            {thumbCarousel.length > 1 ? (
+              <button
+                onClick={() => thumbnailScroll('down')}
+                className={styles.upArrow}
+                style={{ transform: 'rotate(180deg)', top: '-10px' }}
+                type="button"
+                aria-label="down thumbnails"
+              />
+            ) : null}
           </CardColumns>
         </div>
       ) : null}
