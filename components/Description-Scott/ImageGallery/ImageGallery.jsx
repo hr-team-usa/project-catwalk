@@ -17,26 +17,25 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [thumbSliderIndex, setThumbSliderIndex] = useState(0);
 
   const [index, setIndex] = useState(0);
-
   const [view, setView] = useState('default');
-
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   const selectedThumbStyle = {
     height: '100%',
     width: '100%',
     border: 'double',
+    'box-shadow': '8px 5px 5px black',
   };
 
   const defaultThumbStyle = {
     height: '100%',
     width: '100%',
+    'box-shadow': '5px 2.5px 2.5px black',
   };
 
   // ------------------ POPULATE STATE FUNCTIONS ------------------
 
-  // populates the fullSizeImages and thumbnails arrays (states)
-  // called whenever styleInfo prop changes
+  // populates the fullSizeImages and thumbnails arrays
   const getImages = () => {
     if (Object.entries(styleInfo).length > 0) {
       setMainImageSrc(styleInfo.photos[0].url);
@@ -173,6 +172,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   useEffect(() => {
     groupBySevens();
+    setThumbSliderIndex(0);
   }, [thumbnails]);
 
   return (
