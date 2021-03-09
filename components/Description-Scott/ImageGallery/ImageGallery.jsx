@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
+import ReactImageMagnify from 'react-image-magnify';
+
 import styles from './ImageGallery.module.css';
 
-// should pull in productId from global state
 const ImageGallery = ({ styleInfo }) => {
-  // Necessities:
-  // productID of selected product -> allows us to fetch the various styles:
-  //   allows us to get main image for selected style
-
   const [mainImageSrc, setMainImageSrc] = useState('');
   const [fullSizeImages, setFullSizeImages] = useState([]);
   const [thumbnails, setThumbnails] = useState([]);
   const [slides, setSlides] = useState([]);
-
   const [index, setIndex] = useState(0);
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
+  const [view, setView] = useState('default');
+
+  const [expandView, setExpandView] = useState(false);
+  const [zoomView, setZoomView] = useState(false);
+  const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
+
+  // ------------------ POPULATE STATE FUNCTIONS ------------------
 
   const getImages = () => {
     if (Object.entries(styleInfo).length > 0) {
@@ -38,18 +38,107 @@ const ImageGallery = ({ styleInfo }) => {
   };
 
   const renderThumbnails = () => {
+    setIndex(0);
+
     const newSlides = [];
-    let j = index;
-    let counter = 0;
-    while (newSlides.length < 7 && counter < thumbnails.length) {
-      newSlides.push(thumbnails[j]);
-      j += 1;
-      counter += 1;
-      if (j === thumbnails.length) {
-        j = 0;
+
+    for (let i = 0; i < thumbnails.length; i += 1) {
+      const currentSlide = [];
+      let j = i;
+      let counter = 0;
+      while (currentSlide.length < 8 && counter < thumbnails.length) {
+        currentSlide.push({ src: thumbnails[j], index: j });
+        j += 1;
+        counter += 1;
+        if (j === thumbnails.length) {
+          j = 0;
+        }
       }
+      newSlides.push(currentSlide);
     }
     setSlides(newSlides);
+  };
+
+  // ------------------ EVENT HANDLERS ------------------
+
+  const handleSelect = (selectedIndex) => {
+    setMainImageSrc(fullSizeImages[selectedIndex]);
+    setIndex(selectedIndex);
+  };
+
+  const expand = () => {
+    switch (view) {
+      case 'default':
+        setCarouselStyle(styles.carouselExpanded);
+        setView('expanded');
+        break;
+      case 'expanded':
+        setCarouselStyle(styles.carouselZoomed);
+        setView('zoomed');
+        break;
+      default:
+        setCarouselStyle(styles.carousel);
+        setView('default');
+    }
+
+    if (!expandView) {
+      // defaultView -> expandView
+      setCarouselStyle(styles.carouselExpanded);
+      setExpandView(!expandView);
+    } else if (!zoomView) {
+      // expandedView -> zoomView
+      setCarouselStyle(styles.carouselZoomed);
+      setZoomView(!zoomView);
+    } else {
+      // -> defaultView
+      setCarouselStyle(styles.carousel);
+      setExpandView(false);
+      setZoomView(false);
+    }
+  };
+
+  // ------------------ CONDITIONAL RENDERING FUNCTIONS ------------------
+
+  const renderCarouselItem = (image) => {
+    switch (view) {
+      case 'default':
+      case 'expanded':
+        return (
+          <Image
+            className={styles.mainImage}
+            src={image || '/no-image-icon.png'}
+            alt="main product image"
+            onClick={expand}
+            fluid
+          />
+        );
+      case 'zoomed':
+        return (
+          <div onClick={expand} onKeyUp={expand} role="button" tabIndex={0}>
+            <ReactImageMagnify
+              // https://github.com/ethanselzer/react-image-magnify
+              enlargedImagePosition="over"
+              style={{ zIndex: 2 }}
+              enlargedImageContainerStyle={{ width: '100vh', height: '100vh' }}
+              enlargedImageStyle={{ position: 'fixed' }}
+              {...{
+                smallImage: {
+                  alt: 'zoomed main product image',
+                  isFluidWidth: true,
+                  src: mainImageSrc || '/no-image-icon.png',
+                },
+                largeImage: {
+                  src: mainImageSrc || '/no-image-icon.png',
+                  width: 2400,
+                  height: 3600,
+                },
+              }}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   useEffect(() => {
@@ -58,47 +147,72 @@ const ImageGallery = ({ styleInfo }) => {
 
   useEffect(() => {
     renderThumbnails();
-  }, [thumbnails, index]);
+  }, [thumbnails]);
 
   return (
-    <div className={styles.test}>
+    <>
+      <div className={styles.mainImageContainer}>
 
+        {/* Main Image: */}
+        <Carousel
+          className={carouselStyle}
+          indicators={false}
+          interval={null}
+          activeIndex={index}
+          onSelect={handleSelect}
+        >
+
+          {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
+            <Carousel.Item key={image}>
+              {renderCarouselItem(image)}
+            </Carousel.Item>
+
+          )) : null}
+        </Carousel>
+        <button
+          onClick={() => {
+            if (view === 'default') {
+              expand();
+            } else {
+              setCarouselStyle(styles.carousel);
+              setView('default');
+            }
+          }}
+          className={styles.expandButton}
+          type="button"
+          aria-label="expand image"
+        />
+      </div>
+
+      {/* Thumbnails: */}
       <Carousel
-        className={styles.carousel}
         indicators={false}
+        // controls={false}
         interval={null}
+        // onSelect={handleSelect}
         activeIndex={index}
         onSelect={handleSelect}
       >
-        {/* Main Image: */}
-        {fullSizeImages.length > 0 ? fullSizeImages.map((image) => (
-          <Carousel.Item key={image}>
-            <Image
-              src={image || '/favicon.ico'}
-              alt="main product image"
-              fluid
-            />
+        {slides.length > 0 ? slides.map((slide, i) => (
+          <Carousel.Item key={i} className={styles.innerCarousel}>
+            {slide.length > 0 ? slide.map((srcObj) => (
+              <Image
+                className={styles.thumbnailImage}
+                src={srcObj.src || '/no-image-icon.png'}
+                alt="thumbnail product image"
+                width={78}
+                height={78}
+                // eslint-disable-next-line react/no-array-index-key
+                key={srcObj.index}
+                // onClick={handleSelect}
+                onClick={() => handleSelect(srcObj.index)}
+                fluid
+              />
+            )) : null}
           </Carousel.Item>
-        )) : <div />}
+        )) : null}
       </Carousel>
-
-      <Carousel indicators={false} controls={false} interval={null} onSelect={handleSelect}>
-        {/* Thumbnails: */}
-        <Carousel.Item className={styles.innerCarousel}>
-          {slides.length > 0 ? slides.map((slide, i) => (
-            <Image
-              src={slide || '/favicon.ico'}
-              alt="thumbnail product image"
-              width={78}
-              height={78}
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              onClick={() => setIndex(i)}
-            />
-          )) : <div />}
-        </Carousel.Item>
-      </Carousel>
-    </div>
+    </>
   );
 };
 

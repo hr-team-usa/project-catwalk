@@ -21,7 +21,6 @@ const Price = ({ styleInfo }) => {
 
   useEffect(() => {
     // eslint-disable-next-line no-console
-    console.log('style(styleInfo) has changed: ', styleInfo);
     checkPrice();
   }, [styleInfo]);
 

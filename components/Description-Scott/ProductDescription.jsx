@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../../config';
@@ -8,7 +9,7 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({productId}) => {
+const ProductDescription = ({ productId, productRating, reviewsRef, setProductNameGlobal }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -27,6 +28,7 @@ const ProductDescription = ({productId}) => {
     axios(productRequest)
       .then((productResponse) => {
         setProductName(productResponse.data.name);
+        setProductNameGlobal(productResponse.data.name);
         setCategory(productResponse.data.category);
         setDescription(productResponse.data.description);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
@@ -41,14 +43,21 @@ const ProductDescription = ({productId}) => {
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
-        const defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        let defaultStyle;
+
+        if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
+          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          defaultStyle = stylesResponse.data.results[0];
+        }
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
   };
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [productId]);
   return (
     <div>
       <Container>
@@ -59,9 +68,11 @@ const ProductDescription = ({productId}) => {
           <Col>
             <ProductInfo
               productName={productName}
+              productRating={productRating}
               category={category}
               description={description}
               styleInfo={styleInfo}
+              reviewsRef={reviewsRef}
             />
             <StyleSelector
               allStyles={allStyles}
@@ -74,6 +85,18 @@ const ProductDescription = ({productId}) => {
       </Container>
     </div>
   );
+};
+
+ProductDescription.propTypes = {
+  productId: PropTypes.number.isRequired,
+  productRating: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  reviewsRef: PropTypes.object,
+};
+
+ProductDescription.defaultProps = {
+  productRating: null,
+  reviewsRef: {},
 };
 
 export default ProductDescription;
