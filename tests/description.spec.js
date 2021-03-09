@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx';
 import Add from '../components/Description-Scott/AddToCart/Add.jsx';
 import Price from '../components/Description-Scott/ProductInfo/Price.jsx';
+import StyleSelector from '../components/Description-Scott/StyleSelector/StyleSelector.jsx';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -161,11 +162,12 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<Price styleInfo={{style_id: 96887,
+      const wrapper = mount(<Price styleInfo={{
+        style_id: 96887,
         name: "Forest Green & Black",
         original_price: "200.00",
         sale_price: "100.00",
-        }} />);
+      }} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -174,25 +176,109 @@ describe('product description test suite', () => {
       expect(salePrice).toHaveLength(1);
       expect(salePrice.text()).toBe('$100.00')
     })
-  })
 
-  it('only displays original price when sale price is null', () => {
 
-    const mockUseEffect = jest.fn();
-    React.useEffect = mockUseEffect;
+    it('only displays original price when sale price is null', () => {
 
-    const wrapper = mount(<Price styleInfo={{style_id: 96887,
-      name: "Forest Green & Black",
-      original_price: "200.00",
-      sale_price: null,
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Price styleInfo={{
+        style_id: 96887,
+        name: "Forest Green & Black",
+        original_price: "200.00",
+        sale_price: null,
       }} />);
 
-    mockUseEffect.mockClear();
-    wrapper.setProps();
+      mockUseEffect.mockClear();
+      wrapper.setProps();
 
-    const salePrice = wrapper.find('span.salePrice')
-    expect(salePrice).toHaveLength(0);
-    expect(wrapper.text()).toBe('$200.00');
+      const salePrice = wrapper.find('span.salePrice')
+      expect(salePrice).toHaveLength(0);
+      expect(wrapper.text()).toBe('$200.00');
+    })
+  })
+
+  describe('Style Selector component tests', () => {
+    it('updates the displayed style name when a new style is clicked', () => {
+      const allStyles = [
+        {
+          'default?': true,
+          name: "Forest Green & Black",
+          original_price: "140.00",
+          photos: [{
+            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+          }, {
+            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+          }],
+          sale_price: null,
+          skus: {},
+          style_id: 96887,
+        },
+        {
+          'default?': false,
+          name: "Desert Brown & Tan",
+          original_price: "140.00",
+          photos: [{
+            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+          }, {
+            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+          }],
+          sale_price: null,
+          skus: {},
+          style_id: 96888,
+        },
+        {
+          'default?': false,
+          name: "Ocean Blue & Grey",
+          original_price: "140.00",
+          photos: [{
+            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+          }, {
+            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+          }],
+          sale_price: "100.00",
+          skus: {},
+          style_id: 96889,
+        }
+      ]
+
+      let styleInfo = allStyles[0];
+
+      // const mockUseEffect = jest.fn();
+      // React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={(newStyle) => { styleInfo = newStyle }} />);
+
+      // mockUseEffect.mockClear();
+      // wrapper.setProps();
+      // expect(mockUseEffect).toHaveBeenCalled();
+
+      // console.log('wrapper ', wrapper.debug());
+      expect(wrapper.find('h5').text()).toBe("Style >Forest Green & Black");
+
+      // const dropdown = wrapper.find('DropdownButton');
+      const styleThumbnails = wrapper.find('img.selectedThumbnail');
+      expect(styleThumbnails).toHaveLength(3);
+      const newStyle = styleThumbnails.at(1);
+      console.log('newStyleImg ', newStyle.debug());
+      // newStyle.simulate('click');
+      newStyle.prop('onClick')();
+
+      // expect handleClick to have been called
+
+      //expect the h5 to now read the new style name
+      expect(wrapper.find('h5').text()).toBe("Style >Desert Brown & Tan");
+
+      // console.logs placed in handleClick show that it is being called with the new styleId, but for some reason, the text in h5 does not register as changed
+
+    })
   })
 
 })
