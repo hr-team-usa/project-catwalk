@@ -50,7 +50,7 @@ describe('product description test suite', () => {
       expect(dropdown.prop('title')).toBe('Out of Stock');
     })
 
-    it('displays Select Size when there are items in stock', () => {
+    it('displays "Select Size" when there are items in stock', () => {
       const styleInfo = {
         style_id: 96887,
         name: "Forest Green & Black",

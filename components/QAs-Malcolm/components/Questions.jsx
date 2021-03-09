@@ -5,15 +5,15 @@ import config from '../../../config';
 import Q from './Q';
 
 // eslint-disable-next-line no-unused-vars
-function Questions({ productId, productName }) {
+function Questions({ productId, productName, count }) {
   const [questions, setQuestions] = useState([]);
   const [render, setRender] = useState(false);
   const id = productId;
-  const count = 'count=4';
+  // const count = 'count=4';
 
   const getQuestions = () => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}&${count}`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}${count}`,
       method: 'get',
       headers: {
         Authorization: config.TOKEN,
@@ -28,7 +28,7 @@ function Questions({ productId, productName }) {
   useEffect(() => {
     getQuestions();
     setRender(false);
-  }, [render]);
+  }, [render, count]);
 
   return (
     <>

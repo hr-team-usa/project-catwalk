@@ -20,6 +20,8 @@ function Q(props) {
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
 
+  const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
+
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
     let two = Object.keys(props.answers).slice(1, 2);
@@ -82,6 +84,19 @@ function Q(props) {
     } else {
       window.alert("We're glad you found this helpful!");
     }
+  };
+
+  const report = (e) => {
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => { e.target.innerHTML = 'Reported'; })
+      .catch((err) => console.log(err));
   };
 
   const formatDate = (stringDate) => {
@@ -155,7 +170,7 @@ function Q(props) {
               )
             </Col>
             <Col sm="auto" style={resultStyle}>
-              <u>Report</u>
+              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
@@ -193,17 +208,23 @@ function Q(props) {
     </Row>
   );
 
+  const formatAll = () => {
+    for (let i = 0; i < allAnswers.length; i += 1) {
+      return formatAnswer(props.question.answers[allAnswers[i]]);
+    }
+  };
+
   return (
     <Container id="questionsContainer">
       {formatQuestion()}
       <br />
-      {moreAnsBtn ? formatAnswer(...allAnswers) : null}
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
+      {moreAnsBtn ? formatAll() : null}
       <Row>
         <Col>
           {moreAnswers
-            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(true)}>Load More Answers</Button> : null}
+            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
         </Col>
       </Row>
       <br />
