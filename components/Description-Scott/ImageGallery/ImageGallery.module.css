@@ -1,5 +1,5 @@
 .carousel {
-  width: 500px;
+  width: inherit;
   height: 500px;
 }
 
@@ -32,9 +32,10 @@
 
 
 .mainImageContainer {
-  position: relative;
-  width: 500px;
-  height: 500px;
+  /* position: relative; */
+  /* width: 500px;
+  height: 500px; */
+  margin-top: 10px;
 }
 
 .expandButton {
