@@ -73,7 +73,7 @@ const Reviews = ({
 
   return (
     <Container>
-      <h3 ref={reviewsRef}>Ratings & Reviews</h3>
+      <h3 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h3>
       <Row>
         <Col xs={4}>
           {(productReviews && productMeta) ? (

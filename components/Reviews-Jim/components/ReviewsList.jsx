@@ -69,7 +69,7 @@ const ReviewsList = ({
         </select>
       </div>
       {renderedReviews.map((review) => <Review key={review.review_id} review={review} />)}
-      <Button onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
+      <Button id="more-reviews-btn" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
       <Button onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm
         productName={productName}

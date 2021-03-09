@@ -93,9 +93,10 @@ const NewReviewForm = ({
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
       method: 'post',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: config.TOKEN,
       },
-      body: {
+      data: {
         product_id: productId,
         rating,
         summary,
@@ -104,6 +105,7 @@ const NewReviewForm = ({
         name: nickname,
         email,
         photos: [],
+        characteristics: {},
       },
     };
 
@@ -114,7 +116,7 @@ const NewReviewForm = ({
       .then(() => {
         onHide();
       })
-      .catch((err) => { console.log('POST REVIEW ERROR ', err); });
+      .catch((err) => { console.log('POST REVIEW ERROR ', options.body); });
   };
 
   return (
