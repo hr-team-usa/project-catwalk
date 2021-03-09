@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RelatedProducts from "./RelatedProducts";
 import OutfitList from "./OutfitList";
 import { Container } from "react-bootstrap";
-import App from "../../pages";
+
 
 
 const Comparison = ({productId, setProductId}) => {

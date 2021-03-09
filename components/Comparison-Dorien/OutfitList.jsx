@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { CardDeck } from "react-bootstrap";
+import CardDeck from "react-bootstrap/CardDeck";
 import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
 import Carousel from 'react-bootstrap/Carousel';
 
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Carousel from 'react-bootstrap/Carousel';
 import styles from './price.module.css';
-import { CarouselItem } from "react-bootstrap";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Comparison_Modal from "./Comparison-Modal"
+
 
 const RelatedProducts = ({ products, images, style, setProductId, setProducts, setProductImg, setProductStyle }) => {
 
@@ -47,7 +48,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     }
     for (let i = 0; i <= Math.ceil(copyOfProducts.length / 4); i++) {
         arrayOfProducts = copyOfProducts.splice(0, 4);
-        console.log("array of products: ", arrayOfProducts);
         if (arrayOfProducts.length < 4) {
             while (arrayOfProducts.length < 4) {
                 arrayOfProducts.push({
@@ -63,9 +63,6 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
         arrayOfProducts = [];
     }
 
-
-    console.log("related array of products: ", arrayOfArrayProducts);
-
     let changeProduct = (itemId) => {
         setProductId(itemId)
         setProducts([])
@@ -74,7 +71,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
     }
 
     return (
-        <div>
+        <>
 
             Related Products
             {products &&
@@ -83,6 +80,11 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
                         <Carousel.Item key={index}>
                             <CardDeck>
                                 {array.map((item, index) => (
+                                    <OverlayTrigger
+                                    placement="right"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={Comparison_Modal}
+                                  >
                                     <Card key={index} className="related-products" style={{ width: '5rem' }} onClick={() => changeProduct(item.data.id)}>
                                         <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
                                         <Card.Title>{item.data.name}</Card.Title>
@@ -99,6 +101,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
                                             </Card.Text>
                                         }
                                     </Card>
+                                    </OverlayTrigger>
                                 ))}
                             </CardDeck>
                         </Carousel.Item>
@@ -123,7 +126,7 @@ const RelatedProducts = ({ products, images, style, setProductId, setProducts, s
             }
            `}
             </style>
-        </div>
+        </>
     )
 }
 
