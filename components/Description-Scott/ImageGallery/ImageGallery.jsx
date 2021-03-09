@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
+import CardColumns from 'react-bootstrap/CardColumns';
 import ReactImageMagnify from 'react-image-magnify';
 
 import styles from './ImageGallery.module.css';
@@ -11,14 +13,30 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [fullSizeImages, setFullSizeImages] = useState([]);
   const [thumbnails, setThumbnails] = useState([]);
   const [slides, setSlides] = useState([]);
+
+  const [thumbCarousel, setThumbCarousel] = useState([]);
+
   const [index, setIndex] = useState(0);
 
   const [view, setView] = useState('default');
 
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
+  const selectedThumbStyle = {
+    height: '100%',
+    width: '100%',
+    border: 'double',
+  };
+
+  const defaultThumbStyle = {
+    height: '100%',
+    width: '100%',
+  };
+
   // ------------------ POPULATE STATE FUNCTIONS ------------------
 
+  // populates the fullSizeImages and thumbnails arrays (states)
+  // called whenever styleInfo prop changes
   const getImages = () => {
     if (Object.entries(styleInfo).length > 0) {
       setMainImageSrc(styleInfo.photos[0].url);
@@ -35,6 +53,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     }
   };
 
+  // returns an array of arrays, the inner arrays contain src for each thumbnail image
   const renderThumbnails = () => {
     setIndex(0);
 
@@ -55,6 +74,25 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       newSlides.push(currentSlide);
     }
     setSlides(newSlides);
+  };
+
+  const groupBySevens = () => {
+    const thumbnailGroups = [];
+    let thumbnailIndex = 0;
+    let counter = 0;
+    while (thumbnailIndex < thumbnails.length) {
+      const currentGroup = [];
+      for (let i = 0; i < 7; i += 1) {
+        currentGroup.push({ thumbnail: thumbnails[thumbnailIndex], index: counter });
+        counter += 1;
+        thumbnailIndex += 1;
+        if (thumbnailIndex === thumbnails.length) {
+          break;
+        }
+      }
+      thumbnailGroups.push(currentGroup);
+    }
+    setThumbCarousel(thumbnailGroups);
   };
 
   // ------------------ EVENT HANDLERS ------------------
@@ -142,11 +180,13 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   useEffect(() => {
     renderThumbnails();
+    groupBySevens();
   }, [thumbnails]);
 
   return (
     <>
       <div className={styles.mainImageContainer}>
+        {console.log('activeIndex: ', index)}
 
         {/* Main Image: */}
         <Carousel
@@ -182,33 +222,21 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
       {/* Thumbnails: */}
       {view === 'default' ? (
-
-        <Carousel
-          indicators={false}
-          // controls={false}
-          interval={null}
-          // onSelect={handleSelect}
-          activeIndex={index}
-          onSelect={handleSelect}
-        >
-          {slides.length > 0 ? slides.map((slide, i) => (
-            <Carousel.Item key={i} style={{ height: '78px', display: 'flex', justifyContent: 'space-evenly' }}>
-              {slide.length > 0 ? slide.map((srcObj) => (
-                <Image
-                  className={styles.thumbnailImage}
-                  src={srcObj.src || '/no-image-icon.png'}
-                  alt="thumbnail product image"
-                  // width={78}
-                  // height={78}
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={srcObj.index}
-                  onClick={() => handleSelect(srcObj.index)}
-                  style={srcObj.index === index ? { borderStyle: 'double' } : null}
-                />
-              )) : null}
-            </Carousel.Item>
-          )) : null}
-        </Carousel>
+        <CardColumns style={{ columnCount: 1 }}>
+          {thumbCarousel.length > 0 ? thumbCarousel[0].map((thumbnailObj) => (
+            <Card
+              key={thumbnailObj.index}
+              style={{ height: '78px', width: '78px' }}
+            >
+              <Card.Img
+                style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
+                src={thumbnailObj.thumbnail}
+                onClick={() => setIndex(thumbnailObj.index)}
+              />
+            </Card>
+          ))
+            : null}
+        </CardColumns>
       ) : null}
     </>
   );
