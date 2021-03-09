@@ -30,7 +30,7 @@ const ReviewsList = ({
   const filterReviewList = (reviews, count, ratingArray) => {
     if (ratingsLength) {
       const filterArray = [];
-      for (let i = 0; i < count; i += 1) {
+      for (let i = 0; i < renderedReviews.length; i += 1) {
         if (ratingArray.includes(reviews[i].rating)) {
           filterArray.push(reviews[i]);
         }

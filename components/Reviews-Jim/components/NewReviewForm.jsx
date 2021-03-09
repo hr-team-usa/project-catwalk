@@ -80,7 +80,6 @@ const renderCharacteristics = (char) => {
 const NewReviewForm = ({
   show, onHide, characteristics, productName, productId,
 }) => {
-  const [validated, setValidated] = useState(false);
   const [rating, setRating] = useState(0);
   const [recommended, setRecommended] = useState(false);
   const [summary, setSummary] = useState('');

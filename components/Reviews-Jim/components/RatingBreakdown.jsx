@@ -49,7 +49,7 @@ const RatingBreakdown = ({
 
   useEffect(() => {
     createBarRatings(ratings);
-  }, []);
+  }, [ratings]);
 
   return (
     <div className={classes.root}>
