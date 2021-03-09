@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 
 import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx';
-import Add from '../components/Description-Scott/AddToCart/Add.jsx'
+import Add from '../components/Description-Scott/AddToCart/Add.jsx';
+import Price from '../components/Description-Scott/ProductInfo/Price.jsx';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -152,6 +153,46 @@ describe('product description test suite', () => {
       const button = wrapper.find('button')
       expect(button).toHaveLength(0);
     });
+  })
+
+  describe('Price component tests', () => {
+    it('displays the sale price (with a "$") when a style has a sale price', () => {
+
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Price styleInfo={{style_id: 96887,
+        name: "Forest Green & Black",
+        original_price: "200.00",
+        sale_price: "100.00",
+        }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const salePrice = wrapper.find('span.salePrice')
+      expect(salePrice).toHaveLength(1);
+      expect(salePrice.text()).toBe('$100.00')
+    })
+  })
+
+  it('only displays original price when sale price is null', () => {
+
+    const mockUseEffect = jest.fn();
+    React.useEffect = mockUseEffect;
+
+    const wrapper = mount(<Price styleInfo={{style_id: 96887,
+      name: "Forest Green & Black",
+      original_price: "200.00",
+      sale_price: null,
+      }} />);
+
+    mockUseEffect.mockClear();
+    wrapper.setProps();
+
+    const salePrice = wrapper.find('span.salePrice')
+    expect(salePrice).toHaveLength(0);
+    expect(wrapper.text()).toBe('$200.00');
   })
 
 })
