@@ -202,56 +202,57 @@ describe('product description test suite', () => {
   })
 
   describe('Style Selector component tests', () => {
-    xit('updates the displayed style name when a new style is clicked', () => {
-      const allStyles = [
-        {
-          'default?': true,
-          name: "Forest Green & Black",
-          original_price: "140.00",
-          photos: [{
-            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
-          }, {
-            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
-          }],
-          sale_price: null,
-          skus: {},
-          style_id: 96887,
-        },
-        {
-          'default?': false,
-          name: "Desert Brown & Tan",
-          original_price: "140.00",
-          photos: [{
-            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
-          }, {
-            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
-          }],
-          sale_price: null,
-          skus: {},
-          style_id: 96888,
-        },
-        {
-          'default?': false,
-          name: "Ocean Blue & Grey",
-          original_price: "140.00",
-          photos: [{
-            thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
-          }, {
-            thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-            url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
-          }],
-          sale_price: "100.00",
-          skus: {},
-          style_id: 96889,
-        }
-      ]
+    var allStyles = [
+      {
+        'default?': true,
+        name: "Forest Green & Black",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: null,
+        skus: {},
+        style_id: 96887,
+      },
+      {
+        'default?': false,
+        name: "Desert Brown & Tan",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: null,
+        skus: {},
+        style_id: 96888,
+      },
+      {
+        'default?': false,
+        name: "Ocean Blue & Grey",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: "100.00",
+        skus: {},
+        style_id: 96889,
+      }
+    ]
 
-      let styleInfo = allStyles[0];
+    var styleInfo = allStyles[0];
+
+    xit('updates the displayed style name when a new style is clicked', () => {
 
       // const mockUseEffect = jest.fn();
       // React.useEffect = mockUseEffect;
@@ -283,6 +284,16 @@ describe('product description test suite', () => {
 
       // console.logs placed in handleClick show that it is being called with the new styleId, but this doesnt change the styleInfo prop that is passed into our component.
 
+    })
+
+    it('displays a checkmark on the currently selected style', () => {
+      styleInfo = allStyles[2]
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {}} />);
+
+      console.log(wrapper.find('Image.checkmark').debug());
+      expect(wrapper.find('Image.checkmark').at(0).prop('hidden')).toBe(true);
+      expect(wrapper.find('Image.checkmark').at(1).prop('hidden')).toBe(true);
+      expect(wrapper.find('Image.checkmark').at(2).prop('hidden')).toBe(false);
     })
   })
 
