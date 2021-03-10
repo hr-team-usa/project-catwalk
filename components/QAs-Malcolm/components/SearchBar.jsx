@@ -1,16 +1,21 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import SearchBar from 'material-ui-search-bar';
-// import styles from './SearchBar.module.css';
+import PropTypes from 'prop-types';
 
-function QASearchBar() {
+function QASearchBar({ setSearchBody, setSubmitSearch }) {
   return (
     <Container>
       QUESTIONS & ANSWERS
       <Row>
         <Col>
           <br />
-          <SearchBar placeholder="Have a question? Search for answers..." />
+          <SearchBar
+            placeholder="Have a question? Search for answers..."
+            onChange={(value) => setSearchBody(value)}
+            name="searchBar"
+            onSubmit={setSubmitSearch(true)}
+          />
           <></>
           <br />
         </Col>
@@ -18,5 +23,13 @@ function QASearchBar() {
     </Container>
   );
 }
+
+QASearchBar.propTypes = {
+  setSearchBody: PropTypes.func,
+};
+
+QASearchBar.defaultProps = {
+  setSearchBody: null,
+};
 
 export default QASearchBar;

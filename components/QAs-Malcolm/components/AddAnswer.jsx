@@ -7,12 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { DropzoneArea } from 'material-ui-dropzone';
 import config from '../../../config';
 
 function AddAnswer(props) {
   const [answer, setAnswer] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [photos, setPhotos] = useState([]);
 
   const handleChange = (e) => {
     if (e.target.name === 'formAnswer') {
@@ -47,6 +49,13 @@ function AddAnswer(props) {
       .catch((err) => console.log(err));
   };
 
+  // const handleAddPhoto = (e) => {
+  //   console.log(e.target.parentNode.input);
+  //   // const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   const url = reader.readAsDataURL(file.name);
+  // };
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -64,6 +73,7 @@ function AddAnswer(props) {
                   variant="error"
                   maxLength={1000}
                   onChange={(e) => { handleChange(e); }}
+                  required
                 >
                   <Form.Label>Your Answer *</Form.Label>
                   <Form.Control
@@ -72,7 +82,7 @@ function AddAnswer(props) {
                     name="formAnswer"
                   />
                 </Form.Group>
-                <Form.Group onChange={(e) => { handleChange(e); }}>
+                <Form.Group onChange={(e) => { handleChange(e); }} required>
                   <Form.Label>What is your nickname *</Form.Label>
                   <Form.Control
                     type="name"
@@ -87,6 +97,7 @@ function AddAnswer(props) {
                 <Form.Group
                   controlId="formBasicEmail"
                   onChange={(e) => { handleChange(e); }}
+                  required
                 >
                   <Form.Label>Email address *</Form.Label>
                   <Form.Control
@@ -99,9 +110,14 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button>
-                  Upload Your Photos
-                </Button>
+                {/* <Form.File
+                  accept="image/*"
+                  className="position-relative"
+                  name="image"
+                  onChange={(e) => handleAddPhoto(e)}
+                /> */}
+                <DropzoneArea />
+                <Button size="sm">Add Photos</Button>
                 <br />
                 <br />
                 <Button variant="primary" type="submit" onClick={() => submitQ()}>
