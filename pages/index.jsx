@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Container, Navbar } from 'react-bootstrap';
+import { Container, Navbar, NavDropdown } from 'react-bootstrap';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
 import QAs from '../components/QAs-Malcolm/QAs';
@@ -11,6 +11,7 @@ const App = () => {
   const [productRating, setProductRating] = useState(null);
   const [currentProductData, setCurrentProductData] = useState(null);
   const [currentStyleData, setCurrentStyleData] = useState(null);
+  const [cart, setCart] = useState([]);
 
   const reviewsRef = useRef();
 
@@ -20,6 +21,12 @@ const App = () => {
         <Navbar.Brand href="#home">
           😎 NEXT Level Made in USA
         </Navbar.Brand>
+        <NavDropdown title="Cart" id="basic-nav-dropdown">
+          {cart.length > 0 ? cart.map((item, index) => (
+            <NavDropdown.Item key={index}>{`${item.name}`}</NavDropdown.Item>
+          ))
+            : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
+        </NavDropdown>
       </Navbar>
       <div className="App">
         <ProductDescription
@@ -29,6 +36,8 @@ const App = () => {
           setProductNameGlobal={setProductName}
           setCurrentProductData={setCurrentProductData}
           setCurrentStyleData={setCurrentStyleData}
+          setCart={setCart}
+          cart={cart}
         />
         <Comparison
           productId={productId}
