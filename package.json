@@ -29,12 +29,9 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-<<<<<<< HEAD
     "material-ui-dropzone": "^3.5.0",
-=======
     "bootswatch": "^4.6.0",
     "lodash": "^4.17.21",
->>>>>>> 74877e5057d67deaa496531d8ef777476ee25e91
     "material-ui-search-bar": "^1.0.0",
     "next": "^10.0.7",
     "prop-types": "^15.7.2",
