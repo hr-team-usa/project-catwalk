@@ -307,7 +307,7 @@ describe('product description test suite', () => {
       expect(stars).toHaveLength(1);
     })
 
-    it('does not display Stars component if productRating is 0', () => {
+    it('does not display Stars component if productRating is null', () => {
 
       const wrapper = mount(<ProductInfo
         productName='Parachute Pants'
@@ -319,7 +319,7 @@ describe('product description test suite', () => {
           original_price: "200.00",
           sale_price: null,
         }}
-        productRating='0'
+        productRating={null}
         reviewsref={null}
       />);
 
