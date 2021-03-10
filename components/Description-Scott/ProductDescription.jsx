@@ -73,12 +73,12 @@ const ProductDescription = ({
   }, [productId]);
   return (
     <div>
-      <Container>
+      <Container className="container-fluid">
         <Row>
-          <Col>
+          <Col className="col-7">
             <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
-          <Col>
+          <Col className="col-5">
             {isExpanded ? null
               : (
                 <>
