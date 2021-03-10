@@ -1,17 +1,10 @@
 /* eslint-disable object-curly-newline */
-import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import React from 'react';
 import PropTypes from 'prop-types';
-// import config from '../../../config';
 import Q from './Q';
 
 function Questions({
-  productId, productName, count, searchBody, submitSearch, questions, setRender, setQuestions }) {
-  // const [render, setRender] = useState(false);
-  const [searched, setSearched] = useState([]);
-  const [searchBool, setSearchBool] = useState(false);
-  // const [questions, setQuestions] = useState([]);
-
+  productId, productName, count, questions, setRender, setQuestions }) {
   return (
     <>
       { questions.map((item) => (
@@ -37,8 +30,7 @@ Questions.propTypes = {
   ]).isRequired,
   productName: PropTypes.string,
   count: PropTypes.string,
-  searchBody: PropTypes.string,
-  questions: PropTypes.shape({
+  questions: PropTypes.arrayOf(PropTypes.shape({
     answers: PropTypes.shape({
       answerer_name: PropTypes.string,
       body: PropTypes.string,
@@ -54,72 +46,17 @@ Questions.propTypes = {
     question_body: PropTypes.string,
     question_date: PropTypes.string,
     question_helpfulness: PropTypes.number,
-  }),
+  })),
+  setRender: PropTypes.func,
+  setQuestions: PropTypes.func,
 };
 
 Questions.defaultProps = {
   productName: null,
   count: null,
-  searchBody: null,
   questions: null,
+  setRender: null,
+  setQuestions: null,
 };
 
 export default Questions;
-
-// const searched2 = [];
-  // if (searched2.length > 0) {
-  //   setSearched(searched2);
-  // }
-
-  // if (searchBody.length > 3) {
-  // if (submitSearch === true) {
-  //   setSearchBool(true);
-  //   setSearched(questions.filter(({ question_body }) => question_body.includes(searchBody)));
-  // }
-
-  // const getQuestions = () => {
-  //   const options = {
-  //     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}${count}`,
-  //     method: 'get',
-  //     headers: {
-  //       Authorization: config.TOKEN,
-  //     },
-  //   };
-
-  //   axios(options)
-  //     .then((res) => setQuestions(res.data.results))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // useEffect(() => {
-  //   getQuestions();
-  //   setRender(false);
-  // }, [render, count]);
-
-  // <>
-  //     {searchBool === false
-  //       ? questions.map((item) => (
-  //         <Q
-  //           question={item}
-  //           key={item.question_id}
-  //           answers={item.answers}
-  //           setRender={setRender}
-  //           productId={productId}
-  //           count={count}
-  //           setQuestions={setQuestions}
-  //           productName={productName}
-  //         />
-  //       ))
-  //       : searched.map((item) => (
-  //         <Q
-  //           question={item}
-  //           key={item.question_id}
-  //           answers={item.answers}
-  //           setRender={setRender}
-  //           productId={id}
-  //           count={count}
-  //           setQuestions={setQuestions}
-  //           productName={productName}
-  //         />
-  //       ))}
-  //   </>

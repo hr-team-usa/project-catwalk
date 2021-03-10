@@ -7,9 +7,11 @@ function QASearchBar({ setSearchedMatch, questions }) {
   const [searchBody, setSearchBody] = useState('');
 
   const filterQuestions = () => {
-    (searchBody.length >= 3 ?
-      setSearchedMatch(questions.filter(({ question_body }) => (question_body.toLowerCase()).includes(searchBody)))
-      : setSearchedMatch(null));
+    // eslint-disable-next-line no-unused-expressions
+    searchBody.length >= 3
+      // eslint-disable-next-line max-len
+      ? setSearchedMatch(questions.filter(({ question_body }) => (question_body.toLowerCase()).includes(searchBody)))
+      : setSearchedMatch(null);
   };
 
   useEffect(() => {
@@ -37,11 +39,24 @@ function QASearchBar({ setSearchedMatch, questions }) {
 }
 
 QASearchBar.propTypes = {
-  setSearchBody: PropTypes.func,
-};
-
-QASearchBar.defaultProps = {
-  setSearchBody: null,
+  setSearchedMatch: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.shape({
+    answers: PropTypes.shape({
+      answerer_name: PropTypes.string,
+      body: PropTypes.string,
+      date: PropTypes.string,
+      helpfulness: PropTypes.number,
+      id: PropTypes.number,
+      photos: PropTypes.arrayOf(PropTypes.shape({
+        url: PropTypes.string,
+      })),
+    }),
+    asker_name: PropTypes.string,
+    question_id: PropTypes.number,
+    question_body: PropTypes.string,
+    question_date: PropTypes.string,
+    question_helpfulness: PropTypes.number,
+  })).isRequired,
 };
 
 export default QASearchBar;

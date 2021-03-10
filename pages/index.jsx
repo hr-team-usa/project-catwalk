@@ -15,30 +15,30 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* <ProductDescription
+      <ProductDescription
         productId={productId}
         productRating={productRating}
         reviewsRef={reviewsRef}
         setProductNameGlobal={setProductName}
         setCurrentProductData={setCurrentProductData}
         setCurrentStyleData={setCurrentStyleData}
-      /> */}
-      {/* <Comparison
+      />
+      <Comparison
         productId={productId}
         setProductId={setProductId}
         currentProductData={currentProductData}
         currentStyleData={currentStyleData}
-      /> */}
+      />
       <QAs
         productId={productId}
         productName={productName}
       />
-      {/* <Reviews
+      <Reviews
         productId={productId}
         reviewsRef={reviewsRef}
         setProductRating={setProductRating}
         productName={productName}
-      /> */}
+      />
     </div>
   );
 };

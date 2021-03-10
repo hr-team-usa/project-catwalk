@@ -3,7 +3,9 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Container, Button } from 'react-bootstrap';
+import {
+  Row, Col, Container, Button,
+} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';

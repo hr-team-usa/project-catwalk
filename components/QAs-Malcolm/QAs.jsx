@@ -8,7 +8,6 @@ import config from '../../config';
 
 const QAs = ({ productId, productName }) => {
   const [count, setCount] = useState('&count=4');
-  const [submitSearch, setSubmitSearch] = useState(false);
   const [render, setRender] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [searchMatch, setSearchedMatch] = useState(null);
@@ -36,7 +35,6 @@ const QAs = ({ productId, productName }) => {
     <div>
       <QASearchBar
         productId={productId}
-        setSubmitSearch={setSubmitSearch}
         setSearchedMatch={setSearchedMatch}
         questions={questions}
       />
@@ -44,8 +42,6 @@ const QAs = ({ productId, productName }) => {
         productId={productId}
         setCount={setCount}
         count={count}
-        submitSearch={submitSearch}
-        setSubmitSearch={setSubmitSearch}
         questions={(searchMatch || questions)}
         setRender={setRender}
         setQuestions={setQuestions}
