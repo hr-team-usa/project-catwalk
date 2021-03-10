@@ -2,12 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, Container, Button,
+  Row, Col, Container, Button, Image,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
@@ -124,6 +123,10 @@ function Q(props) {
     borderRight: '1px solid #ccc',
   };
 
+  const overflowStyle = {
+    overflow: 'scroll',
+  };
+
   const formatAnswer = (answer) => (
 
     answer
@@ -181,7 +184,7 @@ function Q(props) {
   );
 
   const formatQuestion = () => (
-    <Row>
+    <Row style={overflowStyle}>
       <Col>
         <strong>
           Q:
