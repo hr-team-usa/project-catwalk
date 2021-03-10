@@ -9,7 +9,7 @@ import Stars from '../../Reviews-Jim/components/Stars';
 import { arrayOf } from 'prop-types';
 
 const RelatedProducts = ({
-  products, images, style, ratings, setProductId, setProducts, setProductImg, setProductStyle,
+  products, images, style, ratings, setProductId, productName, productRating, productStyle, setProducts, setProductImg, setProductStyle,
 }) => {
 // in order to make multiple slides in carousel
   const arrayOfArrayProducts = [];
@@ -89,16 +89,21 @@ const RelatedProducts = ({
                       <CardDeck>
                         {array.map((item, index) => (
                           <OverlayTrigger
-                            placement="right"
+                            placement="top"
                             delay={{ show: 250, hide: 400 }}
                             overlay={Comparison_Modal}
                             key={index}
-                            style={{
-                              margin: 0,
-                              padding: 0,
+                            popperConfig={{
+                              productName,
+                              relatedName: item.data.name,
+                              relatedPrice: style[item.data.id.toString()].original_price,
+                              style: starStyle,
+                              relatedRating: ratings[item.data.id.toString()],
+                              productRating,
+                              productStyle,
                             }}
                           >
-                            <Card key={index} className="related-products" style={{ width: '5rem' }} onClick={() => changeProduct(item.data.id)}>
+                            <Card key={index} className="related-products" onClick={() => changeProduct(item.data.id)}>
                               <Card.Img variant="top" className="related-image" src={images[item.data.id.toString()]} />
                               <Card.Title>{item.data.name}</Card.Title>
                               <Card.Subtitle className="mb-2 text-muted">{item.data.category}</Card.Subtitle>
