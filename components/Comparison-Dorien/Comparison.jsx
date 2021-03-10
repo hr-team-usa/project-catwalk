@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RelatedProducts from './components/RelatedProducts';
 import OutfitList from './components/OutfitList';
 
-const Comparison = ({ productId, setProductId }) => {
+const Comparison = ({ productId, setProductId, productName, productRating, currentStyleData}) => {
   const [products, setProducts] = useState([]);
   const [productImg, setProductImg] = useState(false);
   const [productStyle, setProductStyle] = useState(false);
@@ -122,6 +122,9 @@ const Comparison = ({ productId, setProductId }) => {
               images={productImg}
               style={productStyle}
               ratings={multiRating}
+              productName={productName}
+              productRating={productRating}
+              productStyle={currentStyleData}
               setProductId={setProductId}
               setProducts={setProducts}
               setProductImg={setProductImg}
