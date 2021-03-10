@@ -35,3 +35,11 @@
 .review-buttons {
   margin: 0px 10px;
 }
+
+#__next {
+  background-color: gray;
+}
+
+.App {
+  background-color: white;
+}
