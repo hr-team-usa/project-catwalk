@@ -14,7 +14,7 @@ function QASearchBar({ setSearchBody, setSubmitSearch }) {
             placeholder="Have a question? Search for answers..."
             onChange={(value) => setSearchBody(value)}
             name="searchBar"
-            onSubmit={setSubmitSearch(true)}
+            onRequestSearch={() => setSubmitSearch(true)}
           />
           <></>
           <br />

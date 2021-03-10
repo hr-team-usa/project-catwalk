@@ -1,14 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import AddMore from './components/AddMore';
 import Questions from './components/Questions';
 import QASearchBar from './components/SearchBar';
+import config from '../../config';
 
 const QAs = ({ productId, productName }) => {
   const [count, setCount] = useState('&count=4');
   const [searchBody, setSearchBody] = useState('');
   const [submitSearch, setSubmitSearch] = useState(false);
+  const [render, setRender] = useState(false);
+  const [questions, setQuestions] = useState([]);
 
+  const getQuestions = () => {
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${productId}${count}`,
+      method: 'get',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+
+    axios(options)
+      .then((res) => setQuestions(res.data.results))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getQuestions();
+    setRender(false);
+  }, [render, count]);
 
   return (
     <div>
@@ -22,8 +44,11 @@ const QAs = ({ productId, productName }) => {
         setCount={setCount}
         count={count}
         searchBody={searchBody}
-        submitSearch={setSubmitSearch}
+        submitSearch={submitSearch}
         setSubmitSearch={setSubmitSearch}
+        questions={questions}
+        setRender={setRender}
+        setQuestions={setQuestions}
       />
       <AddMore
         productId={productId}
