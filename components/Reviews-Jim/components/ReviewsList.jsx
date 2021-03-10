@@ -9,7 +9,7 @@ import NewReviewForm from './NewReviewForm';
 const ReviewsList = ({
   productReviews, sortStatus, handleSortChange, characteristics,
   renderToggle, setRenderToggle, selectedRatings, ratingsLength,
-  productName, productId,
+  productName, productId, setGetToggle,
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
@@ -77,6 +77,7 @@ const ReviewsList = ({
         show={show}
         onHide={() => setShow(false)}
         productId={productId}
+        setGetToggle={setGetToggle}
       />
     </div>
   );
@@ -111,6 +112,7 @@ ReviewsList.propTypes = {
   ),
   productName: PropTypes.string.isRequired,
   productId: PropTypes.number.isRequired,
+  setGetToggle: PropTypes.func.isRequired,
 };
 
 ReviewsList.defaultProps = {
