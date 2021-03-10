@@ -1,4 +1,4 @@
-.carousel-inner .carousel-item-right.active,
+/* .carousel-inner .carousel-item-right.active,
 .carousel-inner .carousel-item-next {
   transform: translateX(33.33%);
 }
@@ -11,4 +11,35 @@
 .carousel-inner .carousel-item-right,
 .carousel-inner .carousel-item-left{
   transform: translateX(0);
+}
+*/
+.App > div {
+  margin-bottom: 50px;
+}
+
+.carousel-inner {
+  height: inherit;
+  width: inherit;
+}
+
+.carousel-control-next, .carousel-control-prev {
+  z-index: 0;
+}
+
+/* REVIEWS */
+
+.review-card {
+  margin: 20px 0px;
+}
+
+.review-buttons {
+  margin: 0px 10px;
+}
+
+#__next {
+  background-color: gray;
+}
+
+.App {
+  background-color: white;
 }

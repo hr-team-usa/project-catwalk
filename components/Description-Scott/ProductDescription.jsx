@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import Divider from '@material-ui/core/Divider';
 import config from '../../config';
 
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -8,13 +10,18 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart/AddToCart';
 
-const ProductDescription = ({productId}) => {
+const ProductDescription = ({
+  productId, productRating, reviewsRef, setProductNameGlobal,
+  setCurrentProductData, setCurrentStyleData, setCart, cart,
+}) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
 
   const [allStyles, setAllStyles] = useState([]);
   const [styleInfo, setStyleInfo] = useState({});
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const getProduct = () => {
     const productRequest = {
@@ -26,7 +33,9 @@ const ProductDescription = ({productId}) => {
     };
     axios(productRequest)
       .then((productResponse) => {
+        setCurrentProductData(productResponse.data);
         setProductName(productResponse.data.name);
+        setProductNameGlobal(productResponse.data.name);
         setCategory(productResponse.data.category);
         setDescription(productResponse.data.description);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
@@ -41,39 +50,91 @@ const ProductDescription = ({productId}) => {
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
-        const defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        let defaultStyle;
+
+        if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
+          defaultStyle = stylesResponse.data.results.find((style) => style['default?'] === true);
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          defaultStyle = stylesResponse.data.results[0];
+        }
         setStyleInfo(defaultStyle);
       }).catch((err) => console.error(err)); // eslint-disable-line no-console
   };
 
   useEffect(() => {
+    if (styleInfo) {
+      setCurrentStyleData(styleInfo);
+    }
+  }, [styleInfo]);
+
+  useEffect(() => {
     getProduct();
-  }, []);
+  }, [productId]);
   return (
     <div>
-      <Container>
+      <Container className="container-fluid">
         <Row>
-          <Col>
-            <ImageGallery styleInfo={styleInfo} />
+          <Col className="col-7">
+            <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
-          <Col>
-            <ProductInfo
-              productName={productName}
-              category={category}
-              description={description}
-              styleInfo={styleInfo}
-            />
-            <StyleSelector
-              allStyles={allStyles}
-              styleInfo={styleInfo}
-              setStyleInfo={setStyleInfo}
-            />
-            <AddToCart styleInfo={styleInfo} />
+          <Col className="col-5">
+            {isExpanded ? null
+              : (
+                <>
+                  <Divider style={{ marginTop: '10px' }} />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <ProductInfo
+                      productName={productName}
+                      productRating={productRating}
+                      category={category}
+                      description={description}
+                      styleInfo={styleInfo}
+                      reviewsRef={reviewsRef}
+                    />
+                  </div>
+                  <Divider />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <StyleSelector
+                      allStyles={allStyles}
+                      styleInfo={styleInfo}
+                      setStyleInfo={setStyleInfo}
+                    />
+                  </div>
+                  <Divider />
+                  <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <AddToCart
+                      styleInfo={styleInfo}
+                      setCart={setCart}
+                      cart={cart}
+                      productName={productName}
+                    />
+                  </div>
+                </>
+              )}
           </Col>
         </Row>
       </Container>
     </div>
   );
+};
+
+ProductDescription.propTypes = {
+  productId: PropTypes.number.isRequired,
+  productRating: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  reviewsRef: PropTypes.object,
+  setCurrentProductData: PropTypes.func.isRequired,
+  setCurrentStyleData: PropTypes.func.isRequired,
+  setProductNameGlobal: PropTypes.func.isRequired,
+  setCart: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cart: PropTypes.array.isRequired,
+};
+
+ProductDescription.defaultProps = {
+  productRating: null,
+  reviewsRef: {},
 };
 
 export default ProductDescription;

@@ -1,37 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  PinterestShareButton, PinterestIcon,
+  TwitterShareButton, TwitterIcon,
+  FacebookShareButton, FacebookIcon,
+} from 'react-share';
 import styles from './ProductInfo.module.css';
 import Price from './Price';
+import Stars from '../../Reviews-Jim/components/Stars';
 
-const ProductInfo = ({ productName, category, description, styleInfo}) => {
+const ProductInfo = ({
+  productName, category, description, styleInfo, productRating, reviewsRef,
+}) => {
   const url = 'http://localhost:3000/';
+  const starsStyle = {
+    display: 'inline',
+  };
+
+  const scrollToReviews = (ref) => {
+    window.scrollTo(0, ref.current.offsetTop);
+  };
+
   return (
     <div>
-      <div> ***** -- Read all reviews link here</div>
+      {productRating !== null ? (
+        <>
+          <Stars style={starsStyle} rating={productRating} />
+          <span
+            onClick={() => scrollToReviews(reviewsRef)}
+            onKeyUp={() => scrollToReviews(reviewsRef)}
+            role="button"
+            tabIndex={0}
+          >
+            <u>Read all reviews</u>
+          </span>
+        </>
+      ) : null}
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />
-      <div>{description}</div>
-      <span>
-        <a href="https://twitter.com/intent/tweet">
-          <img src="twitter.png" alt="twitter" width="25" height="25" />
-        </a>
+      <div style={{ marginTop: '5px', marginBottom: '5px' }}>{description}</div>
+      { styleInfo.photos && (
+        <span style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <TwitterShareButton url={url} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
 
-        <a href="https://www.pinterest.com/pin/create/button/">
-          <img src="pinterest.png" alt="pinterest" width="25" height="25" />
-        </a>
+          <PinterestShareButton url={url} media={styleInfo.photos[0].url || `${url}/no-image-icon.png`} description="check out this product!">
+            <PinterestIcon size={32} round />
+          </PinterestShareButton>
 
-        <a href={`https://facebook.com/sharer/sharer.php?u=${url}`}>
-          <img src="facebook.png" alt="facebook" width="25" height="25" />
-        </a>
+          <FacebookShareButton url={url} hashtag="TEAMUSA">
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
 
-      </span>
+        </span>
+      )}
     </div>
   );
 };
 
 ProductInfo.propTypes = {
   productName: PropTypes.string.isRequired,
+  productRating: PropTypes.string,
   category: PropTypes.string.isRequired,
   description: PropTypes.string,
   styleInfo: PropTypes.shape({
@@ -39,17 +70,23 @@ ProductInfo.propTypes = {
     style_id: PropTypes.number,
     original_price: PropTypes.string,
     sale_price: PropTypes.string,
+    // eslint-disable-next-line react/forbid-prop-types
+    photos: PropTypes.array,
   }),
+  // eslint-disable-next-line react/forbid-prop-types
+  reviewsRef: PropTypes.object,
 };
 
 ProductInfo.defaultProps = {
   description: null,
+  productRating: null,
   styleInfo: {
     name: 'style name',
     style_id: null,
     original_price: null,
     sale_price: null,
   },
+  reviewsRef: {},
 };
 
 export default ProductInfo;

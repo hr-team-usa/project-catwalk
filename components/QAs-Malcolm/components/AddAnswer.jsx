@@ -9,14 +9,14 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import config from '../../../config';
 
-function AddQuestion(props) {
-  const [question, setQuestion] = useState('');
+function AddAnswer(props) {
+  const [answer, setAnswer] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
   const handleChange = (e) => {
-    if (e.target.name === 'formQuestion') {
-      setQuestion(e.target.value);
+    if (e.target.name === 'formAnswer') {
+      setAnswer(e.target.value);
     }
     if (e.target.name === 'name') {
       setName(e.target.value);
@@ -28,21 +28,22 @@ function AddQuestion(props) {
 
   const submitQ = () => {
     const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
       method: 'post',
       headers: {
         Authorization: config.TOKEN,
       },
       data: {
-        body: question,
+        body: answer,
         name,
         email,
-        product_id: props.productId,
+        photos: [],
       },
     };
 
     axios(options)
       .then(() => { props.onHide(); })
+      .then(() => console.log('created in db'))
       .catch((err) => console.log(err));
   };
 
@@ -50,9 +51,7 @@ function AddQuestion(props) {
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Ask Your Question About the
-          {' '}
-          {props.productName}
+          Submit Your Answer
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
@@ -66,18 +65,18 @@ function AddQuestion(props) {
                   maxLength={1000}
                   onChange={(e) => { handleChange(e); }}
                 >
-                  <Form.Label>Your Question *</Form.Label>
+                  <Form.Label>Your Answer *</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    name="formQuestion"
+                    name="formAnswer"
                   />
                 </Form.Group>
                 <Form.Group onChange={(e) => { handleChange(e); }}>
                   <Form.Label>What is your nickname *</Form.Label>
                   <Form.Control
                     type="name"
-                    placeholder="Example: jackson11!"
+                    placeholder="Example: jack543!"
                     maxLength={60}
                     name="name"
                   />
@@ -92,7 +91,7 @@ function AddQuestion(props) {
                   <Form.Label>Email address *</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Example: jack@email.com"
                     maxLength={60}
                     name="email"
                   />
@@ -100,7 +99,12 @@ function AddQuestion(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button className="submitQBtn" variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button>
+                  Upload Your Photos
+                </Button>
+                <br />
+                <br />
+                <Button variant="primary" type="submit" onClick={() => submitQ()}>
                   Submit
                 </Button>
               </Form>
@@ -115,13 +119,13 @@ function AddQuestion(props) {
   );
 }
 
-AddQuestion.propTypes = {
+AddAnswer.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   productId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  productName: PropTypes.string.isRequired,
+  questionId: PropTypes.number.isRequired,
 };
-export default AddQuestion;
+export default AddAnswer;

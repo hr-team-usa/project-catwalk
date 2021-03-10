@@ -1,26 +1,71 @@
-.error {
-  color: white;
-  background-color: red;
-}
-
-div .test {
-  background-color: grey;
-}
-
 .carousel {
-  /* position: absolute;
-  z-index: 0; */
-  width: "320px";
-  height: "400px";
-  margin: "auto";
+  width: inherit;
+  height: 600px;
 }
 
-/* .carousel-item {
-  position: absolute;
-  z-index: 1;
+.carouselExpanded {
+  width: 1110px;
+  height: 650px;
+  z-index: 2;
+  background-color:white;
+}
+
+.carouselZoomed {
+  width: 100vh;
+  height: 100vh;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  cursor: zoom-in;
+}
+/*
+.carouselItem {
+  height: 100%
 } */
 
-.carousel-inner {
-  justify-self: auto;
-  align-self: center;
+.thumbnailImage {
+  width: 14%;
+  height: 100%;
+}
+
+
+.mainImageContainer {
+  /* position: relative; */
+  /* width: 500px;
+  height: 500px; */
+  margin-top: 10px;
+}
+
+.expandButton {
+    position: absolute;
+    z-index: 3;
+    top: 5%;
+    right: 3%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-image: url("/expand.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 12px 12px;
+    border: none;
+    cursor: pointer;
+    /* filter: invert(1); */
+}
+
+.upArrow {
+  position: relative;
+  left: 25%;
+  background-image: url("/up-arrow.png");
+  height: 10px;
+  width: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  padding: 12px 12px;
+  border: none;
+  cursor: pointer;
+  /* filter: invert(1); */
 }

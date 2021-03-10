@@ -1,20 +1,60 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import config from '../../../config';
+import AddAnswer from './AddAnswer';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
+  const [clicked, setClicked] = useState(false);
+  const [show, setShow] = useState(false);
+  const [moreAnswers, setMoreAnswers] = useState(false);
+  const [allAnswers, setAllAnswers] = useState([]);
+  const [moreAnsBtn, setMoreAnsBtn] = useState(false);
+
+  const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
   const parseAnswers = () => {
-    const one = Object.keys(props.answers).slice(0, 1);
-    const two = Object.keys(props.answers).slice(1, 2);
+    let one = Object.keys(props.answers).slice(0, 1);
+    let two = Object.keys(props.answers).slice(1, 2);
+    const all = Object.keys(props.answers);
+    if (all.length > 2) {
+      setMoreAnswers(true);
+    }
+    const helpfulness = [];
+
+    for (let j = 0; j < all.length; j += 1) {
+      helpfulness.push(props.answers[all[j]].helpfulness);
+    }
+
+    helpfulness.sort((a, b) => b - a);
+    for (let k = 0; k < all.length; k += 1) {
+      if (props.answers[all[k]].helpfulness === helpfulness[0]) {
+        one = all[k];
+      }
+      if (props.answers[all[k]].helpfulness === helpfulness[1]) {
+        two = all[k];
+      }
+    }
+
+    for (let i = 0; i < all.length; i += 1) {
+      if (props.answers[all[i]].answerer_name === 'Seller') {
+        setOneAnswer(props.answers[all[i]]);
+        setTwoAnswer(props.question.answers[one]);
+        return;
+      }
+    }
     setOneAnswer(props.question.answers[one]);
     setTwoAnswer(props.question.answers[two]);
+    setAllAnswers(all);
   };
 
   useEffect(() => {
@@ -22,9 +62,41 @@ function Q(props) {
   }, []);
 
   const handleClick = (e) => {
-    console.log('clicked');
-    // e.target.clicked = true;
-    console.log(e.target.parentNode.clicked);
+    e.preventDefault();
+    if (clicked === false) {
+      let qaPath = 'answers';
+      if (e.target.parentNode.id.length === 6) {
+        qaPath = 'questions';
+      } else {
+        qaPath = 'answers';
+      }
+      const options = {
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
+        method: 'put',
+        headers: {
+          Authorization: config.TOKEN,
+        },
+      };
+      axios(options)
+        .then(() => props.setRender(true))
+        .then(() => setClicked(true))
+        .catch((err) => console.log(err));
+    } else {
+      window.alert("We're glad you found this helpful!");
+    }
+  };
+
+  const report = (e) => {
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => { e.target.innerHTML = 'Reported'; })
+      .catch((err) => console.log(err));
   };
 
   const formatDate = (stringDate) => {
@@ -51,6 +123,7 @@ function Q(props) {
   };
 
   const formatAnswer = (answer) => (
+
     answer
       ? (
         <>
@@ -79,25 +152,31 @@ function Q(props) {
           <br />
           <Row>
             <Col sm="auto" style={answerStyle}>
-              {`By ${answer.answerer_name}`}
-    &nbsp;
+              {answer.answerer_name === 'Seller' ? (
+                <strong>
+                  By &nbsp;
+                  {answer.answerer_name}
+                </strong>
+              ) : `By ${answer.answerer_name}`}
+      &nbsp;
               {formatDate(answer.date)}
             </Col>
-            <Col sm="auto" style={answerStyle} onClick={handleClick}>
+            <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
               Helpful?
               {' '}
-              <u>Yes</u>
+              <u onClick={(e) => { handleClick(e); }}>Yes</u>
               (
               {answer.helpfulness}
               )
             </Col>
             <Col sm="auto" style={resultStyle}>
-              <u>Report</u>
+              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
         </>
-      ) : null);
+      ) : null
+  );
 
   const formatQuestion = () => (
     <Row>
@@ -108,20 +187,32 @@ function Q(props) {
           {props.question.question_body}
         </strong>
       </Col>
-      <Col sm="auto" style={questionStyle}>
+      <Col id={props.question.question_id} sm="auto" style={questionStyle}>
         Helpful?
         {' '}
-        <u>Yes</u>
+        <u onClick={(e) => { handleClick(e); }}>Yes</u>
         (
         {props.question.question_helpfulness}
         )
       </Col>
       <Col sm="auto" style={resultStyle}>
-        <u>Add Answer</u>
+        <u onClick={() => setShow(true)}>Add Answer</u>
+        <AddAnswer
+          variant="primary"
+          show={show}
+          onHide={() => setShow(false)}
+          productId={props.productId}
+          questionId={props.question.question_id}
+        />
       </Col>
     </Row>
-
   );
+
+  const formatAll = () => {
+    for (let i = 0; i < allAnswers.length; i += 1) {
+      return formatAnswer(props.question.answers[allAnswers[i]]);
+    }
+  };
 
   return (
     <Container id="questionsContainer">
@@ -129,6 +220,14 @@ function Q(props) {
       <br />
       {formatAnswer(oneAnswer)}
       {formatAnswer(twoAnswer)}
+      {moreAnsBtn ? formatAll() : null}
+      <Row>
+        <Col>
+          {moreAnswers
+            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
+        </Col>
+      </Row>
+      <br />
     </Container>
   );
 }
@@ -146,6 +245,7 @@ Q.propTypes = {
       })),
     }),
     asker_name: PropTypes.string,
+    question_id: PropTypes.number,
     question_body: PropTypes.string,
     question_date: PropTypes.string,
     question_helpfulness: PropTypes.number,
@@ -160,11 +260,17 @@ Q.propTypes = {
       url: PropTypes.string,
     })),
   }),
+  setRender: PropTypes.func,
+  productId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 Q.defaultProps = {
   question: null,
   answers: null,
+  setRender: null,
 };
 
 export default Q;
