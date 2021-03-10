@@ -5,7 +5,9 @@ import SelectSize from './SelectSize';
 import SelectQuantity from './SelectQuantity';
 import Add from './Add';
 
-const AddToCart = ({ styleInfo }) => {
+const AddToCart = ({
+  styleInfo, setCart, cart, productName,
+}) => {
   const [sku, setSku] = useState({ size: 'Select Size', quantity: null });
   const [quantitySelected, setQuantitySelected] = useState(null);
   const [isOutOfStock, setIsOutOfStock] = useState(false);
@@ -33,8 +35,12 @@ const AddToCart = ({ styleInfo }) => {
         <Col>
           <Add
             quantitySelected={quantitySelected}
-            isOutOfStock={isOutOfStock} sku={sku}
+            isOutOfStock={isOutOfStock}
+            sku={sku}
             setInvalidAdd={setInvalidAdd}
+            setCart={setCart}
+            cart={cart}
+            productName={productName}
           />
 
         </Col>
@@ -47,6 +53,11 @@ AddToCart.propTypes = {
   styleInfo: PropTypes.shape({
     skus: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   }),
+  setCart: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cart: PropTypes.array.isRequired,
+  productName: PropTypes.string.isRequired,
+
 };
 
 AddToCart.defaultProps = {
