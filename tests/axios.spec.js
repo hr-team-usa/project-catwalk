@@ -1,11 +1,11 @@
 /*eslint-disable*/
 import React from 'react';
-import { render, cleanup, waitForElement } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import axiosMock from 'axios';
+// // import { render, cleanup, waitForElement } from '@testing-library/react';
+// import '@testing-library/jest-dom';
+// import axiosMock from 'axios';
 import ReviewsList from '../components/Reviews-Jim/components/ReviewsList';
 
-afterEach(cleanup);
+// afterEach(cleanup);
 
 xdescribe('Reviews Widget', () => {
   it('should fetch product review data', async () => {
