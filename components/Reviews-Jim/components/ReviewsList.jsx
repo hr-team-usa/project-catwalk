@@ -52,7 +52,6 @@ const ReviewsList = ({
     e.preventDefault();
     const api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
 
-    console.log(api);
     const options = {
       url: api,
       method: 'put',

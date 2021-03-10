@@ -87,8 +87,6 @@ const NewReviewForm = ({
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
 
-  console.log(productId);
-
   const sendReview = () => {
     const options = {
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',

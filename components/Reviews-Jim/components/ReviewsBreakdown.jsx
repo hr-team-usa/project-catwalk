@@ -66,7 +66,7 @@ const ReviewsBreakdown = ({
         setSelectedRatings={setSelectedRatings}
         setRatingsLength={setRatingsLength}
       />
-      <ProductBreakdown />
+      <ProductBreakdown characteristics={productMeta.characteristics} />
     </div>
   );
 };
