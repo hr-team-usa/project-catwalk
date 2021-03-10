@@ -21,9 +21,9 @@ const Add = ({
   return (
     <>
       <Button
-        style={{ marginTop: '5px', width: '120px' }}
+        style={{ marginTop: '5px', width: '40%' }}
         onClick={clickHandler}
-        variant="success"
+        variant="primary"
       >
         Add to Cart
       </Button>
