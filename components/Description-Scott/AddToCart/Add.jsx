@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import 'bootswatch/dist/lux/bootstrap.min.css';
 
 const Add = ({
   quantitySelected, isOutOfStock, sku, setInvalidAdd, setCart, cart, productName,
