@@ -4,3 +4,4 @@ package-lock.json
 .next
 .vscode
 .DS_Store
+package-lock.json
