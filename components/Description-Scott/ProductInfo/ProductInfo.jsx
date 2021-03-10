@@ -23,21 +23,25 @@ const ProductInfo = ({
 
   return (
     <div>
-      <Stars style={starsStyle} rating={productRating} />
-      <span
-        onClick={() => scrollToReviews(reviewsRef)}
-        onKeyUp={() => scrollToReviews(reviewsRef)}
-        role="button"
-        tabIndex={0}
-      >
-        <u>Read all reviews</u>
-      </span>
+      {productRating !== 0 ? (
+        <>
+          <Stars style={starsStyle} rating={productRating} />
+          <span
+            onClick={() => scrollToReviews(reviewsRef)}
+            onKeyUp={() => scrollToReviews(reviewsRef)}
+            role="button"
+            tabIndex={0}
+          >
+            <u>Read all reviews</u>
+          </span>
+        </>
+      ) : null}
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />
-      <div>{description}</div>
+      <div style={{ marginTop: '5px', marginBottom: '5px' }}>{description}</div>
       { styleInfo.photos && (
-        <span>
+        <span style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <TwitterShareButton url={url} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
@@ -49,6 +53,7 @@ const ProductInfo = ({
           <FacebookShareButton url={url} hashtag="TEAMUSA">
             <FacebookIcon size={32} round />
           </FacebookShareButton>
+
         </span>
       )}
     </div>

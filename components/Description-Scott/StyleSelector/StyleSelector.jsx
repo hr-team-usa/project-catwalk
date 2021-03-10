@@ -57,6 +57,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                           alt="style thumbnail"
                           width="80"
                           height="80"
+                          style={{ margin: '5px' }}
                           roundedCircle
                         />
                         <Image
