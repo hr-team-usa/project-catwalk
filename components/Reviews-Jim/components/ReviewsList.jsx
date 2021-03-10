@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import config from '../../../config';
 
 import Review from './Review';
 import NewReviewForm from './NewReviewForm';
@@ -9,7 +11,7 @@ import NewReviewForm from './NewReviewForm';
 const ReviewsList = ({
   productReviews, sortStatus, handleSortChange, characteristics,
   renderToggle, setRenderToggle, selectedRatings, ratingsLength,
-  productName, productId,
+  productName, productId, setGetToggle,
 }) => {
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
@@ -30,7 +32,7 @@ const ReviewsList = ({
   const filterReviewList = (reviews, count, ratingArray) => {
     if (ratingsLength) {
       const filterArray = [];
-      for (let i = 0; i < count; i += 1) {
+      for (let i = 0; i < renderedReviews.length; i += 1) {
         if (ratingArray.includes(reviews[i].rating)) {
           filterArray.push(reviews[i]);
         }
@@ -46,6 +48,29 @@ const ReviewsList = ({
     setReviewCount(reviewCount + 2);
   };
 
+  const markHelpful = (e, reviewId) => {
+    e.preventDefault();
+    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
+
+    console.log(api);
+    const options = {
+      url: api,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+
+    axios(options)
+      .then((res) => {
+        console.log('Marked as helpful! ', res)
+      })
+      .then(() => {
+        setGetToggle(true);
+      })
+      .catch((err) => { console.log('HELPFUL ERROR', err); });
+  };
+
   useEffect(() => {
     renderReviewList(productReviews, reviewCount);
     setRenderToggle(false);
@@ -56,7 +81,7 @@ const ReviewsList = ({
   }, [ratingsLength]);
 
   return (
-    <div>
+    <div className="review-list">
       <div>
         XXX reviews, sorted by
         <select
@@ -68,15 +93,16 @@ const ReviewsList = ({
           <option value="newest">Newest</option>
         </select>
       </div>
-      {renderedReviews.map((review) => <Review key={review.review_id} review={review} />)}
-      <Button id="more-reviews-btn" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
-      <Button onClick={() => setShow(true)}>Add a Review +</Button>
+      {renderedReviews.map((review) => <Review key={review.review_id} review={review} markHelpful={markHelpful} />)}
+      <Button id="more-reviews-btn" className="review-buttons" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
+      <Button className="review-buttons" onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm
         productName={productName}
         characteristics={characteristics}
         show={show}
         onHide={() => setShow(false)}
         productId={productId}
+        setGetToggle={setGetToggle}
       />
     </div>
   );
@@ -111,6 +137,7 @@ ReviewsList.propTypes = {
   ),
   productName: PropTypes.string.isRequired,
   productId: PropTypes.number.isRequired,
+  setGetToggle: PropTypes.func.isRequired,
 };
 
 ReviewsList.defaultProps = {

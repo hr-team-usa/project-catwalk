@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 
-const Review = ({ review }) => {
+const Review = ({ review, markHelpful }) => {
+  const [helpful, setHelpful] = useState(false);
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dateVal = new Date(review.date);
   const month = monthNames[dateVal.getMonth()];
@@ -11,7 +12,7 @@ const Review = ({ review }) => {
   const year = dateVal.getFullYear();
 
   return (
-    <Container>
+    <Container className="review-card">
       <Row>
         <Col>
           <Rating className="star-rating" value={review.rating} precision={0.25} readOnly />
@@ -44,11 +45,25 @@ const Review = ({ review }) => {
         </Row>
       ) : null}
       <Row>
-        <Col>
-          Helpful? Yes (
-          {review.helpfulness}
-          ) | Report
-        </Col>
+        {helpful ? (
+          <Col>
+            Marked as helpful! (
+            {review.helpfulness}
+            )
+          </Col>
+        ) : (
+          <Col>
+            Was this review helpful?
+            {' '}
+            <span onClick={(e) => { markHelpful(e, review.review_id); setHelpful(true); }}><u>Yes</u></span>
+            {' '}
+            (
+            {review.helpfulness}
+            ) |
+            {' '}
+            <u>Report</u>
+          </Col>
+        )}
       </Row>
 
       <style jsx>
@@ -78,6 +93,7 @@ Review.propTypes = {
     response: PropTypes.string,
     helpfulness: PropTypes.number.isRequired,
   }),
+  markHelpful: PropTypes.func.isRequired,
 };
 
 Review.defaultProps = {

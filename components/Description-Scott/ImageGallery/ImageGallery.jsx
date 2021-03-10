@@ -179,7 +179,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   return (
     <>
       <div className={styles.mainImageContainer}>
-
         {/* Main Image: */}
         <Carousel
           className={carouselStyle}

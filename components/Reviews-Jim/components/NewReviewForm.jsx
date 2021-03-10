@@ -78,9 +78,8 @@ const renderCharacteristics = (char) => {
 };
 
 const NewReviewForm = ({
-  show, onHide, characteristics, productName, productId,
+  show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
-  const [validated, setValidated] = useState(false);
   const [rating, setRating] = useState(0);
   const [recommended, setRecommended] = useState(false);
   const [summary, setSummary] = useState('');
@@ -112,6 +111,9 @@ const NewReviewForm = ({
     axios(options)
       .then((res) => {
         console.log('Review Sent! ', res);
+      })
+      .then(() => {
+        setGetToggle(true);
       })
       .then(() => {
         onHide();
@@ -208,6 +210,7 @@ NewReviewForm.propTypes = {
   ).isRequired,
   productName: PropTypes.string.isRequired,
   productId: PropTypes.number.isRequired,
+  setGetToggle: PropTypes.func.isRequired,
 };
 
 export default NewReviewForm;

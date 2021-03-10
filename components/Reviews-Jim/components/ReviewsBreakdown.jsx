@@ -13,6 +13,10 @@ const ReviewsBreakdown = ({
   const [recommended, setRecommended] = useState(null);
 
   const ratingCreator = (ratingsObj) => {
+    if (!Object.keys(ratingsObj).length) {
+      setProductRating(null);
+      return setRating(null);
+    }
     let allRatings = 0;
     let ratingCount = 0;
     const keys = Object.keys(ratingsObj);
@@ -26,6 +30,12 @@ const ReviewsBreakdown = ({
   };
 
   const reviewPercentage = (ratings, recommend) => {
+    if (!recommend) {
+      return setRecommended(0);
+    }
+    if (!Object.keys(ratings).length) {
+      return setRecommended('empty');
+    }
     let totalRatings = 0;
     const values = Object.values(ratings);
     for (let i = 0; i < values.length; i += 1) {
@@ -37,16 +47,19 @@ const ReviewsBreakdown = ({
   useEffect(() => {
     ratingCreator(productMeta.ratings);
     reviewPercentage(productMeta.ratings, productMeta.recommended.true);
-  }, []);
+  }, [productMeta]);
 
   return (
     <div>
       <div className="avg-rating">{rating}</div>
       <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
-      <div>
-        {recommended}
-        % of reviews recommend this product
-      </div>
+      <br />
+      {recommended ? (
+        <>
+          {recommended}
+          % of reviews recommend this product
+        </>
+      ) : <>No reviews recommend this product</>}
       <RatingBreakdown
         ratings={productMeta.ratings}
         selectedRatings={selectedRatings}
