@@ -77,13 +77,11 @@ const SelectSize = ({
             placement, arrowprops, show: _show, popper, ...props
           }) => ( // made this arrowprops lowercase to rid error -Jim -MichaelScott
             <div
-              {...props}
               style={{
                 backgroundColor: 'rgba(255, 100, 100, 0.85)',
                 padding: '2px 10px',
                 color: 'white',
                 borderRadius: 3,
-                ...props.style,
               }}
             >
               Please select a size
