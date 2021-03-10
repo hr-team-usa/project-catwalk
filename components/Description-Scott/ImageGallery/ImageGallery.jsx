@@ -194,6 +194,28 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             </Carousel.Item>
 
           )) : null}
+          {index === 0
+            ? (
+              <style type="text/css">
+                {`
+              .carousel-control-prev {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
+          {index === fullSizeImages.length - 1
+            ? (
+              <style type="text/css">
+                {`
+              .carousel-control-next {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
         </Carousel>
         <button
           onClick={() => {
