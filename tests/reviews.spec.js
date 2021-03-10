@@ -143,7 +143,7 @@ const productMeta = {
 
 // USE beforeEach() TO START EACH TEST WITH THE SAME CODE (LIKE A WRAPPER)
 
-xdescribe('Reviews Component', () => {
+describe('Reviews Component', () => {
 
   describe('Jest tests that test the Jest!', () => {
     it('should expect true to equal true', () => {
