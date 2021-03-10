@@ -181,6 +181,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       <div className={styles.mainImageContainer}>
         {/* Main Image: */}
         <Carousel
+          id="maincarousel"
           className={carouselStyle}
           indicators={view === 'expanded'}
           interval={null}
@@ -198,7 +199,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             ? (
               <style type="text/css">
                 {`
-              .carousel-control-prev {
+              #maincarousel .carousel-control-prev {
                 visibility: hidden;
               }
             `}
@@ -209,7 +210,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             ? (
               <style type="text/css">
                 {`
-              .carousel-control-next {
+              #maincarousel .carousel-control-next {
                 visibility: hidden;
               }
             `}
