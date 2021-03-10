@@ -18,7 +18,7 @@ const RelatedProducts = ({
   const starStyle = {
     display: 'inline',
   };
-  
+
   if (products.length === 0) {
     products = [
       {
