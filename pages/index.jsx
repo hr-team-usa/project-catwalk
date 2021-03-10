@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Container>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           😎 NEXT Level Made in USA
         </Navbar.Brand>
         <NavDropdown title="Cart" id="basic-nav-dropdown">

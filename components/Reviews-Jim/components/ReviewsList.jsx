@@ -50,7 +50,7 @@ const ReviewsList = ({
 
   const markHelpful = (e, reviewId) => {
     e.preventDefault();
-    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
+    const api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
 
     console.log(api);
     const options = {
