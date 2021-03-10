@@ -24,8 +24,13 @@ describe('QAs test suite', () => {
     });
   });
 
+<<<<<<< HEAD
+  xdescribe('Test Add Question Button component', () => {
+    it('Test click event', () => {
+=======
   describe('Test Add Question Button component', () => {
     xit('Test click event', () => {
+>>>>>>> 74877e5057d67deaa496531d8ef777476ee25e91
       const mockCallBack = jest.fn();
       const button = shallow((<AddQuestion
         variant="primary"
