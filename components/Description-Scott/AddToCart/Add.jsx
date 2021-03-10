@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import 'bootswatch/dist/lux/bootstrap.min.css';
 
 const Add = ({
-  quantitySelected, isOutOfStock, sku, setInvalidAdd,
+  quantitySelected, isOutOfStock, sku, setInvalidAdd, setCart, cart, productName,
 }) => {
   const clickHandler = () => {
     if (sku.size === 'Select Size') {
       setInvalidAdd(true);
     } else {
       // Actual add to cart here...
-      alert(`Added to Cart: size - ${sku.size}, quantity: ${quantitySelected}`);
+      setCart([...cart, { name: productName, size: sku.size, quantity: quantitySelected }]);
     }
   };
 
@@ -20,9 +21,9 @@ const Add = ({
   return (
     <>
       <Button
-        style={{ marginTop: '5px', width: '120px' }}
+        style={{ marginTop: '5px', width: '40%' }}
         onClick={clickHandler}
-        variant="success"
+        variant="primary"
       >
         Add to Cart
       </Button>
@@ -37,6 +38,10 @@ Add.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   sku: PropTypes.object,
   setInvalidAdd: PropTypes.func.isRequired,
+  setCart: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cart: PropTypes.array.isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
 Add.defaultProps = {

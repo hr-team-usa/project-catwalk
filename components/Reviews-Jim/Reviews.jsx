@@ -18,6 +18,7 @@ const Reviews = ({
   const [renderToggle, setRenderToggle] = useState(false);
   const [selectedRatings, setSelectedRatings] = useState([]);
   const [ratingsLength, setRatingsLength] = useState(selectedRatings.length);
+  const [getToggle, setGetToggle] = useState(false);
 
   const getProductReviews = (product, sort, count = null) => {
     let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/?product_id=${product}&sort=${sort}`;
@@ -37,6 +38,9 @@ const Reviews = ({
     axios(options)
       .then((res) => {
         setProductReviews(res.data.results);
+      })
+      .then(() => {
+        setGetToggle(false);
       })
       .then(() => {
         setRenderToggle(true);
@@ -69,7 +73,7 @@ const Reviews = ({
   useEffect(() => {
     getProductReviews(productId, sortStatus);
     getProductMeta(productId);
-  }, [sortStatus, productId]);
+  }, [sortStatus, productId, getToggle]);
 
   return (
     <Container>
@@ -99,6 +103,7 @@ const Reviews = ({
               ratingsLength={ratingsLength}
               productName={productName}
               productId={productId}
+              setGetToggle={setGetToggle}
             />
           ) : null}
         </Col>

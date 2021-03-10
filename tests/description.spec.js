@@ -5,6 +5,11 @@ import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 
 import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx';
+import Add from '../components/Description-Scott/AddToCart/Add.jsx';
+import Price from '../components/Description-Scott/ProductInfo/Price.jsx';
+import StyleSelector from '../components/Description-Scott/StyleSelector/StyleSelector.jsx';
+import ProductInfo from '../components/Description-Scott/ProductInfo/ProductInfo.jsx';
+import ImageGallery from '../components/Description-Scott/ImageGallery/ImageGallery.jsx';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -36,7 +41,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
+      const wrapper = mount(<SelectSize styleInfo={outOfStock} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -63,7 +68,7 @@ describe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={()=>{}} setIsOutOfStock={()=>{}} invalidAdd={false} setInvalidAdd={()=>{}}/>);
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -90,5 +95,324 @@ describe('product description test suite', () => {
         - lots of the info online is NOT written with jest methods, so you'll need to find the equivalent syntax here (ie. .toHaveLength, .toBe, etc.)
       */
     })
+
+    xit('displays only in-stock styles in the dropdown when clicked', () => {
+      const styleInfo = {
+        style_id: 96887,
+        name: "Forest Green & Black",
+        skus: {
+          560837: { quantity: 6, size: "XS" },
+          560838: { quantity: 0, size: "S" },
+          560839: { quantity: 9, size: "M" },
+        },
+      }
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+      expect(mockUseEffect).toHaveBeenCalled();
+
+      // simulate a click of the DropdownButton
+      // expec the number of dropdown items to be three ("XS, M, and Select Size")
+      console.log('wrapper ', wrapper.debug());
+
+      const dropdown = wrapper.find('DropdownButton');
+
+      const dropdownButton = dropdown.find('Dropdown');
+      dropdown.simulate('click');
+      // after clicking, four buttons should be rendered
+
+      expect(dropdown.find('DropdownItem')).toHaveLength(4);
+    })
   })
+
+  describe('Add to Cart button tests', () => {
+
+    it('displays a button when items are in stock', () => {
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={false} sku={null} setInvalidAdd={() => { }} setCart={() => {}} cart={[]} productName={'dummy'}/>);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const button = wrapper.find('button')
+      expect(button).toHaveLength(1);
+    });
+
+    it('does not display a button when items are out of stock', () => {
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={true} sku={null} setInvalidAdd={() => { }} setCart={() => {}} cart={[]} productName={'dummy'} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const button = wrapper.find('button')
+      expect(button).toHaveLength(0);
+    });
+  })
+
+  describe('Price component tests', () => {
+    it('displays the sale price (with a "$") when a style has a sale price', () => {
+
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Price styleInfo={{
+        style_id: 96887,
+        name: "Forest Green & Black",
+        original_price: "200.00",
+        sale_price: "100.00",
+      }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const salePrice = wrapper.find('span.salePrice')
+      expect(salePrice).toHaveLength(1);
+      expect(salePrice.text()).toBe('$100.00')
+    })
+
+
+    it('only displays original price when sale price is null', () => {
+
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<Price styleInfo={{
+        style_id: 96887,
+        name: "Forest Green & Black",
+        original_price: "200.00",
+        sale_price: null,
+      }} />);
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+
+      const salePrice = wrapper.find('span.salePrice')
+      expect(salePrice).toHaveLength(0);
+      expect(wrapper.text()).toBe('$200.00');
+    })
+  })
+
+  describe('Style Selector component tests', () => {
+    var allStyles = [
+      {
+        'default?': true,
+        name: "Forest Green & Black",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: null,
+        skus: {},
+        style_id: 96887,
+      },
+      {
+        'default?': false,
+        name: "Desert Brown & Tan",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: null,
+        skus: {},
+        style_id: 96888,
+      },
+      {
+        'default?': false,
+        name: "Ocean Blue & Grey",
+        original_price: "140.00",
+        photos: [{
+          thumbnail_url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1556304653-cba65c59b3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2761&q=80"
+        }, {
+          thumbnail_url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+          url: "https://images.unsplash.com/photo-1544131750-2985d621da30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80"
+        }],
+        sale_price: "100.00",
+        skus: {},
+        style_id: 96889,
+      }
+    ]
+
+    var styleInfo = allStyles[0];
+
+    xit('updates the displayed style name when a new style is clicked', () => {
+
+      // const mockUseEffect = jest.fn();
+      // React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {
+        // how do we update the styleInfo prop that is passed to the StyleSelector component???
+      }} />);
+
+      // mockUseEffect.mockClear();
+      // wrapper.setProps();
+      // expect(mockUseEffect).toHaveBeenCalled();
+
+      expect(wrapper.find('h5').text()).toBe("Style >Forest Green & Black");
+
+      const styleThumbnails = wrapper.find('img.selectedThumbnail');
+      expect(styleThumbnails).toHaveLength(3);
+      const newStyle = styleThumbnails.at(1);
+      console.log('newStyleImg ', newStyle.debug());
+
+      // newStyle.simulate('click');
+      newStyle.prop('onClick')();
+
+      // expect handleClick to have been called
+
+      wrapper.update();
+
+      //expect the h5 to now read the new style name
+      expect(wrapper.find('h5').text()).toBe("Style >Desert Brown & Tan");
+
+      // console.logs placed in handleClick show that it is being called with the new styleId, but this doesnt change the styleInfo prop that is passed into our component.
+
+    })
+
+    it('displays a checkmark on the currently selected style', () => {
+      styleInfo = allStyles[2]
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {}} />);
+
+      expect(wrapper.find('Image.checkmark').at(0).prop('hidden')).toBe(true);
+      expect(wrapper.find('Image.checkmark').at(1).prop('hidden')).toBe(true);
+      expect(wrapper.find('Image.checkmark').at(2).prop('hidden')).toBe(false);
+    })
+  })
+
+  describe('Product Info component tests', () => {
+
+    it('displays Stars component if productRating is not 0', () => {
+
+      const wrapper = mount(<ProductInfo
+        productName='Parachute Pants'
+        category='pants'
+        description='very comfortable pants'
+        styleInfo={{
+          style_id: 96887,
+          name: "Forest Green & Black",
+          original_price: "200.00",
+          sale_price: null,
+        }}
+        productRating='3.4'
+        reviewsref={null}
+      />);
+
+      const stars = wrapper.find('Stars')
+      expect(stars).toHaveLength(1);
+    })
+
+    it('does not display Stars component if productRating is null', () => {
+
+      const wrapper = mount(<ProductInfo
+        productName='Parachute Pants'
+        category='pants'
+        description='very comfortable pants'
+        styleInfo={{
+          style_id: 96887,
+          name: "Forest Green & Black",
+          original_price: "200.00",
+          sale_price: null,
+        }}
+        productRating={null}
+        reviewsref={null}
+      />);
+
+      expect(wrapper.find('Stars')).toHaveLength(0);
+    })
+  })
+
+  describe('Image Gallery component tests', () => {
+    it('renders seven thumbnails when seven exist', () => {
+      const wrapper = mount(<ImageGallery
+        styleInfo={{
+          'default?': true,
+          name: "Forest Green & Black",
+          original_price: "140.00",
+          photos: [{ thumbnail_url: "https://images.unsplash.com/photo-1501088430049-71…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1501088430049-71…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1534011546717-40…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1534011546717-40…cHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1549831243-a69a0…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1549831243-a69a0…cHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1527522883525-97…2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1527522883525-97…2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1556648202-80e75…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1556648202-80e75…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1532543491484-63…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1532543491484-63…cHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80" },
+          { thumbnail_url: "dummy", url: "dummy" }
+          ],
+          sale_price: null,
+          style_id: 96887,
+        }}
+        setIsExpanded={() => { }}
+      />);
+
+      expect(wrapper.find('button.upArrow')).toHaveLength(0);
+      expect(wrapper.find('CardImg')).toHaveLength(7);
+    })
+
+    it('does not render more than seven thumbnails at a time when more than seven exist', () => {
+      const wrapper = mount(<ImageGallery
+        styleInfo={{
+          'default?': true,
+          name: "Forest Green & Black",
+          original_price: "140.00",
+          photos: [{ thumbnail_url: "https://images.unsplash.com/photo-1501088430049-71…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1501088430049-71…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1534011546717-40…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1534011546717-40…cHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1549831243-a69a0…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1549831243-a69a0…cHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1527522883525-97…2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1527522883525-97…2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "https://images.unsplash.com/photo-1556648202-80e75…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80", url: "https://images.unsplash.com/photo-1556648202-80e75…hcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" },
+          { thumbnail_url: "000", url: "000" },
+          { thumbnail_url: "111", url: "111" },
+          { thumbnail_url: "222", url: "222" },
+          { thumbnail_url: "333", url: "333" }
+          ],
+          sale_price: null,
+          style_id: 96887,
+        }}
+        setIsExpanded={() => { }}
+      />);
+
+      expect(wrapper.find('CardImg')).toHaveLength(7);
+    })
+
+    it('displays arrow buttons when more than seven thumbnails exist', () => {
+      const wrapper = mount(<ImageGallery
+        styleInfo={{
+          'default?': true,
+          name: "Forest Green & Black",
+          original_price: "140.00",
+          photos: [
+          { thumbnail_url: "000", url: "000" },
+          { thumbnail_url: "111", url: "111" },
+          { thumbnail_url: "222", url: "222" },
+          { thumbnail_url: "333", url: "333" },
+          { thumbnail_url: "444", url: "444" },
+          { thumbnail_url: "555", url: "555" },
+          { thumbnail_url: "666", url: "666" },
+          { thumbnail_url: "777", url: "777" },
+          { thumbnail_url: "888", url: "888" },
+          ],
+          sale_price: null,
+          style_id: 96887,
+        }}
+        setIsExpanded={() => { }}
+      />);
+
+      expect(wrapper.find('button.upArrow')).toHaveLength(2);
+    })
+  })
+
 })

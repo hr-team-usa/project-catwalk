@@ -12,7 +12,7 @@ import AddToCart from './AddToCart/AddToCart';
 
 const ProductDescription = ({
   productId, productRating, reviewsRef, setProductNameGlobal,
-  setCurrentProductData, setCurrentStyleData,
+  setCurrentProductData, setCurrentStyleData, setCart, cart,
 }) => {
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
@@ -73,12 +73,12 @@ const ProductDescription = ({
   }, [productId]);
   return (
     <div>
-      <Container>
+      <Container className="container-fluid">
         <Row>
-          <Col>
+          <Col className="col-7">
             <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
-          <Col>
+          <Col className="col-5">
             {isExpanded ? null
               : (
                 <>
@@ -103,7 +103,12 @@ const ProductDescription = ({
                   </div>
                   <Divider />
                   <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                    <AddToCart styleInfo={styleInfo} />
+                    <AddToCart
+                      styleInfo={styleInfo}
+                      setCart={setCart}
+                      cart={cart}
+                      productName={productName}
+                    />
                   </div>
                 </>
               )}
@@ -122,6 +127,9 @@ ProductDescription.propTypes = {
   setCurrentProductData: PropTypes.func.isRequired,
   setCurrentStyleData: PropTypes.func.isRequired,
   setProductNameGlobal: PropTypes.func.isRequired,
+  setCart: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cart: PropTypes.array.isRequired,
 };
 
 ProductDescription.defaultProps = {

@@ -25,3 +25,21 @@
 .carousel-control-next, .carousel-control-prev {
   z-index: 0;
 }
+
+/* REVIEWS */
+
+.review-card {
+  margin: 20px 0px;
+}
+
+.review-buttons {
+  margin: 0px 10px;
+}
+
+#__next {
+  background-color: gray;
+}
+
+.App {
+  background-color: white;
+}
