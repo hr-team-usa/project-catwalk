@@ -12,7 +12,7 @@ import AddQuestion from '../components/QAs-Malcolm/components/AddQuestion';
 import QASearchBar from '../components/QAs-Malcolm/components/SearchBar';
 import Questions from '../components/QAs-Malcolm/components/Questions';
 
-xdescribe('QAs test suite', () => {
+describe('QAs test suite', () => {
   describe('Parent Component', () => {
     it('renders QAs component', () => {
       const wrapper = shallow(<QAs productId={1234} productName="prod name" />);
@@ -24,7 +24,7 @@ xdescribe('QAs test suite', () => {
     });
   });
 
-  describe('Test Add Question Button component', () => {
+  xdescribe('Test Add Question Button component', () => {
     it('Test click event', () => {
       const mockCallBack = jest.fn();
       const button = shallow((<AddQuestion

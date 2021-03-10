@@ -7,7 +7,7 @@ import ReviewsList from '../components/Reviews-Jim/components/ReviewsList';
 
 afterEach(cleanup);
 
-xdescribe('Reviews Widget', () => {
+describe('Reviews Widget', () => {
   it('should fetch product review data', async () => {
     const productId = '18201';
     const {} = render(<ReviewsList productId={productId} />);
