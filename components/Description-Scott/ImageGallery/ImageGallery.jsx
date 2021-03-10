@@ -182,7 +182,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         {/* Main Image: */}
         <Carousel
           className={carouselStyle}
-          indicators={false}
+          indicators={view === 'expanded'}
           interval={null}
           activeIndex={index}
           onSelect={handleSelect}
