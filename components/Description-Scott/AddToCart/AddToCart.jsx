@@ -12,7 +12,7 @@ const AddToCart = ({ styleInfo }) => {
   const [invalidAdd, setInvalidAdd] = useState(false);
   return (
     <>
-      <Row>
+      <Row style={{ marginTop: '5px', marginBottom: '5px' }}>
         <Col>
           <SelectSize
             styleInfo={styleInfo}
