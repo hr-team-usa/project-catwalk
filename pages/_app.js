@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 /* eslint-disable */
 import 'bootstrap/dist/css/bootstrap.min.css';
