@@ -86,6 +86,13 @@ const NewReviewForm = ({
   const [body, setBody] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  // const [state, setState] = useState({});
+
+  // const stateListener = e => {
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);
+  //   setState({ ...state, [e.target.name]: (e.target.value) });
+  // };
 
   const sendReview = () => {
     const options = {
@@ -118,7 +125,7 @@ const NewReviewForm = ({
       .then(() => {
         onHide();
       })
-      .catch((err) => { console.log('POST REVIEW ERROR ', options.body); });
+      .catch((err) => { console.log('POST REVIEW ERROR ', err); });
   };
 
   return (
@@ -169,7 +176,8 @@ const NewReviewForm = ({
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
-            <Form.Control type="" placeholder="Example: Best purchase ever!" onChange={(e) => setSummary(e.target.value)} />
+            <Form.Control type="" placeholder="Example: Best purchase ever!" maxLength="60" onChange={(e) => setSummary(e.target.value)} />
+            <Form.Text>{summary.length}/60 characters max</Form.Text>
           </Form.Group>
           <Form.Group>
             <Form.Label>Review body *</Form.Label>

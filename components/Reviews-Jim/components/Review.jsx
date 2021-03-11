@@ -22,7 +22,7 @@ const Review = ({ review, markReview }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="review-summary">
           {review.summary}
         </Col>
       </Row>
