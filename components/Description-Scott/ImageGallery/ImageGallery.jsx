@@ -240,6 +240,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
                   src={thumbnailObj.thumbnail}
                   onClick={() => handleSelect(thumbnailObj.index)}
+                  alt="thumbnail image"
                 />
               </Card>
             ))
