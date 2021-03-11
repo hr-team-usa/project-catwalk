@@ -53,31 +53,31 @@ const RatingBreakdown = ({
 
   return (
     <div className={classes.root}>
-      <div role="button" onClick={(e) => clickListen(e, 5)}>
+      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 5)}>
         5 Stars (
         {ratings['5'] ? ratings['5'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['5'])} />
       </div>
-      <div role="button" onClick={(e) => clickListen(e, 4)}>
+      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 4)}>
         4 Stars (
         {ratings['4'] ? ratings['4'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['4'])} />
       </div>
-      <div role="button" onClick={(e) => clickListen(e, 3)}>
+      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 3)}>
         3 Stars (
         {ratings['3'] ? ratings['3'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['3'])} />
       </div>
-      <div role="button" onClick={(e) => clickListen(e, 2)}>
+      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 2)}>
         2 Stars (
         {ratings['2'] ? ratings['2'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['2'])} />
       </div>
-      <div role="button" onClick={(e) => clickListen(e, 1)}>
+      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 1)}>
         1 Stars (
         {ratings['1'] ? ratings['1'] : '0'}
         )
