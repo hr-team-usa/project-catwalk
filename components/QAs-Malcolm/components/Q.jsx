@@ -23,6 +23,9 @@ function Q(props) {
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
   const [photosArr, setPhotosArr] = useState([]);
+  const [helpfulA, setHelpfulA] = useState(false);
+  const [helpfulQ, setHelpfulQ] = useState(false);
+  const [image, setImage] = useState('');
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -63,31 +66,31 @@ function Q(props) {
 
   useEffect(() => {
     parseAnswers();
-  }, []);
+  }, [helpfulA]);
 
-  const handleClick = (e) => {
+  const handleClick = (e, id) => {
     e.preventDefault();
-    if (clicked === false) {
-      let qaPath = 'answers';
-      if (e.target.parentNode.id.length === 6) {
-        qaPath = 'questions';
-      } else {
-        qaPath = 'answers';
-      }
-      const options = {
-        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
-        method: 'put',
-        headers: {
-          Authorization: config.TOKEN,
-        },
-      };
-      axios(options)
-        .then(() => props.setRender(true))
-        .then(() => setClicked(true))
-        .catch((err) => console.log(err));
+    // if (clicked === false) {
+    let qaPath = 'answers';
+    if (e.target.parentNode.id.length === 6) {
+      qaPath = 'questions';
     } else {
-      window.alert("We're glad you found this helpful!");
+      qaPath = 'answers';
     }
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${id}/helpful`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => props.setRender(true))
+      .then(() => setClicked(true))
+      .catch((err) => console.log(err));
+    // } else {
+    //   window.alert("We're glad you found this helpful!");
+    // }
   };
 
   const report = (e) => {
@@ -153,13 +156,13 @@ function Q(props) {
                       height={78}
                       key={i}
                       thumbnail
-                      onClick={() => setShowImage(true)}
+                      onClick={() => { setShowImage(true); setImage(img); }}
                     />
                     <ImageModal
                       variant="primary"
                       show={showImage}
                       onHide={() => setShowImage(false)}
-                      img={answer.photos[i]}
+                      img={image}
                       key={i + 1}
                     />
                   </>
@@ -179,14 +182,23 @@ function Q(props) {
       &nbsp;
               {formatDate(answer.date)}
             </Col>
-            <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
-              Helpful?
-              {' '}
-              <u onClick={(e) => { handleClick(e); }}>Yes</u>
-              (
-              {answer.helpfulness}
-              )
-            </Col>
+            {helpfulA ? (
+              <Col sm="auto" style={answerStyle}>
+                Marked as Helpful! (
+                {answer.helpfulness}
+                )
+              </Col>
+            )
+              : (
+                <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
+                  Helpful?
+                  {' '}
+                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(true); }}>Yes</u>
+                  (
+                  {answer.helpfulness}
+                  )
+                </Col>
+              )}
             <Col sm="auto" style={resultStyle}>
               <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
@@ -205,14 +217,27 @@ function Q(props) {
           {props.question.question_body}
         </strong>
       </Col>
-      <Col id={props.question.question_id} sm="auto" style={questionStyle}>
-        Helpful?
-        {' '}
-        <u onClick={(e) => { handleClick(e); }}>Yes</u>
-        (
-        {props.question.question_helpfulness}
+      {helpfulQ
+        ? (
+          <Col sm="auto" style={questionStyle}>
+            Marked as Helpful!
+            (
+            {props.question.question_helpfulness}
+            )
+          </Col>
         )
-      </Col>
+        : (
+          <Col id={props.question.question_id} sm="auto" style={questionStyle}>
+            Helpful?
+            {' '}
+            <u onClick={(e) => { handleClick(e, props.question.question_id); setHelpfulQ(true); }}>
+              Yes
+            </u>
+            (
+            {props.question.question_helpfulness}
+            )
+          </Col>
+        )}
       <Col sm="auto" style={resultStyle}>
         <u onClick={() => setShow(true)}>Add Answer</u>
         <AddAnswer

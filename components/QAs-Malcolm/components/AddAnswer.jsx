@@ -153,12 +153,6 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                {/* <Form.File
-                  accept="image/*"
-                  className="position-relative"
-                  name="image"
-                  onChange={(e) => handleAddPhoto(e)}
-                /> */}
                 <DropzoneArea />
                 <Button size="sm">Add Photos</Button>
                 <br />
