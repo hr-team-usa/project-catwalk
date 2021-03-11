@@ -48,9 +48,16 @@ const ReviewsList = ({
     setReviewCount(reviewCount + 2);
   };
 
-  const markHelpful = (e, reviewId) => {
+  const markReview = (e, reviewId, string) => {
     e.preventDefault();
-    const api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
+    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/`;
+
+    if (string === 'Yes') {
+      api += 'helpful';
+    }
+    if (string === 'Report') {
+      api += 'report';
+    }
 
     const options = {
       url: api,
@@ -62,10 +69,13 @@ const ReviewsList = ({
 
     axios(options)
       .then((res) => {
-        console.log('Marked as helpful! ', res);
+        console.log('PUT success ', res);
       })
       .then(() => {
         setGetToggle(true);
+      })
+      .then(() => {
+        (string === 'Report') ? alert('This review has been reported') : null
       })
       .catch((err) => { console.log('HELPFUL ERROR', err); });
   };
@@ -95,7 +105,7 @@ const ReviewsList = ({
           <option value="newest">Newest</option>
         </select>
       </div>
-      {renderedReviews.map((review) => <Review key={review.review_id} review={review} markHelpful={markHelpful} />)}
+      {renderedReviews.map((review) => <Review key={review.review_id} review={review} markReview={markReview} />)}
       <Button id="more-reviews-btn" className="review-buttons" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
       <Button className="review-buttons" onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm

@@ -44,6 +44,10 @@
   margin: 0px 10px;
 }
 
+.review-summary {
+  font-weight: 900;
+}
+
 .char-rating {
   margin: 10px 0px;
   width: 100%;
