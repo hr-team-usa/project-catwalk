@@ -68,6 +68,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       }
       thumbnailGroups.push(currentGroup);
     }
+    if (index >= thumbnails.length) {
+      setIndex(0);
+    }
     setThumbCarousel(thumbnailGroups);
   };
 
@@ -124,7 +127,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'expanded':
@@ -135,7 +137,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'zoomed':
