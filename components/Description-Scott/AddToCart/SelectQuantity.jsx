@@ -1,9 +1,13 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const SelectQuantity = ({ sku, setQuantitySelected }) => {
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
+
   const [currentQuantity, setCurrentQuantity] = useState(1);
   const [quantityAvailable, setQuantityAvailable] = useState(0);
 
@@ -58,7 +62,14 @@ const SelectQuantity = ({ sku, setQuantitySelected }) => {
   }
 
   return (
-    <span>
+    <span
+      onClick={() => {
+        trackEvent({ element: 'Select Quantity', time: new Date() });
+      }}
+      onKeyUp={() => {
+        trackEvent({ element: 'Select Quantity', time: new Date() });
+      }}
+    >
       {/* eslint-disable-next-line block-scoped-var */}
       {quantityAvailable > 0 ? stock : emptyStock}
     </span>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import 'bootswatch/dist/lux/bootstrap.min.css';
@@ -6,6 +7,7 @@ import 'bootswatch/dist/lux/bootstrap.min.css';
 const Add = ({
   quantitySelected, isOutOfStock, sku, setInvalidAdd, setCart, cart, productName,
 }) => {
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
   const clickHandler = () => {
     if (sku.size === 'Select Size') {
       setInvalidAdd(true);
@@ -13,6 +15,7 @@ const Add = ({
       // Actual add to cart here...
       setCart([...cart, { name: productName, size: sku.size, quantity: quantitySelected }]);
     }
+    trackEvent({ element: 'Add to Cart', time: new Date() });
   };
 
   if (isOutOfStock) {

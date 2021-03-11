@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line object-curly-newline
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import styleSheet from './StyleSelector.module.css';
 
 const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
+
   const [styles, setStyles] = useState([]);
 
   const handleClick = (styleId) => {
@@ -36,7 +39,14 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
 
   return (
     <div>
-      <Container>
+      <Container
+        onClick={() => {
+          trackEvent({ element: 'Style Selector', time: new Date() });
+        }}
+        onKeyUp={() => {
+          trackEvent({ element: 'Style Selector', time: new Date() });
+        }}
+      >
         <h5>
           Style &gt;
           {`${styleInfo.name}`}

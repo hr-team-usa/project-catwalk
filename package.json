@@ -30,8 +30,6 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootswatch": "^4.6.0",
-    "formik": "^2.2.6",
-    "lodash": "^4.17.21",
     "material-ui-dropzone": "^3.5.0",
     "material-ui-search-bar": "^1.0.0",
     "next": "^10.0.7",
@@ -41,7 +39,7 @@
     "react-dom": "^17.0.1",
     "react-image-magnify": "^2.1.1",
     "react-share": "^4.4.0",
-    "yup": "^0.32.9"
+    "react-tracking": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",
