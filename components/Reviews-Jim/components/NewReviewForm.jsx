@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -81,6 +81,8 @@ const NewReviewForm = ({
   show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
   const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [hoverText, setHoverText] = useState('');
   const [recommended, setRecommended] = useState(null);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -93,6 +95,35 @@ const NewReviewForm = ({
   //   console.log(e.target.value);
   //   setState({ ...state, [e.target.name]: (e.target.value) });
   // };
+
+  const ratingPhrase = (num) => {
+    switch (num) {
+      case 0 || -1:
+        setHoverText('');
+        break;
+      case 1:
+        setHoverText('Poor');
+        break;
+      case 2:
+        setHoverText('Not very good');
+        break;
+      case 3:
+        setHoverText('Decent');
+        break;
+      case 4:
+        setHoverText('Pretty good');
+        break;
+      case 5:
+        setHoverText('Excellent');
+        break;
+      default:
+        setHoverText('');
+    }
+  };
+
+  useEffect(() => {
+    ratingPhrase(hover);
+  }, [hover]);
 
   const validationCheck = () => {
     const required = [];
@@ -189,10 +220,16 @@ const NewReviewForm = ({
             <Rating
               name="product-rating"
               value={rating}
+              precision={1}
               onChange={(event, newValue) => {
                 setRating(newValue);
               }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
             />
+            {' '}
+            <span>{hoverText}</span>
           </Form.Group>
           <Form.Group>
             <Form.Label>Do you recommend this product? (required)</Form.Label>
