@@ -13,10 +13,10 @@ function AddMore({
 
   const handleChange = (e) => {
     if (count === '&count=4') {
-      setCount('');
+      setCount('&count=100');
       e.target.innerHTML = 'LESS ANSWERED QUESTIONS';
     }
-    if (count === '') {
+    if (count === '&count=100') {
       setCount('&count=4');
       e.target.innerHTML = 'MORE ANSWERED QUESTIONS';
     }

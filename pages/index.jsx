@@ -29,11 +29,20 @@ const App = () => {
       <Container className={isDarkMode ? styles.darkMode : null}>
         <Navbar bg="dark" variant="dark" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Navbar.Brand href="#home">
-            😎 NEXT Level Made in USA
+            😎
+            <strong style={{ fontSize: '20px', fontFamily: 'Palatino', marginLeft: '10px' }}>NEXT Level</strong>
+            <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in USA</i></span>
           </Navbar.Brand>
           <NavDropdown title="Cart" id="basic-nav-dropdown">
             {cart.length > 0 ? cart.map((item, index) => (
-              <NavDropdown.Item key={index}>{`${item.name}`}</NavDropdown.Item>
+              // eslint-disable-next-line react/no-array-index-key
+              <NavDropdown.Item key={index}>
+                {`${item.name}`}
+                (
+                {`${item.size}`}
+                ) x
+                {`${item.quantity}`}
+              </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
           </NavDropdown>

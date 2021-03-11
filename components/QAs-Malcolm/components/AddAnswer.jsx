@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { DropzoneArea } from 'material-ui-dropzone';
 import config from '../../../config';
 
 function AddAnswer(props) {
@@ -26,6 +25,9 @@ function AddAnswer(props) {
     }
     if (e.target.name === 'email') {
       setEmail(e.target.value);
+    }
+    if (e.target.name === 'photo') {
+      setPhotos(e.target.value);
     }
   };
 
@@ -56,6 +58,7 @@ function AddAnswer(props) {
   //   const reader = new FileReader();
   //   const url = reader.readAsDataURL(file.name);
   // };
+
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -111,17 +114,26 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                {/* <Form.File
-                  accept="image/*"
-                  className="position-relative"
-                  name="image"
-                  onChange={(e) => handleAddPhoto(e)}
-                /> */}
-                <DropzoneArea />
-                <Button size="sm">Add Photos</Button>
+
+                <Form.Group
+                  controlId="addPhoto"
+                  onChange={(e) => { handleChange(e); }}
+                  required
+                >
+                  <Form.Label>Add Photos</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Photo URL"
+                    maxLength={1000}
+                    name="photo"
+                  />
+                  <Form.Text className="text-muted">
+                    Please copy and past full photo URL
+                  </Form.Text>
+                </Form.Group>
                 <br />
                 <br />
-                <Button variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button variant="primary" type="submit" onClick={() => submitQ()} onSubmit={submitQ()}>
                   Submit
                 </Button>
               </Form>
