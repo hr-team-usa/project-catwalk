@@ -52,6 +52,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
           {`${styleInfo.name}`}
         </h5>
         {styles.length > 0 ? styles.map((group, j) => (
+          // eslint-disable-next-line react/no-array-index-key
           <Row key={j}>
             <Col>
               {group.length > 0 ? group.map((style, i) => (
