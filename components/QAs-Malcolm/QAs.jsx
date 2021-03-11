@@ -29,7 +29,7 @@ const QAs = ({ productId, productName }) => {
   useEffect(() => {
     getQuestions();
     setRender(false);
-  }, [render, count]);
+  }, [render, count, productId]);
 
   return (
     <div>
