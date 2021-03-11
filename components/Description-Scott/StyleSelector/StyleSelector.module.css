@@ -7,8 +7,8 @@
 .checkmark {
   position: absolute;
   z-index: 1;
-  transform: translate(-100%, 0%);
-  -ms-transform: translate(-100%, 0%);
+  transform: translate(-140%, 30%);
+  -ms-transform: translate(-140%, 30%);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: white;

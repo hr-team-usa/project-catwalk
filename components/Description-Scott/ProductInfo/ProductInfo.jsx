@@ -14,7 +14,7 @@ import Stars from '../../Reviews-Jim/components/Stars';
 const ProductInfo = ({
   productName, category, description, styleInfo, productRating, reviewsRef,
 }) => {
-  const {trackEvent } = useTracking({ module: 'Product Overview' });
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
 
   const url = 'http://localhost:3000/';
   const starsStyle = {
