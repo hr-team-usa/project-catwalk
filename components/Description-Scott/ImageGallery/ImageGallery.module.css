@@ -4,7 +4,7 @@
 }
 
 .carouselExpanded {
-  width: 1110px;
+  width: inherit;
   height: 650px;
   z-index: 2;
   background-color:white;

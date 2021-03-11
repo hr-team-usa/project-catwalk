@@ -79,52 +79,68 @@ const ProductDescription = ({
       <div>
         <Container className="container-fluid">
           <Row>
-            <Col
-              className="col-7"
-              onClick={() => {
-                trackEvent({ element: 'Image Gallery', time: new Date() });
-              }}
-            >
-              <ImageGallery
-                styleInfo={styleInfo}
-                setIsExpanded={setIsExpanded}
-              />
-            </Col>
-            <Col className="col-5">
-              {isExpanded ? null
-                : (
-                  <>
-                    <Divider style={{ marginTop: '10px' }} />
-                    <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                      <ProductInfo
-                        productName={productName}
-                        productRating={productRating}
-                        category={category}
-                        description={description}
-                        styleInfo={styleInfo}
-                        reviewsRef={reviewsRef}
-                      />
-                    </div>
-                    <Divider />
-                    <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                      <StyleSelector
-                        allStyles={allStyles}
-                        styleInfo={styleInfo}
-                        setStyleInfo={setStyleInfo}
-                      />
-                    </div>
-                    <Divider />
-                    <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                      <AddToCart
-                        styleInfo={styleInfo}
-                        setCart={setCart}
-                        cart={cart}
-                        productName={productName}
-                      />
-                    </div>
-                  </>
-                )}
-            </Col>
+            {isExpanded ? (
+              <Col
+                className="col-12"
+                onClick={() => {
+                  trackEvent({ element: 'Image Gallery', time: new Date() });
+                }}
+              >
+                <ImageGallery
+                  styleInfo={styleInfo}
+                  setIsExpanded={setIsExpanded}
+                />
+              </Col>
+            ) : (
+              <>
+                <Col
+                  className="col-7"
+                  onClick={() => {
+                    trackEvent({ element: 'Image Gallery', time: new Date() });
+                  }}
+                >
+                  <ImageGallery
+                    styleInfo={styleInfo}
+                    setIsExpanded={setIsExpanded}
+                  />
+                </Col>
+                <Col className="col-5">
+                  {isExpanded ? null
+                    : (
+                      <>
+                        <Divider style={{ marginTop: '10px' }} />
+                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                          <ProductInfo
+                            productName={productName}
+                            productRating={productRating}
+                            category={category}
+                            description={description}
+                            styleInfo={styleInfo}
+                            reviewsRef={reviewsRef}
+                          />
+                        </div>
+                        <Divider />
+                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                          <StyleSelector
+                            allStyles={allStyles}
+                            styleInfo={styleInfo}
+                            setStyleInfo={setStyleInfo}
+                          />
+                        </div>
+                        <Divider />
+                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                          <AddToCart
+                            styleInfo={styleInfo}
+                            setCart={setCart}
+                            cart={cart}
+                            productName={productName}
+                          />
+                        </div>
+                      </>
+                    )}
+                </Col>
+              </>
+            )}
           </Row>
         </Container>
       </div>
