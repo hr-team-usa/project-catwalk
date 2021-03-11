@@ -76,9 +76,9 @@ function AddAnswer(props) {
         .max(60, 'Invalid email address')
         .required('Required'),
     }),
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    // onSubmit: values => {
+    //   alert(JSON.stringify(values, null, 2));
+    // },
   });
 
   return (
