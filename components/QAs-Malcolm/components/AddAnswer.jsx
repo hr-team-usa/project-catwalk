@@ -77,6 +77,7 @@ function AddAnswer(props) {
     }
   };
 
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -135,6 +136,7 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
+
                 <Form.Group
                   controlId="addPhoto"
                   onChange={(e) => { handleChange(e); }}
