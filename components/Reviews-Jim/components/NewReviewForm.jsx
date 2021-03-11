@@ -95,27 +95,39 @@ const NewReviewForm = ({
   // };
 
   const validationCheck = () => {
+    const required = [];
     if (rating === 0) {
-      return false;
+      required.push('product rating');
     }
     if (recommended === null) {
-      return false;
+      required.push('product recommendation');
     }
     if (body.length < 50 || body.length > 1000) {
-      return false;
+      required.push('review body');
     }
     if (nickname === '') {
-      return false;
+      required.push('nickname');
     }
     if (email === '') {
-      return false;
+      required.push('email address');
     }
-    return true;
+    if (required.length) {
+      let result = '';
+      for (let i = 0; i < required.length; i += 1) {
+        if (i === required.length - 1) {
+          result += `and ${required[i]}`;
+        } else {
+          result += `${required[i]}, `;
+        }
+      }
+      return result;
+    }
+    return null;
   };
 
   const sendReview = (e) => {
     e.preventDefault();
-    if (validationCheck()) {
+    if (!validationCheck()) {
       const options = {
         url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
         method: 'post',
@@ -148,7 +160,7 @@ const NewReviewForm = ({
         })
         .catch((err) => { console.log('POST REVIEW ERROR ', err); });
     } else {
-      alert('Please fill out all the required fields');
+      alert(`Please complete the required fields: ${validationCheck()}`);
     }
   };
 
