@@ -63,6 +63,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                         <Image
                           hidden={!(styleInfo.style_id === style.style_id)}
                           src="/check-mark.png"
+                          alt="selected style checkmark"
                           className={styleSheet.checkmark}
                           fluid
                           roundedCircle
