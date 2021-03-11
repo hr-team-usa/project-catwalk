@@ -26,7 +26,9 @@ const App = () => {
       <Container>
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">
-            😎 NEXT Level Made in USA
+            😎
+            <strong style={{ fontSize: '20px', fontFamily: 'Palatino', marginLeft: '10px' }}>NEXT Level</strong>
+            <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in USA</i></span>
           </Navbar.Brand>
           <NavDropdown title="Cart" id="basic-nav-dropdown">
             {cart.length > 0 ? cart.map((item, index) => (
