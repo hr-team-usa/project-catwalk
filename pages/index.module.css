@@ -1,0 +1,8 @@
+.darkMode > * {
+  background-color:#282828;
+  color: white !important;
+}
+
+.darkMode > h2 {
+  color: white !important;
+}
