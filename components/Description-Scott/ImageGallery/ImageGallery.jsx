@@ -68,6 +68,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       }
       thumbnailGroups.push(currentGroup);
     }
+    if (index >= thumbnails.length) {
+      setIndex(0);
+    }
     setThumbCarousel(thumbnailGroups);
   };
 
