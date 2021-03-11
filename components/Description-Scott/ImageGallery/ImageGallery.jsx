@@ -182,6 +182,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       <div className={styles.mainImageContainer}>
         {/* Main Image: */}
         <Carousel
+          id="mainCarousel"
           className={carouselStyle}
           indicators={false}
           interval={null}
@@ -258,6 +259,24 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             ) : null}
           </CardColumns>
         </div>
+      ) : null}
+      {index === 0 ? (
+        <style type="text/css">
+          {`
+          #mainCarousel .carousel-control-prev {
+            visibility: hidden
+          }
+      `}
+        </style>
+      ) : null}
+      {index === thumbnails.length - 1 ? (
+        <style type="text/css">
+          {`
+                #mainCarousel .carousel-control-next {
+                  visibility: hidden
+                }
+            `}
+        </style>
       ) : null}
     </>
   );
