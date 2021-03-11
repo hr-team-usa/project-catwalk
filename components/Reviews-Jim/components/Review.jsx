@@ -34,7 +34,7 @@ const Review = ({ review, markReview }) => {
       <Row>
         {review.photos.map((photo) => <img key={photo.id} alt="" src={photo.url} />)}
       </Row>
-      {review.recommended ? <Row><Col>✓ I recommend this product</Col></Row> : null}
+      {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
       {review.response ? (
         <Row>
           <Col>
@@ -89,7 +89,7 @@ Review.propTypes = {
       id: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
     })),
-    recommended: PropTypes.bool,
+    recommend: PropTypes.bool,
     response: PropTypes.string,
     helpfulness: PropTypes.number.isRequired,
   }),
