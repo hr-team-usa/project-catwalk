@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import {
   Row, Col, Container, Button, Form,
 } from 'react-bootstrap';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
@@ -59,27 +57,6 @@ function AddAnswer(props) {
   //   const url = reader.readAsDataURL(file.name);
   // };
 
-  const formik = useFormik({
-    initialValues: {
-      formAnswer: '',
-      name: '',
-      email: '',
-    },
-    validationSchema: Yup.object({
-      formAnswer: Yup.string()
-        .max(1000, 'Must be 60 characters or less')
-        .required('Required'),
-      name: Yup.string()
-        .max(60, 'Must be 60 characters or less')
-        .required('Required'),
-      email: Yup.string()
-        .max(60, 'Invalid email address')
-        .required('Required'),
-    }),
-    // onSubmit: values => {
-    //   alert(JSON.stringify(values, null, 2));
-    // },
-  });
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -92,7 +69,7 @@ function AddAnswer(props) {
         <Container>
           <Row>
             <Col>
-              <Form onSubmit={formik.handleSubmit}>
+              <Form>
                 <Form.Group
                   controlId="exampleForm.ControlTextarea1"
                   variant="error"
@@ -105,13 +82,7 @@ function AddAnswer(props) {
                     as="textarea"
                     rows={3}
                     name="formAnswer"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.formAnswer}
                   />
-                  {formik.touched.formAnswer && formik.errors.formAnswer ? (
-                    <div>{formik.errors.formAnswer}</div>
-                  ) : null}
                 </Form.Group>
                 <Form.Group onChange={(e) => { handleChange(e); }} required>
                   <Form.Label>What is your nickname *</Form.Label>
@@ -120,13 +91,7 @@ function AddAnswer(props) {
                     placeholder="Example: jack543!"
                     maxLength={60}
                     name="name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.name}
                   />
-                  {formik.touched.name && formik.errors.name ? (
-                    <div>{formik.errors.name}</div>
-                  ) : null}
                   <Form.Text className="text-muted">
                     For privacy reasons, do not use your full name or email address
                   </Form.Text>
@@ -142,13 +107,7 @@ function AddAnswer(props) {
                     placeholder="Example: jack@email.com"
                     maxLength={60}
                     name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
                   />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div>{formik.errors.email}</div>
-                  ) : null}
                   <Form.Text className="text-muted">
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
@@ -157,7 +116,7 @@ function AddAnswer(props) {
                 <Button size="sm">Add Photos</Button>
                 <br />
                 <br />
-                <Button variant="primary" type="submit" onClick={() => submitQ()} onSubmit={formik.handleSubmit}>
+                <Button variant="primary" type="submit" onClick={() => submitQ()} onSubmit={submitQ()}>
                   Submit
                 </Button>
               </Form>
