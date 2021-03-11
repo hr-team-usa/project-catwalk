@@ -184,7 +184,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
         <Carousel
           id="mainCarousel"
           className={carouselStyle}
-          indicators={false}
+          indicators={view === 'expanded'}
           interval={null}
           activeIndex={index}
           onSelect={handleSelect}
@@ -196,6 +196,28 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             </Carousel.Item>
 
           )) : null}
+          {index === 0
+            ? (
+              <style type="text/css">
+                {`
+              #maincarousel .carousel-control-prev {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
+          {index === fullSizeImages.length - 1
+            ? (
+              <style type="text/css">
+                {`
+              #maincarousel .carousel-control-next {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
         </Carousel>
         <button
           onClick={() => {
