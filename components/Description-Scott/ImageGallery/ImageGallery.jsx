@@ -124,7 +124,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'expanded':
@@ -135,7 +134,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'zoomed':
