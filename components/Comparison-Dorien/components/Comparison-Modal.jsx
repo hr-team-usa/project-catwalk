@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Stars from '../../Reviews-Jim/components/Stars';
 
 const Comparison_Modal = (props) => {
-  console.log(props);
   const divProps = { ...props };
   delete divProps.arrowProps;
   divProps.show = 'true';
@@ -17,7 +16,6 @@ const Comparison_Modal = (props) => {
   let productRating = '';
   let relatedRating = '';
   let starStyle = {};
-
 
   if (props.popper.state) {
     productName = divProps.popper.state.options.productName;
@@ -82,7 +80,7 @@ const Comparison_Modal = (props) => {
               Stars
             </Col>
             <Col xs={6} md={4}>
-              {relatedRating} 
+              {relatedRating}
               {relatedRating !== 'NaN' || relatedRating !== undefined ? (
                 <>
                   <Stars
