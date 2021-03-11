@@ -32,7 +32,14 @@ const App = () => {
           </Navbar.Brand>
           <NavDropdown title="Cart" id="basic-nav-dropdown">
             {cart.length > 0 ? cart.map((item, index) => (
-              <NavDropdown.Item key={index}>{`${item.name}`}</NavDropdown.Item>
+              // eslint-disable-next-line react/no-array-index-key
+              <NavDropdown.Item key={index}>
+                {`${item.name}`}
+                (
+                {`${item.size}`}
+                ) x
+                {`${item.quantity}`}
+              </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
           </NavDropdown>
