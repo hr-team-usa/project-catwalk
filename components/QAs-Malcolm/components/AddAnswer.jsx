@@ -52,7 +52,7 @@ function AddAnswer(props) {
     return null;
   };
 
-  const submitQ = (e) => {
+  const submitA = (e) => {
     e.preventDefault();
     if (!validationCheck()) {
       const options = {
@@ -155,7 +155,7 @@ function AddAnswer(props) {
                 </Form.Group>
                 <br />
                 <br />
-                <Button variant="primary" type="submit" onClick={(e) => submitQ(e)}>
+                <Button variant="primary" type="submit" onClick={(e) => submitA(e)}>
                   Submit
                 </Button>
               </Form>
