@@ -57,6 +57,7 @@ function AddAnswer(props) {
   //   const url = reader.readAsDataURL(file.name);
   // };
 
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -111,17 +112,11 @@ function AddAnswer(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                {/* <Form.File
-                  accept="image/*"
-                  className="position-relative"
-                  name="image"
-                  onChange={(e) => handleAddPhoto(e)}
-                /> */}
                 <DropzoneArea />
                 <Button size="sm">Add Photos</Button>
                 <br />
                 <br />
-                <Button variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button variant="primary" type="submit" onClick={() => submitQ()} onSubmit={submitQ()}>
                   Submit
                 </Button>
               </Form>
