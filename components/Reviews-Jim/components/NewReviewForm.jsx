@@ -81,44 +81,87 @@ const NewReviewForm = ({
   show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
   const [rating, setRating] = useState(0);
-  const [recommended, setRecommended] = useState(false);
+  const [recommended, setRecommended] = useState(null);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  // const [state, setState] = useState({});
 
-  const sendReview = () => {
-    const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: config.TOKEN,
-      },
-      data: {
-        product_id: productId,
-        rating,
-        summary,
-        body,
-        recommend: recommended,
-        name: nickname,
-        email,
-        photos: [],
-        characteristics: {},
-      },
-    };
+  // const stateListener = e => {
+  //   console.log(e.target.name);
+  //   console.log(e.target.value);
+  //   setState({ ...state, [e.target.name]: (e.target.value) });
+  // };
 
-    axios(options)
-      .then((res) => {
-        console.log('Review Sent! ', res);
-      })
-      .then(() => {
-        setGetToggle(true);
-      })
-      .then(() => {
-        onHide();
-      })
-      .catch((err) => { console.log('POST REVIEW ERROR ', options.body); });
+  const validationCheck = () => {
+    const required = [];
+    if (rating === 0) {
+      required.push('product rating');
+    }
+    if (recommended === null) {
+      required.push('product recommendation');
+    }
+    if (body.length < 50 || body.length > 1000) {
+      required.push('review body');
+    }
+    if (nickname === '') {
+      required.push('nickname');
+    }
+    if (email === '') {
+      required.push('email address');
+    }
+    if (required.length) {
+      let result = '';
+      for (let i = 0; i < required.length; i += 1) {
+        if (i === required.length - 1) {
+          result += `and ${required[i]}`;
+        } else {
+          result += `${required[i]}, `;
+        }
+      }
+      return result;
+    }
+    return null;
+  };
+
+  const sendReview = (e) => {
+    e.preventDefault();
+    if (!validationCheck()) {
+      const options = {
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.TOKEN,
+        },
+        data: {
+          product_id: productId,
+          rating,
+          summary,
+          body,
+          recommend: recommended,
+          name: nickname,
+          email,
+          photos: [],
+          characteristics: {},
+        },
+      };
+
+      axios(options)
+        .then((res) => {
+          console.log('Review Sent! ', res);
+        })
+        .then(() => {
+          setGetToggle(true);
+        })
+        .then(() => {
+          onHide();
+        })
+        .catch((err) => { console.log('POST REVIEW ERROR ', err); });
+    } else {
+      alert(`Please complete the required fields: ${validationCheck()}`);
+    }
   };
 
   return (
@@ -140,9 +183,8 @@ const NewReviewForm = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          Mandatory fields *
           <Form.Group>
-            <Form.Label>Overall rating *</Form.Label>
+            <Form.Label>Overall rating (required)</Form.Label>
             <br />
             <Rating
               name="product-rating"
@@ -153,12 +195,12 @@ const NewReviewForm = ({
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Do you recommend this product? *</Form.Label>
+            <Form.Label>Do you recommend this product? (required)</Form.Label>
             <Form.Check type="radio" name="recommend" label="Yes" onChange={() => setRecommended(true)} />
             <Form.Check type="radio" name="recommend" label="No" onChange={() => setRecommended(false)} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Characteristics</Form.Label>
+            <Form.Label>Characteristics (required)</Form.Label>
             <br />
             {Object.keys(characteristics).map((characteristic, i) => (
               <div key={i}>
@@ -169,33 +211,45 @@ const NewReviewForm = ({
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
-            <Form.Control type="" placeholder="Example: Best purchase ever!" onChange={(e) => setSummary(e.target.value)} />
+            <Form.Control type="" placeholder="Example: Best purchase ever!" maxLength="60" onChange={(e) => setSummary(e.target.value)} />
+            <Form.Text>
+              {summary.length}
+              /60 characters max
+            </Form.Text>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Review body *</Form.Label>
+            <Form.Label>Review body (required)</Form.Label>
             <Form.Control type="" placeholder="Why did you like the product or not?" onChange={(e) => setBody(e.target.value)} />
+            <Form.Text>
+              Min 50 characters required
+              {' '}
+              {body.length}
+              /1000
+            </Form.Text>
+            <Form.Control.Feedback type="invalid">
+              Please include a review that is at least 50 characters
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.File id="" label="Upload your photos" />
           </Form.Group>
           <Form.Group>
-            <Form.Label>What is your nickname?</Form.Label>
+            <Form.Label>What is your nickname? (required)</Form.Label>
             <Form.Control type="" placeholder="Example: jackson11!" onChange={(e) => setNickname(e.target.value)} />
             <Form.Text>For privacy reasons, do not use your full name or email address</Form.Text>
           </Form.Group>
-          <Form.Group>
-            <Form.Label>Your email</Form.Label>
+          <Form.Group controlId="formBasicEmail" required>
+            <Form.Label>Your email (required)</Form.Label>
             <Form.Control type="email" placeholder="Example: jackson11@email.com" onChange={(e) => setEmail(e.target.value)} />
             <Form.Text>For authentication reasons, you will not be emailed</Form.Text>
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={sendReview}>Submit Review</Button>
+        <Button onClick={(e) => sendReview(e)}>Submit Review</Button>
         <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
-
   );
 };
 

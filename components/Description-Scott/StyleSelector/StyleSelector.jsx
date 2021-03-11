@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line object-curly-newline
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import styleSheet from './StyleSelector.module.css';
 
 const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
+
   const [styles, setStyles] = useState([]);
 
   const handleClick = (styleId) => {
@@ -36,12 +39,20 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
 
   return (
     <div>
-      <Container>
+      <Container
+        onClick={() => {
+          trackEvent({ element: 'Style Selector', time: new Date() });
+        }}
+        onKeyUp={() => {
+          trackEvent({ element: 'Style Selector', time: new Date() });
+        }}
+      >
         <h5>
           Style &gt;
           {`${styleInfo.name}`}
         </h5>
         {styles.length > 0 ? styles.map((group, j) => (
+          // eslint-disable-next-line react/no-array-index-key
           <Row key={j}>
             <Col>
               {group.length > 0 ? group.map((style, i) => (
@@ -63,6 +74,7 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                         <Image
                           hidden={!(styleInfo.style_id === style.style_id)}
                           src="/check-mark.png"
+                          alt="selected style checkmark"
                           className={styleSheet.checkmark}
                           fluid
                           roundedCircle

@@ -17,6 +17,14 @@
   margin-bottom: 50px;
 }
 
+#__next {
+  background-color: gray;
+}
+
+.App {
+  background-color: white;
+}
+
 .carousel-inner {
   height: inherit;
   width: inherit;
@@ -28,6 +36,8 @@
 
 /* REVIEWS */
 
+/* Review Card */
+
 .review-card {
   margin: 20px 0px;
 }
@@ -36,10 +46,39 @@
   margin: 0px 10px;
 }
 
-#__next {
-  background-color: gray;
+.review-summary {
+  font-weight: 900;
 }
 
-.App {
-  background-color: white;
+/* Product Breakdown */
+
+.char-rating {
+  margin: 5x 0px;
+  width: 100%;
+}
+.char-bar {
+  background-color: lightgray;
+  color: lightgray;
+  width: auto;
+  height: 5px;
+  font-size: 1px;
+}
+.char-labels {
+  text-align: center;
+}
+.char-rating .char-left {
+  float: left;
+}
+.char-rating .char-right {
+  float: right;
+}
+
+/* Rating Breakdown */
+
+.rating-bar {
+  margin: 5px 0px;
+  padding: 5px 0px;
+}
+.rating-bar:hover {
+  background-color: lightgray;
 }

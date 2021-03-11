@@ -68,6 +68,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       }
       thumbnailGroups.push(currentGroup);
     }
+    if (index >= thumbnails.length) {
+      setIndex(0);
+    }
     setThumbCarousel(thumbnailGroups);
   };
 
@@ -124,7 +127,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'expanded':
@@ -135,7 +137,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'zoomed':
@@ -181,7 +182,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       <div className={styles.mainImageContainer}>
         {/* Main Image: */}
         <Carousel
-          id="maincarousel"
+          id="mainCarousel"
           className={carouselStyle}
           indicators={view === 'expanded'}
           interval={null}
@@ -263,6 +264,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
                   src={thumbnailObj.thumbnail}
                   onClick={() => handleSelect(thumbnailObj.index)}
+                  alt="thumbnail image"
                 />
               </Card>
             ))
@@ -279,6 +281,24 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             ) : null}
           </CardColumns>
         </div>
+      ) : null}
+      {index === 0 ? (
+        <style type="text/css">
+          {`
+          #mainCarousel .carousel-control-prev {
+            visibility: hidden
+          }
+      `}
+        </style>
+      ) : null}
+      {index === thumbnails.length - 1 ? (
+        <style type="text/css">
+          {`
+                #mainCarousel .carousel-control-next {
+                  visibility: hidden
+                }
+            `}
+        </style>
       ) : null}
     </>
   );

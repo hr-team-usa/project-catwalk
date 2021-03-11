@@ -6,15 +6,17 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddQuestion from './AddQuestion';
 
-function AddMore({ productId, productName, setCount, count }) {
+function AddMore({
+  productId, productName, setCount, count,
+}) {
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
     if (count === '&count=4') {
-      setCount('');
+      setCount('&count=100');
       e.target.innerHTML = 'LESS ANSWERED QUESTIONS';
     }
-    if (count === '') {
+    if (count === '&count=100') {
       setCount('&count=4');
       e.target.innerHTML = 'MORE ANSWERED QUESTIONS';
     }
@@ -47,6 +49,8 @@ AddMore.propTypes = {
     PropTypes.number,
   ]).isRequired,
   productName: PropTypes.string.isRequired,
+  setCount: PropTypes.func.isRequired,
+  count: PropTypes.string.isRequired,
 };
 
 export default AddMore;
