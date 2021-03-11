@@ -17,6 +17,14 @@
   margin-bottom: 50px;
 }
 
+#__next {
+  background-color: gray;
+}
+
+.App {
+  background-color: white;
+}
+
 .carousel-inner {
   height: inherit;
   width: inherit;
@@ -36,10 +44,26 @@
   margin: 0px 10px;
 }
 
-#__next {
-  background-color: gray;
+.char-rating {
+  margin: 10px 0px;
+  width: 100%;
+}
+.char-bar {
+  background-color: lightgray;
+  color: lightgray;
+  width: auto;
+  height: 5px;
+  font-size: 1px;
 }
 
-.App {
-  background-color: white;
+.char-labels {
+  text-align: center;
+}
+
+.char-rating .char-left {
+  float: left;
+}
+
+.char-rating .char-right {
+  float: right;
 }

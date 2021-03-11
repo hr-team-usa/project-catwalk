@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddQuestion from './AddQuestion';
 
-function AddMore({ productId, productName, setCount, count }) {
+function AddMore({
+  productId, productName, setCount, count,
+}) {
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
@@ -47,6 +49,8 @@ AddMore.propTypes = {
     PropTypes.number,
   ]).isRequired,
   productName: PropTypes.string.isRequired,
+  setCount: PropTypes.func.isRequired,
+  count: PropTypes.string.isRequired,
 };
 
 export default AddMore;

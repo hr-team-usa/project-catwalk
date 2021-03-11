@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button, Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
@@ -50,9 +50,8 @@ const ReviewsList = ({
 
   const markHelpful = (e, reviewId) => {
     e.preventDefault();
-    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
+    const api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
 
-    console.log(api);
     const options = {
       url: api,
       method: 'put',
@@ -63,7 +62,7 @@ const ReviewsList = ({
 
     axios(options)
       .then((res) => {
-        console.log('Marked as helpful! ', res)
+        console.log('Marked as helpful! ', res);
       })
       .then(() => {
         setGetToggle(true);
@@ -83,7 +82,10 @@ const ReviewsList = ({
   return (
     <div className="review-list">
       <div>
-        XXX reviews, sorted by
+        {productReviews.length}
+        {' '}
+        reviews, sorted by
+        {' '}
         <select
           value={sortStatus}
           onChange={(e) => handleSortChange(e)}

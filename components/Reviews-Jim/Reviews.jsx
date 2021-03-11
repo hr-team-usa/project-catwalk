@@ -20,7 +20,7 @@ const Reviews = ({
   const [ratingsLength, setRatingsLength] = useState(selectedRatings.length);
   const [getToggle, setGetToggle] = useState(false);
 
-  const getProductReviews = (product, sort, count = null) => {
+  const getProductReviews = (product, sort, count = 100) => {
     let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/?product_id=${product}&sort=${sort}`;
 
     if (count) {
