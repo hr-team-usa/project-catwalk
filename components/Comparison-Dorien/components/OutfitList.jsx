@@ -4,78 +4,81 @@ import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import { CardColumns } from 'react-bootstrap';
 
-const OutfitList = ({ products, images }) => (
-  <div>
-    Outfit Products
-    <Carousel interval={null}>
-      <Carousel.Item>
-        <CardDeck className="outfit-group">
-          <Card className="outfit-products">
-            <Card.Img variant="top" className="add-outfit-image" src="add-to-outfit2.png" />
-            <Card.ImgOverlay>
-              <Card.Title className="text-center outfit-text">Add to Outfit List</Card.Title>
-            </Card.ImgOverlay>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
+const OutfitList = ({ productStyle, images }) => {
+  function addOutfit(e) {
+    console.log(e.target);
+    console.log(document.getElementById('first-placeholder'));
+    console.log(productStyle);
+    // $('<Card.Img variant="top" className="related-image"/>').append('#first-placeholder');
+  }
 
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            
-          </Card>
-        </CardDeck>
-      </Carousel.Item>
-    </Carousel>
-    <style>
-      {`   
-           .outfit-products {
-             box-shadow:
-             inset 0 0 60px #fff, 
-             inset 20px 0 80px #f0f, 
-             inset -20 0 80px #0ff,
-             inset 20px 0 300px #f0f,
-             inset -20px 0 300px #0ff,
-             0 0 50 px #fff,
-             -10 0 80px #f0f,
-             10px 0 80 #0ff; 
-             
-           }
-           .outfit-text {
-             font-weight: bold;
-             font: icon;
-             font-size: x-large;
-             position: relative;
-             bottom: -1px;
-           } 
-           .carousel-control-prev {
-             width: 2%;
-           }
-           .carousel-control-next {
-             width: 2%;
-           }
-           .add-outfit {
-            width: 243.500px;
-            height: 271.992px;
-            margin: auto;
-          }
-           .add-outfit-image {
-             height: 272px;
-             margin: auto;
-             padding: 0px;
-           }
-           .outfit-products {
-             margin: 10px;
-             box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
-             border-color: grey;
-           }
-           .related-products-group {
-
-           }
-           `}
-    </style>
-  </div>
-);
+  return (
+    <div>
+      Outfit Products
+      <Carousel interval={null}>
+        <Carousel.Item id="first-list">
+          <CardDeck className="outfit-group">
+            <Card className="outfit-products" onClick={(e) => { addOutfit(e); }}>
+              <Card.Img variant="top" className="add-outfit-image" src="add-to-outfit2.png" />
+              <Card.ImgOverlay>
+                <Card.Title className="text-center outfit-text">Add to Outfit List</Card.Title>
+              </Card.ImgOverlay>
+            </Card>
+            <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+            <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+            <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+          </CardDeck>
+        </Carousel.Item>
+      </Carousel>
+      <style>
+        {`   
+             .outfit-products:hover {
+               box-shadow:
+               inset 0 0 60px #fff, 
+               inset 20px 0 80px #f0f, 
+               inset -20 0 80px #0ff,
+               inset 20px 0 300px #f0f,
+               inset -20px 0 300px #0ff,
+               0 0 50 px #fff,
+               -10 0 80px #f0f,
+               10px 0 80 #0ff; 
+               
+             }
+             .outfit-text {
+               font-weight: bold;
+               font: icon;
+               font-size: x-large;
+               position: relative;
+               bottom: -1px;
+             } 
+             .carousel-control-prev {
+               width: 2%;
+             }
+             .carousel-control-next {
+               width: 2%;
+             }
+             .add-outfit {
+              width: 243.500px;
+              height: 271.992px;
+              margin: auto;
+            }
+             .add-outfit-image {
+               height: 272px;
+               margin: auto;
+               padding: 0px;
+             }
+             .outfit-products {
+               margin: 10px;
+               box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
+               border-color: grey;
+             }
+             .related-products-group {
+  
+             }
+             `}
+      </style>
+    </div>
+  );
+};
 
 export default OutfitList;
