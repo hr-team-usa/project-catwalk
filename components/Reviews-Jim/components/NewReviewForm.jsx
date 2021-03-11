@@ -81,7 +81,7 @@ const NewReviewForm = ({
   show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
   const [rating, setRating] = useState(0);
-  const [recommended, setRecommended] = useState(false);
+  const [recommended, setRecommended] = useState(null);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [nickname, setNickname] = useState('');
@@ -94,39 +94,62 @@ const NewReviewForm = ({
   //   setState({ ...state, [e.target.name]: (e.target.value) });
   // };
 
+  const validationCheck = () => {
+    if (rating === 0) {
+      return false;
+    }
+    if (recommended === null) {
+      return false;
+    }
+    if (body.length < 50 || body.length > 1000) {
+      return false;
+    }
+    if (nickname === '') {
+      return false;
+    }
+    if (email === '') {
+      return false;
+    }
+    return true;
+  };
+
   const sendReview = (e) => {
     e.preventDefault();
-    const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: config.TOKEN,
-      },
-      data: {
-        product_id: productId,
-        rating,
-        summary,
-        body,
-        recommend: recommended,
-        name: nickname,
-        email,
-        photos: [],
-        characteristics: {},
-      },
-    };
+    if (validationCheck()) {
+      const options = {
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews',
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.TOKEN,
+        },
+        data: {
+          product_id: productId,
+          rating,
+          summary,
+          body,
+          recommend: recommended,
+          name: nickname,
+          email,
+          photos: [],
+          characteristics: {},
+        },
+      };
 
-    axios(options)
-      .then((res) => {
-        console.log('Review Sent! ', res);
-      })
-      .then(() => {
-        setGetToggle(true);
-      })
-      .then(() => {
-        onHide();
-      })
-      .catch((err) => { console.log('POST REVIEW ERROR ', err); });
+      axios(options)
+        .then((res) => {
+          console.log('Review Sent! ', res);
+        })
+        .then(() => {
+          setGetToggle(true);
+        })
+        .then(() => {
+          onHide();
+        })
+        .catch((err) => { console.log('POST REVIEW ERROR ', err); });
+    } else {
+      alert('Please fill out all the required fields');
+    }
   };
 
   return (
@@ -148,9 +171,8 @@ const NewReviewForm = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          Mandatory fields *
           <Form.Group>
-            <Form.Label>Overall rating *</Form.Label>
+            <Form.Label>Overall rating (required)</Form.Label>
             <br />
             <Rating
               name="product-rating"
@@ -161,12 +183,12 @@ const NewReviewForm = ({
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Do you recommend this product? *</Form.Label>
+            <Form.Label>Do you recommend this product? (required)</Form.Label>
             <Form.Check type="radio" name="recommend" label="Yes" onChange={() => setRecommended(true)} />
             <Form.Check type="radio" name="recommend" label="No" onChange={() => setRecommended(false)} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Characteristics</Form.Label>
+            <Form.Label>Characteristics (required)</Form.Label>
             <br />
             {Object.keys(characteristics).map((characteristic, i) => (
               <div key={i}>
@@ -178,11 +200,20 @@ const NewReviewForm = ({
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
             <Form.Control type="" placeholder="Example: Best purchase ever!" maxLength="60" onChange={(e) => setSummary(e.target.value)} />
-            <Form.Text>{summary.length}/60 characters max</Form.Text>
+            <Form.Text>
+              {summary.length}
+              /60 characters max
+            </Form.Text>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Review body *</Form.Label>
+            <Form.Label>Review body (required)</Form.Label>
             <Form.Control type="" placeholder="Why did you like the product or not?" onChange={(e) => setBody(e.target.value)} />
+            <Form.Text>
+              Min 50 characters required
+              {' '}
+              {body.length}
+              /1000
+            </Form.Text>
             <Form.Control.Feedback type="invalid">
               Please include a review that is at least 50 characters
             </Form.Control.Feedback>
@@ -191,12 +222,12 @@ const NewReviewForm = ({
             <Form.File id="" label="Upload your photos" />
           </Form.Group>
           <Form.Group>
-            <Form.Label>What is your nickname?</Form.Label>
+            <Form.Label>What is your nickname? (required)</Form.Label>
             <Form.Control type="" placeholder="Example: jackson11!" onChange={(e) => setNickname(e.target.value)} />
             <Form.Text>For privacy reasons, do not use your full name or email address</Form.Text>
           </Form.Group>
           <Form.Group controlId="formBasicEmail" required>
-            <Form.Label>Your email</Form.Label>
+            <Form.Label>Your email (required)</Form.Label>
             <Form.Control type="email" placeholder="Example: jackson11@email.com" onChange={(e) => setEmail(e.target.value)} />
             <Form.Text>For authentication reasons, you will not be emailed</Form.Text>
           </Form.Group>
