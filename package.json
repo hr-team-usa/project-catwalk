@@ -29,9 +29,10 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "material-ui-dropzone": "^3.5.0",
     "bootswatch": "^4.6.0",
+    "formik": "^2.2.6",
     "lodash": "^4.17.21",
+    "material-ui-dropzone": "^3.5.0",
     "material-ui-search-bar": "^1.0.0",
     "next": "^10.0.7",
     "prop-types": "^15.7.2",
@@ -39,7 +40,8 @@
     "react-bootstrap": "^1.5.0",
     "react-dom": "^17.0.1",
     "react-image-magnify": "^2.1.1",
-    "react-share": "^4.4.0"
+    "react-share": "^4.4.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",

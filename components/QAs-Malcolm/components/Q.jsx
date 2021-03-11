@@ -11,15 +11,18 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
 import AddAnswer from './AddAnswer';
+import ImageModal from './ImageModal';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
   const [clicked, setClicked] = useState(false);
   const [show, setShow] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
+  const [photosArr, setPhotosArr] = useState([]);
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -143,13 +146,23 @@ function Q(props) {
             <Col>
               {
                 answer.photos ? answer.photos.map((img, i) => (
-                  <Image
-                    src={img}
-                    width={78}
-                    height={78}
-                    key={i}
-                    thumbnail
-                  />
+                  <>
+                    <Image
+                      src={img}
+                      width={78}
+                      height={78}
+                      key={i}
+                      thumbnail
+                      onClick={() => setShowImage(true)}
+                    />
+                    <ImageModal
+                      variant="primary"
+                      show={showImage}
+                      onHide={() => setShowImage(false)}
+                      img={answer.photos[i]}
+                      key={i + 1}
+                    />
+                  </>
                 )) : null
               }
             </Col>
