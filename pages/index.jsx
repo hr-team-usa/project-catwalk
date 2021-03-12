@@ -9,7 +9,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 import styles from './index.module.css';
 
 const App = () => {
-  const [productId, setProductId] = useState(18078);
+  const [productId, setProductId] = useState(18081);
   const [productName, setProductName] = useState('Camo Onesie');
   const [productRating, setProductRating] = useState(null);
   const [currentProductData, setCurrentProductData] = useState(null);
@@ -21,6 +21,7 @@ const App = () => {
 
   return (
     <>
+    {console.log('productId', productId)}
       {isDarkMode ? (
         <style type="text/css">
           {`
