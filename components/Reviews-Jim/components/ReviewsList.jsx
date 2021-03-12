@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button, Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
@@ -43,16 +43,22 @@ const ReviewsList = ({
     }
   };
 
-  const addTwoReviews = (e) => {
-    e.preventDefault();
-    setReviewCount(reviewCount + 2);
-  };
+  // const addTwoReviews = (e) => {
+  //   e.preventDefault();
+  //   setReviewCount(reviewCount + 2);
+  // };
 
-  const markHelpful = (e, reviewId) => {
+  const markReview = (e, reviewId, string) => {
     e.preventDefault();
-    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/helpful`;
+    let api = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/reviews/${reviewId}/`;
 
-    console.log(api);
+    if (string === 'Yes') {
+      api += 'helpful';
+    }
+    if (string === 'Report') {
+      api += 'report';
+    }
+
     const options = {
       url: api,
       method: 'put',
@@ -63,10 +69,13 @@ const ReviewsList = ({
 
     axios(options)
       .then((res) => {
-        console.log('Marked as helpful! ', res)
+        console.log('PUT success ', res);
       })
       .then(() => {
         setGetToggle(true);
+      })
+      .then(() => {
+        (string === 'Report') ? alert('This review has been reported') : null
       })
       .catch((err) => { console.log('HELPFUL ERROR', err); });
   };
@@ -83,7 +92,10 @@ const ReviewsList = ({
   return (
     <div className="review-list">
       <div>
-        XXX reviews, sorted by
+        {productReviews.length}
+        {' '}
+        reviews, sorted by
+        {' '}
         <select
           value={sortStatus}
           onChange={(e) => handleSortChange(e)}
@@ -93,8 +105,10 @@ const ReviewsList = ({
           <option value="newest">Newest</option>
         </select>
       </div>
-      {renderedReviews.map((review) => <Review key={review.review_id} review={review} markHelpful={markHelpful} />)}
-      <Button id="more-reviews-btn" className="review-buttons" onClick={(e) => addTwoReviews(e)}>More Reviews</Button>
+      {renderedReviews.map((review) => <Review key={review.review_id} review={review} markReview={markReview} />)}
+      {!productReviews.length ? <div>Be the first to review this product.</div> : null}
+      {(productReviews.length <= 2 || reviewCount >= productReviews.length) ? null : <Button id="more-reviews-btn" className="review-buttons" onClick={() => setReviewCount(reviewCount + 2)}>More Reviews</Button>}
+      {reviewCount >= productReviews.length ? <Button id="fewer-reviews-btn" className="review-buttons" onClick={() => setReviewCount(2)}>Fewer Reviews</Button> : null}
       <Button className="review-buttons" onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm
         productName={productName}

@@ -1,5 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Row, Col, Container, Button, Form,
 } from 'react-bootstrap';
@@ -26,24 +27,50 @@ function AddQuestion(props) {
     }
   };
 
-  const submitQ = () => {
-    const options = {
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions',
-      method: 'post',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-      data: {
-        body: question,
-        name,
-        email,
-        product_id: props.productId,
-      },
-    };
+  const validationCheck = () => {
+    const required = [];
+    if (question === '') {
+      required.push('question');
+    }
+    if (name === '') {
+      required.push('nickname');
+    }
+    if (email === '') {
+      required.push('email address');
+    }
+    if (required.length) {
+      let result = '\n';
+      for (let i = 0; i < required.length; i += 1) {
+        result += `${required[i]}\n`;
+      }
+      return result;
+    }
+    return null;
+  };
 
-    axios(options)
-      .then(() => { props.onHide(); })
-      .catch((err) => console.log(err));
+  const submitQ = (e) => {
+    e.preventDefault();
+    if (!validationCheck()) {
+      const options = {
+        url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions',
+        method: 'post',
+        headers: {
+          Authorization: config.TOKEN,
+        },
+        data: {
+          body: question,
+          name,
+          email,
+          product_id: props.productId,
+        },
+      };
+
+      axios(options)
+        .then(() => { props.onHide(); })
+        .catch((err) => console.log(err));
+    } else {
+      alert(`Please complete the required fields: ${validationCheck()}`);
+    }
   };
 
   return (
@@ -72,6 +99,10 @@ function AddQuestion(props) {
                     rows={3}
                     name="formQuestion"
                   />
+                  <Form.Text>
+                    {question.length}
+                    /1000 max
+                  </Form.Text>
                 </Form.Group>
                 <Form.Group onChange={(e) => { handleChange(e); }}>
                   <Form.Label>What is your nickname *</Form.Label>
@@ -100,7 +131,7 @@ function AddQuestion(props) {
                     For authentication reasons, you will not be emailed.
                   </Form.Text>
                 </Form.Group>
-                <Button className="submitQBtn" variant="primary" type="submit" onClick={() => submitQ()}>
+                <Button className="submitQBtn" variant="primary" type="submit" onClick={(e) => submitQ(e)}>
                   Submit
                 </Button>
               </Form>

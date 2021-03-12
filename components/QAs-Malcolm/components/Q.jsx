@@ -2,23 +2,30 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Container, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import {
+  Row, Col, Container, Button, Image,
+} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
 import AddAnswer from './AddAnswer';
+import ImageModal from './ImageModal';
 
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
   const [clicked, setClicked] = useState(false);
   const [show, setShow] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
+  const [photosArr, setPhotosArr] = useState([]);
+  const [helpfulA, setHelpfulA] = useState(false);
+  const [helpfulQ, setHelpfulQ] = useState(false);
+  const [image, setImage] = useState('');
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -59,31 +66,31 @@ function Q(props) {
 
   useEffect(() => {
     parseAnswers();
-  }, []);
+  }, [helpfulA]);
 
-  const handleClick = (e) => {
+  const handleClick = (e, id) => {
     e.preventDefault();
-    if (clicked === false) {
-      let qaPath = 'answers';
-      if (e.target.parentNode.id.length === 6) {
-        qaPath = 'questions';
-      } else {
-        qaPath = 'answers';
-      }
-      const options = {
-        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${e.target.parentNode.id}/helpful`,
-        method: 'put',
-        headers: {
-          Authorization: config.TOKEN,
-        },
-      };
-      axios(options)
-        .then(() => props.setRender(true))
-        .then(() => setClicked(true))
-        .catch((err) => console.log(err));
+    // if (clicked === false) {
+    let qaPath = 'answers';
+    if (e.target.parentNode.id.length === 6) {
+      qaPath = 'questions';
     } else {
-      window.alert("We're glad you found this helpful!");
+      qaPath = 'answers';
     }
+    const options = {
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${id}/helpful`,
+      method: 'put',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+    };
+    axios(options)
+      .then(() => props.setRender(true))
+      .then(() => setClicked(true))
+      .catch((err) => console.log(err));
+    // } else {
+    //   window.alert("We're glad you found this helpful!");
+    // }
   };
 
   const report = (e) => {
@@ -138,13 +145,23 @@ function Q(props) {
             <Col>
               {
                 answer.photos ? answer.photos.map((img, i) => (
-                  <Image
-                    src={img}
-                    width={78}
-                    height={78}
-                    key={i}
-                    thumbnail
-                  />
+                  <>
+                    <Image
+                      src={img}
+                      width={78}
+                      height={78}
+                      key={i}
+                      thumbnail
+                      onClick={() => { setShowImage(true); setImage(img); }}
+                    />
+                    <ImageModal
+                      variant="primary"
+                      show={showImage}
+                      onHide={() => setShowImage(false)}
+                      img={image}
+                      key={i + 1}
+                    />
+                  </>
                 )) : null
               }
             </Col>
@@ -154,21 +171,34 @@ function Q(props) {
             <Col sm="auto" style={answerStyle}>
               {answer.answerer_name === 'Seller' ? (
                 <strong>
-                  By &nbsp;
-                  {answer.answerer_name}
+                  <strong>
+                    <strong>
+                      By &nbsp;
+                      {answer.answerer_name}
+                    </strong>
+                  </strong>
                 </strong>
               ) : `By ${answer.answerer_name}`}
       &nbsp;
               {formatDate(answer.date)}
             </Col>
-            <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
-              Helpful?
-              {' '}
-              <u onClick={(e) => { handleClick(e); }}>Yes</u>
-              (
-              {answer.helpfulness}
-              )
-            </Col>
+            {helpfulA ? (
+              <Col sm="auto" style={answerStyle}>
+                Marked as Helpful! (
+                {answer.helpfulness}
+                )
+              </Col>
+            )
+              : (
+                <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
+                  Helpful?
+                  {' '}
+                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(true); }}>Yes</u>
+                  (
+                  {answer.helpfulness}
+                  )
+                </Col>
+              )}
             <Col sm="auto" style={resultStyle}>
               <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
             </Col>
@@ -187,14 +217,27 @@ function Q(props) {
           {props.question.question_body}
         </strong>
       </Col>
-      <Col id={props.question.question_id} sm="auto" style={questionStyle}>
-        Helpful?
-        {' '}
-        <u onClick={(e) => { handleClick(e); }}>Yes</u>
-        (
-        {props.question.question_helpfulness}
+      {helpfulQ
+        ? (
+          <Col sm="auto" style={questionStyle}>
+            Marked as Helpful!
+            (
+            {props.question.question_helpfulness}
+            )
+          </Col>
         )
-      </Col>
+        : (
+          <Col id={props.question.question_id} sm="auto" style={questionStyle}>
+            Helpful?
+            {' '}
+            <u onClick={(e) => { handleClick(e, props.question.question_id); setHelpfulQ(true); }}>
+              Yes
+            </u>
+            (
+            {props.question.question_helpfulness}
+            )
+          </Col>
+        )}
       <Col sm="auto" style={resultStyle}>
         <u onClick={() => setShow(true)}>Add Answer</u>
         <AddAnswer

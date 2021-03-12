@@ -1,77 +1,214 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
+import { CardColumns } from 'react-bootstrap';
+import { CopyrightTwoTone, LensTwoTone } from '@material-ui/icons';
+import Stars from '../../Reviews-Jim/components/Stars';
 
-const OutfitList = ({ products, images }) => (
-  <div>
-    Outfit Products
-    <Carousel interval={null}>
-      <Carousel.Item>
-        <CardDeck className="outfit-group">
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-        </CardDeck>
-      </Carousel.Item>
-      <Carousel.Item>
-        <CardDeck className="outfit-group">
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-          <Card className="outfit-products" style={{ width: '5rem' }}>
-            <Card.Img variant="top" className="outfit-image" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22263%22%20height%3D%22160%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20263%20160%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177e4e6d2c3%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3A-apple-system%2CBlinkMacSystemFont%2C%26quot%3BSegoe%20UI%26quot%3B%2CRoboto%2C%26quot%3BHelvetica%20Neue%26quot%3B%2CArial%2C%26quot%3BNoto%20Sans%26quot%3B%2C%26quot%3BLiberation%20Sans%26quot%3B%2Csans-serif%2C%26quot%3BApple%20Color%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Emoji%26quot%3B%2C%26quot%3BSegoe%20UI%20Symbol%26quot%3B%2C%26quot%3BNoto%20Color%20Emoji%26quot%3B%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177e4e6d2c3%22%3E%3Crect%20width%3D%22263%22%20height%3D%22160%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2297.25%22%20y%3D%2286.15%22%3E263x160%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
-            <Card.Title>Outfit</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">category</Card.Subtitle>
-          </Card>
-        </CardDeck>
-      </Carousel.Item>
-    </Carousel>
-    <style>
-      {`
-           .related-image {
-             height: 160px;
-           }
-           .related-products {
-             margin: 10px;
-             box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
-             border-color: grey;
-           }
-           .related-products-group {
+const OutfitList = ({
+  productId, productName, productStyle, productRating,
+}) => {
+  const [outfitList, setOutfitList] = useState([]);
+  const [addedOutfit, setAddedOutfit] = useState(false);
+  const [outfitList2, setOutfitList2] = useState([]);
 
-           }
-           `}
-    </style>
-  </div>
-);
+
+  const starStyle = {
+    display: 'inline',
+  };
+
+  useEffect(() => {
+    if (addedOutfit) {
+      const newList = outfitList;
+      if (newList.length < 3) {
+        newList.push({
+          id: productId,
+          name: productName,
+          style: productStyle,
+          rating: productRating,
+        });
+        setOutfitList(newList);
+        setAddedOutfit(false);
+      } else if (newList.length === 4) {
+        const newList2 = outfitList2;
+        if (newList2.length < 4) {
+          newList2.push({
+            id: productId,
+            name: productName,
+            style: productStyle,
+            rating: productRating,
+          });
+          setOutfitList2(newList2);
+          setAddedOutfit(false);
+        } else {
+          console.log('add an error no more than 7');
+        }
+      }
+    }
+  }, [addedOutfit]);
+
+  return (
+    <div>
+      Outfit Products
+      <Carousel interval={null} indicators={false}>
+        <Carousel.Item id="first-list">
+          <CardDeck className="outfit-group">
+            <Card className="outfit-products" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
+              <Card.Img variant="top" className="add-outfit-image" src="add-to-outfit2.png" />
+              <Card.ImgOverlay>
+                <Card.Title className="text-center outfit-text">Add to Outfit List</Card.Title>
+              </Card.ImgOverlay>
+            </Card>
+            {outfitList.length === 0
+              ? (
+                <>
+                  <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                </>
+              )
+              : outfitList.length === 1
+                ? (
+                  <>
+                    <Card key={outfitList[0].id} className="related-products" onClick={() => changeProduct(outfitList[0].id)}>
+                      <Card.Img variant="top" className="related-image" src={outfitList[0].style.photos[1].url} />
+                      <Card.Title>{outfitList[0].name}</Card.Title>
+                      {
+              outfitList[0].style !== undefined ? (
+                <Card.Text>
+                  <span className={outfitList[0].style.sale_price}>
+                    {outfitList[0].style.sale_price}
+                  </span>
+                  <span className={outfitList[0].style.original_price}>
+                    {outfitList[0].style.original_price}
+                  </span>
+                </Card.Text>
+              ) : (
+                <Card.Text>
+                  <span>{outfitList[0].style.original_price}</span>
+                </Card.Text>
+              )
+      }
+                      {outfitList[0].rating !== 'NaN' || outfitList[0].rating !== undefined ? (
+                        <Stars
+                          style={starStyle}
+                          rating={outfitList[0].rating}
+                        />
+                      ) : null}
+                    </Card>
+                    <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                    <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  </>
+                )
+                : outfitList.length === 2
+                  ? (
+                    <>
+                      {outfitList.map((item, index) => (
+                        <Card key={index} className="related-products" onClick={() => changeProduct(item.id)}>
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
+                          <Card.Title>{[item.name]}</Card.Title>
+                          {
+              item.name === undefined ? (
+                <Card.Text>
+                  <span className={item.style.sale_price}>
+                    {item.style.sale_price}
+                  </span>
+                  <span className={item.style.original_price}>
+                    {item.style.original_price}
+                  </span>
+                </Card.Text>
+              ) : (
+                <Card.Text>
+                  <span>{item.style.original_price}</span>
+                </Card.Text>
+              )
+      }
+                          {item.rating !== 'NaN' || item.rating !== undefined ? (
+                            <Stars
+                              style={starStyle}
+                              rating={item.rating}
+                            />
+                          ) : null}
+                        </Card>
+                      ))}
+                      <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                    </>
+                  )
+                  : (
+                    <>
+                      {outfitList.map((item, index) => (
+                        <Card key={index} className="related-products" onClick={() => changeProduct(item.id)}>
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
+                          <Card.Title>{[item.name]}</Card.Title>
+                          {
+              item.name === undefined ? (
+                <Card.Text>
+                  <span className={item.style.sale_price}>
+                    {item.style.sale_price}
+                  </span>
+                  <span className={item.style.original_price}>
+                    {item.style.original_price}
+                  </span>
+                </Card.Text>
+              ) : (
+                <Card.Text>
+                  <span>{item.style.original_price}</span>
+                </Card.Text>
+              )
+      }
+                          {item.rating !== 'NaN' || item.rating !== undefined ? (
+                            <Stars
+                              style={starStyle}
+                              rating={item.rating}
+                            />
+                          ) : null}
+                        </Card>
+                      ))}
+                    </>
+                  )}
+          </CardDeck>
+        </Carousel.Item>
+      </Carousel>
+      <style>
+        {`   
+            
+            .outfit-text {
+               font-weight: bold;
+               font: icon;
+               font-size: x-large;
+               position: relative;
+               bottom: -1px;
+             } 
+             .carousel-control-prev {
+               width: 2%;
+             }
+             .carousel-control-next {
+               width: 2%;
+             }
+             .add-outfit {
+              width: 243.500px;
+              height: 271.992px;
+              margin: auto;
+            }
+             .add-outfit-image {
+               height: 272px;
+               margin: auto;
+               padding: 0px;
+             }
+             .outfit-products {
+               margin: 10px;
+               box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
+               border-color: grey;
+             }
+             .related-products-group {
+  
+             }
+             `}
+      </style>
+    </div>
+  );
+};
 
 export default OutfitList;

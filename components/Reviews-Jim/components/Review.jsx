@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 
-const Review = ({ review, markHelpful }) => {
+import ImageModal from './ImageModal';
+
+const Review = ({ review, markReview }) => {
   const [helpful, setHelpful] = useState(false);
+  const [show, setShow] = useState(false);
+  const [image, setImage] = useState('');
+  const [body, setBody] = useState(review.body.substring(0, 250));
+
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dateVal = new Date(review.date);
   const month = monthNames[dateVal.getMonth()];
@@ -22,19 +28,28 @@ const Review = ({ review, markHelpful }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="review-summary">
           {review.summary}
         </Col>
       </Row>
       <Row>
-        <Col>
-          {review.body}
-        </Col>
+        {(review.body.length <= 250)
+          ? (
+            <Col>
+              {review.body}
+            </Col>
+          )
+          : (
+            <Col>
+              {`${body} ...`}
+              {(body.length <= 250) ? <div onClick={() => setBody(review.body)}><u>See more</u></div> : <div onClick={() => setBody(review.body.substring(0, 250))}><u>See less</u></div>}
+            </Col>
+          )}
       </Row>
       <Row>
-        {review.photos.map((photo) => <img key={photo.id} alt="" src={photo.url} />)}
+        {review.photos.map((photo) => <img key={photo.id} className="review-photo" alt="" src={photo.url} onClick={() => { setShow(true); setImage(photo.url); }} />)}
       </Row>
-      {review.recommended ? <Row><Col>✓ I recommend this product</Col></Row> : null}
+      {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
       {review.response ? (
         <Row>
           <Col>
@@ -55,25 +70,21 @@ const Review = ({ review, markHelpful }) => {
           <Col>
             Was this review helpful?
             {' '}
-            <span onClick={(e) => { markHelpful(e, review.review_id); setHelpful(true); }}><u>Yes</u></span>
+            <span onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
             {' '}
             (
             {review.helpfulness}
             ) |
             {' '}
-            <u>Report</u>
+            <span value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
           </Col>
         )}
       </Row>
-
-      <style jsx>
-        {`
-          img {
-            height: 150px;
-          }
-      `}
-      </style>
-
+      <ImageModal
+        image={image}
+        show={show}
+        onHide={() => setShow(false)}
+      />
     </Container>
   );
 };
@@ -89,11 +100,11 @@ Review.propTypes = {
       id: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
     })),
-    recommended: PropTypes.bool,
+    recommend: PropTypes.bool,
     response: PropTypes.string,
     helpfulness: PropTypes.number.isRequired,
   }),
-  markHelpful: PropTypes.func.isRequired,
+  markReview: PropTypes.func.isRequired,
 };
 
 Review.defaultProps = {

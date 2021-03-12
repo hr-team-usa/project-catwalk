@@ -1,4 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import {
   PinterestShareButton, PinterestIcon,
@@ -12,9 +14,12 @@ import Stars from '../../Reviews-Jim/components/Stars';
 const ProductInfo = ({
   productName, category, description, styleInfo, productRating, reviewsRef,
 }) => {
-  const url = 'http://localhost:3000/';
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
+
+  const url = 'http://18.224.109.82/';
   const starsStyle = {
-    display: 'inline',
+    display: 'flex',
+    justifySelf: 'flex-start',
   };
 
   const scrollToReviews = (ref) => {
@@ -24,7 +29,7 @@ const ProductInfo = ({
   return (
     <div>
       {productRating !== null ? (
-        <>
+        <div style={{ display: 'flex' }}>
           <Stars style={starsStyle} rating={productRating} />
           <span
             onClick={() => scrollToReviews(reviewsRef)}
@@ -32,16 +37,25 @@ const ProductInfo = ({
             role="button"
             tabIndex={0}
           >
-            <u>Read all reviews</u>
+            <u style={{ position: 'relative', left: '50%', top: '18%' }}>Read all reviews</u>
           </span>
-        </>
+
+        </div>
       ) : null}
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
       <Price styleInfo={styleInfo} />
       <div style={{ marginTop: '5px', marginBottom: '5px' }}>{description}</div>
       { styleInfo.photos && (
-        <span style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <span
+          style={{ display: 'flex', justifyContent: 'space-evenly' }}
+          onClick={() => {
+            trackEvent({ element: 'Social Media', time: new Date() });
+          }}
+          onKeyUp={() => {
+            trackEvent({ element: 'Social Media', time: new Date() });
+          }}
+        >
           <TwitterShareButton url={url} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
