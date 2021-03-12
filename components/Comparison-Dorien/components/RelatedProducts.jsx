@@ -83,7 +83,7 @@ const RelatedProducts = ({
       Related Products
       {products
                 && (
-                <Carousel interval={null}>
+                <Carousel interval={null} indicators={false}>
                   {arrayOfArrayProducts.map((array, index) => (
                     <Carousel.Item key={index}>
                       <CardDeck>
@@ -101,6 +101,7 @@ const RelatedProducts = ({
                               relatedRating: ratings[item.data.id.toString()],
                               productRating,
                               productStyle,
+                              relatedStyle: style[item.data.id.toString()],
                             }}
                           >
                             <Card key={index} className="related-products" onClick={() => changeProduct(item.data.id)}>

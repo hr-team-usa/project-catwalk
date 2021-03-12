@@ -133,7 +133,10 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
           )
           : null }
         <OutfitList
+          productId={productId}
+          productName={productName}
           productStyle={currentStyleData}
+          productRating={productRating}
         />
       </Container>
     </div>
