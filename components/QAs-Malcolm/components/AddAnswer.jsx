@@ -27,38 +27,57 @@ function AddAnswer(props) {
       setEmail(e.target.value);
     }
     if (e.target.name === 'photo') {
-      setPhotos(e.target.value);
+      setPhotos([e.target.value]);
     }
   };
 
-  const submitQ = () => {
-    const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
-      method: 'post',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-      data: {
-        body: answer,
-        name,
-        email,
-        photos: [],
-      },
-    };
+  console.log(photos)
 
-    axios(options)
-      .then(() => { props.onHide(); })
-      .then(() => console.log('created in db'))
-      .catch((err) => console.log(err));
+  const validationCheck = () => {
+    const required = [];
+    if (answer === '') {
+      required.push('answer');
+    }
+    if (name === '') {
+      required.push('nickname');
+    }
+    if (email === '') {
+      required.push('email address');
+    }
+    if (required.length) {
+      let result = '\n';
+      for (let i = 0; i < required.length; i += 1) {
+        result += `${required[i]}\n`;
+      }
+      return result;
+    }
+    return null;
   };
 
-  // const handleAddPhoto = (e) => {
-  //   console.log(e.target.parentNode.input);
-  //   // const file = e.target.files[0];
-  //   const reader = new FileReader();
-  //   const url = reader.readAsDataURL(file.name);
-  // };
-
+  const submitA = (e) => {
+    e.preventDefault();
+    if (!validationCheck()) {
+      const options = {
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
+        method: 'post',
+        headers: {
+          Authorization: config.TOKEN,
+        },
+        data: {
+          body: answer,
+          name,
+          email,
+          photos: [],
+        },
+      };
+      axios(options)
+        .then(() => { props.onHide(); })
+        .then(() => console.log('created in db'))
+        .catch((err) => console.log(err));
+    } else {
+      alert(`Please complete the required fields: ${validationCheck()}`);
+    }
+  };
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
@@ -79,15 +98,19 @@ function AddAnswer(props) {
                   onChange={(e) => { handleChange(e); }}
                   required
                 >
-                  <Form.Label>Your Answer *</Form.Label>
+                  <Form.Label>Your Answer (required)</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
                     name="formAnswer"
                   />
+                  <Form.Text>
+                    {answer.length}
+                    /1000 max
+                  </Form.Text>
                 </Form.Group>
                 <Form.Group onChange={(e) => { handleChange(e); }} required>
-                  <Form.Label>What is your nickname *</Form.Label>
+                  <Form.Label>What is your nickname (required)</Form.Label>
                   <Form.Control
                     type="name"
                     placeholder="Example: jack543!"
@@ -103,7 +126,7 @@ function AddAnswer(props) {
                   onChange={(e) => { handleChange(e); }}
                   required
                 >
-                  <Form.Label>Email address *</Form.Label>
+                  <Form.Label>Email address (required)</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Example: jack@email.com"
@@ -133,7 +156,7 @@ function AddAnswer(props) {
                 </Form.Group>
                 <br />
                 <br />
-                <Button variant="primary" type="submit" onClick={() => submitQ()} onSubmit={submitQ()}>
+                <Button variant="primary" type="submit" onClick={(e) => submitA(e)}>
                   Submit
                 </Button>
               </Form>
