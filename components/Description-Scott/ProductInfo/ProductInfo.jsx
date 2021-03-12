@@ -16,7 +16,7 @@ const ProductInfo = ({
 }) => {
   const { trackEvent } = useTracking({ module: 'Product Overview' });
 
-  const url = 'http://localhost:3000/';
+  const url = 'http://18.224.109.82/';
   const starsStyle = {
     display: 'inline',
   };

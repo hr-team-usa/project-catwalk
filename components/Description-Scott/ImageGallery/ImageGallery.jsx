@@ -179,7 +179,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   return (
     <>
-      <div className={styles.mainImageContainer}>
+      <div className={styles.mainImageContainer} style={{ border: '1px solid #92A2B0' }}>
         {/* Main Image: */}
         <Carousel
           id="mainCarousel"
@@ -241,7 +241,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           width: '80px',
           height: '500px',
           position: 'absolute',
-          top: '5%',
+          top: '50px',
           left: '5%',
         }}
         >
@@ -262,7 +262,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
               >
                 <Card.Img
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
-                  src={thumbnailObj.thumbnail}
+                  src={thumbnailObj.thumbnail || '/no-image-icon.png'}
                   onClick={() => handleSelect(thumbnailObj.index)}
                   alt="thumbnail image"
                 />
