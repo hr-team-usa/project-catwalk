@@ -107,7 +107,7 @@ const ReviewsList = ({
       </div>
       {renderedReviews.map((review) => <Review key={review.review_id} review={review} markReview={markReview} />)}
       {!productReviews.length ? <div>Be the first to review this product.</div> : null}
-      {productReviews.length ? <Button id="more-reviews-btn" className="review-buttons" onClick={(e) => addTwoReviews(e)}>More Reviews</Button> : null}
+      {(productReviews.length > 2) ? <Button id="more-reviews-btn" className="review-buttons" onClick={(e) => addTwoReviews(e)}>More Reviews</Button> : null}
       <Button className="review-buttons" onClick={() => setShow(true)}>Add a Review +</Button>
       <NewReviewForm
         productName={productName}

@@ -8,75 +8,6 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
 
-const renderCharacteristics = (char) => {
-  if (char === 'Size') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick1" label="A size too small" value="1" />
-        <Form.Check inline type="radio" name="char-pick1" label="½ a size too small" value="2" />
-        <Form.Check inline type="radio" name="char-pick1" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick1" label="½ a size too big" value="4" />
-        <Form.Check inline type="radio" name="char-pick1" label="A size too wide" value="5" />
-      </>
-    );
-  }
-  if (char === 'Width') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick2" label="Too narrow" value="1" />
-        <Form.Check inline type="radio" name="char-pick2" label="Slightly narrow" value="2" />
-        <Form.Check inline type="radio" name="char-pick2" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick2" label="Slightly wide" value="4" />
-        <Form.Check inline type="radio" name="char-pick2" label="Too wide" value="5" />
-      </>
-    );
-  }
-  if (char === 'Comfort') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick3" label="Uncomfortable" value="1" />
-        <Form.Check inline type="radio" name="char-pick3" label="Slightly comfortable" value="2" />
-        <Form.Check inline type="radio" name="char-pick3" label="Ok" value="3" />
-        <Form.Check inline type="radio" name="char-pick3" label="Comfortable" value="4" />
-        <Form.Check inline type="radio" name="char-pick3" label="Perfect" value="5" />
-      </>
-    );
-  }
-  if (char === 'Quality') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick4" label="Poor" value="1" />
-        <Form.Check inline type="radio" name="char-pick4" label="Below average" value="2" />
-        <Form.Check inline type="radio" name="char-pick4" label="What I expected" value="3" />
-        <Form.Check inline type="radio" name="char-pick4" label="Pretty great" value="4" />
-        <Form.Check inline type="radio" name="char-pick4" label="Perfect" value="5" />
-      </>
-    );
-  }
-  if (char === 'Length') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick5" label="Runs short" value="1" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly short" value="2" />
-        <Form.Check inline type="radio" name="char-pick5" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly long" value="4" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs too long" value="5" />
-      </>
-    );
-  }
-  if (char === 'Fit') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick6" label="Runs tight" value="1" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly tight" value="2" />
-        <Form.Check inline type="radio" name="char-pick6" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly loose" value="4" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs loose" value="5" />
-      </>
-    );
-  }
-};
-
 const NewReviewForm = ({
   show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
@@ -88,6 +19,7 @@ const NewReviewForm = ({
   const [body, setBody] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [charObj, setCharObj] = useState({});
   // const [state, setState] = useState({});
 
   // const stateListener = e => {
@@ -95,6 +27,83 @@ const NewReviewForm = ({
   //   console.log(e.target.value);
   //   setState({ ...state, [e.target.name]: (e.target.value) });
   // };
+
+  const handleCharInput = (e, char) => {
+    // console.log(characteristics[key].id);
+    // console.log(e.target.value);
+    const key = characteristics[char].id;
+    const val = e.target.value;
+    setCharObj({ ...charObj, [key]: (Number(val)) });
+  };
+
+  const renderCharacteristics = (char) => {
+    if (char === 'Size') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick1" label="A size too small" value="1" />
+          <Form.Check inline type="radio" name="char-pick1" label="½ a size too small" value="2" />
+          <Form.Check inline type="radio" name="char-pick1" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick1" label="½ a size too big" value="4" />
+          <Form.Check inline type="radio" name="char-pick1" label="A size too wide" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Width') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick2" label="Too narrow" value="1" />
+          <Form.Check inline type="radio" name="char-pick2" label="Slightly narrow" value="2" />
+          <Form.Check inline type="radio" name="char-pick2" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick2" label="Slightly wide" value="4" />
+          <Form.Check inline type="radio" name="char-pick2" label="Too wide" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Comfort') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick3" label="Uncomfortable" value="1" />
+          <Form.Check inline type="radio" name="char-pick3" label="Slightly comfortable" value="2" />
+          <Form.Check inline type="radio" name="char-pick3" label="Ok" value="3" />
+          <Form.Check inline type="radio" name="char-pick3" label="Comfortable" value="4" />
+          <Form.Check inline type="radio" name="char-pick3" label="Perfect" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Quality') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick4" label="Poor" value="1" />
+          <Form.Check inline type="radio" name="char-pick4" label="Below average" value="2" />
+          <Form.Check inline type="radio" name="char-pick4" label="What I expected" value="3" />
+          <Form.Check inline type="radio" name="char-pick4" label="Pretty great" value="4" />
+          <Form.Check inline type="radio" name="char-pick4" label="Perfect" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Length') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick5" label="Runs short" value="1" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs slightly short" value="2" />
+          <Form.Check inline type="radio" name="char-pick5" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs slightly long" value="4" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs too long" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Fit') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick6" label="Runs tight" value="1" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs slightly tight" value="2" />
+          <Form.Check inline type="radio" name="char-pick6" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs slightly loose" value="4" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs loose" value="5" />
+        </div>
+      );
+    }
+  };
 
   const ratingPhrase = (num) => {
     switch (num) {
@@ -175,7 +184,7 @@ const NewReviewForm = ({
           name: nickname,
           email,
           photos: [],
-          characteristics: {},
+          characteristics: charObj,
         },
       };
 
