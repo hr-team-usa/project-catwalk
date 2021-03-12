@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTracking } from 'react-tracking';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Divider from '@material-ui/core/Divider';
@@ -15,8 +14,6 @@ const ProductDescription = ({
   productId, productRating, reviewsRef, setProductNameGlobal,
   setCurrentProductData, setCurrentStyleData, setCart, cart,
 }) => {
-  const { Track, trackEvent } = useTracking({ module: 'Product Overview' });
-
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');

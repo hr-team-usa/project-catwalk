@@ -3,8 +3,11 @@ import { shallow, mount } from 'enzyme';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
+import { act } from 'react-dom/test-utils'
 
+// import ProductDescription from '../components/Description-Scott/ProductDescription.jsx';
 import SelectSize from '../components/Description-Scott/AddToCart/SelectSize.jsx';
+import SelectQuantity from '../components/Description-Scott/AddToCart/SelectQuantity.jsx';
 import Add from '../components/Description-Scott/AddToCart/Add.jsx';
 import Price from '../components/Description-Scott/ProductInfo/Price.jsx';
 import StyleSelector from '../components/Description-Scott/StyleSelector/StyleSelector.jsx';
@@ -13,7 +16,7 @@ import ImageGallery from '../components/Description-Scott/ImageGallery/ImageGall
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-xdescribe('product description test suite', () => {
+describe('product description test suite', () => {
 
   describe('Select Size Dropdown tests', () => {
     it('runs a basic jest test', () => {
@@ -96,7 +99,7 @@ xdescribe('product description test suite', () => {
       */
     })
 
-    xit('displays only in-stock styles in the dropdown when clicked', () => {
+    it('displays only in-stock styles in the dropdown when clicked', async () => {
       const styleInfo = {
         style_id: 96887,
         name: "Forest Green & Black",
@@ -106,26 +109,157 @@ xdescribe('product description test suite', () => {
           560839: { quantity: 9, size: "M" },
         },
       }
-      const mockUseEffect = jest.fn();
-      React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
+      let wrapper;
+      act(() => {
+        wrapper = mount(<SelectSize styleInfo={styleInfo} setSku={() => { }} setIsOutOfStock={() => { }} invalidAdd={false} setInvalidAdd={() => { }} />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const button = wrapper.find('.btn');
 
-      mockUseEffect.mockClear();
-      wrapper.setProps();
-      expect(mockUseEffect).toHaveBeenCalled();
+      act(() => {
+        button.simulate('click');
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
 
-      // simulate a click of the DropdownButton
-      // expec the number of dropdown items to be three ("XS, M, and Select Size")
-      console.log('wrapper ', wrapper.debug());
+      const dropdownItems = wrapper.find('DropdownItem');
+      expect(dropdownItems).toHaveLength(3);
+      expect(dropdownItems.at(0).text()).toBe('Select Size');
+      expect(dropdownItems.at(1).text()).toBe('XS');
+      expect(dropdownItems.at(2).text()).toBe('M');
+    })
+  })
+
+  describe('Select Quantity Dropdown tests', () => {
+    it('displays a list up to 15 when quantity of style is > 15', () => {
+    })
+
+    it('is disabled and displays "-" when no sku has been selected', () => {
+      const styleInfo = {
+        style_id: 96887,
+        name: "Forest Green & Black",
+        skus: {
+          560837: { quantity: 25, size: "XS" },
+          560838: { quantity: 20, size: "S" },
+          560839: { quantity: 19, size: "M" },
+        },
+      }
+
+      const wrapper = mount(<SelectQuantity sku={null} setQuantitySelected={() => { }} />);
 
       const dropdown = wrapper.find('DropdownButton');
+      expect(dropdown).toHaveLength(1);
+      expect(dropdown.prop('disabled')).toBe(true);
+      expect(dropdown.prop('title')).toBe('-');
+    })
 
-      const dropdownButton = dropdown.find('Dropdown');
-      dropdown.simulate('click');
-      // after clicking, four buttons should be rendered
+    it('is defaults to 1 when a sku has been selected', async () => {
+      const styleInfo = {
+        style_id: 96887,
+        name: "Forest Green & Black",
+        skus: {
+          560837: { quantity: 25, size: "XS" },
+          560838: { quantity: 20, size: "S" },
+          560839: { quantity: 19, size: "M" },
+        },
+      }
+      let wrapper;
+      act(() => {
+        wrapper = mount(<SelectQuantity sku={styleInfo.skus[560837]} setQuantitySelected={() => { }} />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const button = wrapper.find('.btn');
 
-      expect(dropdown.find('DropdownItem')).toHaveLength(4);
+      act(() => {
+        // appears you can only call simulate on a variable that points to one node:
+        button.simulate('click');
+        // for some reason wrapper.find('.btn').simulate('click') DOES NOT work
+      });
+
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+
+      const dropdown = wrapper.find('DropdownButton');
+      expect(dropdown.prop('title')).toBe(1);
+
+      const dropdownItems = wrapper.find('DropdownItem');
+      expect(dropdownItems).toHaveLength(15);
+    })
+
+    it('is displays only up to the quantity available if that quantity is less than 15', async () => {
+      const styleInfo = {
+        style_id: 96887,
+        skus: {
+          560837: { quantity: 3, size: "XS" },
+        },
+      }
+      let wrapper;
+      act(() => {
+        wrapper = mount(<SelectQuantity sku={styleInfo.skus[560837]} setQuantitySelected={() => { }} />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const button = wrapper.find('.btn');
+
+      act(() => {
+        // appears you can only call simulate on a variable that points to one node:
+        button.simulate('click');
+        // for some reason wrapper.find('.btn').simulate('click') DOES NOT work
+      });
+
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+
+      const dropdown = wrapper.find('DropdownButton');
+      expect(dropdown.prop('title')).toBe(1);
+
+      const dropdownItems = wrapper.find('DropdownItem');
+      expect(dropdownItems).toHaveLength(3);
     })
   })
 
@@ -135,7 +269,7 @@ xdescribe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={false} sku={null} setInvalidAdd={() => { }} setCart={() => {}} cart={[]} productName={'dummy'}/>);
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={false} sku={null} setInvalidAdd={() => { }} setCart={() => { }} cart={[]} productName={'dummy'} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -148,7 +282,7 @@ xdescribe('product description test suite', () => {
       const mockUseEffect = jest.fn();
       React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={true} sku={null} setInvalidAdd={() => { }} setCart={() => {}} cart={[]} productName={'dummy'} />);
+      const wrapper = mount(<Add quantitySelected={null} isOutOfStock={true} sku={null} setInvalidAdd={() => { }} setCart={() => { }} cart={[]} productName={'dummy'} />);
 
       mockUseEffect.mockClear();
       wrapper.setProps();
@@ -252,13 +386,13 @@ xdescribe('product description test suite', () => {
 
     var styleInfo = allStyles[0];
 
-    xit('updates the displayed style name when a new style is clicked', () => {
+    xit('updates the StyleInfo when a new style is clicked', () => {
 
       // const mockUseEffect = jest.fn();
       // React.useEffect = mockUseEffect;
 
-      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {
-        // how do we update the styleInfo prop that is passed to the StyleSelector component???
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={(newStyle) => {
+        // check if newStyle is the style we clicked
       }} />);
 
       // mockUseEffect.mockClear();
@@ -288,7 +422,7 @@ xdescribe('product description test suite', () => {
 
     it('displays a checkmark on the currently selected style', () => {
       styleInfo = allStyles[2]
-      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => {}} />);
+      const wrapper = mount(<StyleSelector allStyles={allStyles} styleInfo={styleInfo} setStyleInfo={() => { }} />);
 
       expect(wrapper.find('Image.checkmark').at(0).prop('hidden')).toBe(true);
       expect(wrapper.find('Image.checkmark').at(1).prop('hidden')).toBe(true);
@@ -395,15 +529,15 @@ xdescribe('product description test suite', () => {
           name: "Forest Green & Black",
           original_price: "140.00",
           photos: [
-          { thumbnail_url: "000", url: "000" },
-          { thumbnail_url: "111", url: "111" },
-          { thumbnail_url: "222", url: "222" },
-          { thumbnail_url: "333", url: "333" },
-          { thumbnail_url: "444", url: "444" },
-          { thumbnail_url: "555", url: "555" },
-          { thumbnail_url: "666", url: "666" },
-          { thumbnail_url: "777", url: "777" },
-          { thumbnail_url: "888", url: "888" },
+            { thumbnail_url: "000", url: "000" },
+            { thumbnail_url: "111", url: "111" },
+            { thumbnail_url: "222", url: "222" },
+            { thumbnail_url: "333", url: "333" },
+            { thumbnail_url: "444", url: "444" },
+            { thumbnail_url: "555", url: "555" },
+            { thumbnail_url: "666", url: "666" },
+            { thumbnail_url: "777", url: "777" },
+            { thumbnail_url: "888", url: "888" },
           ],
           sale_price: null,
           style_id: 96887,
