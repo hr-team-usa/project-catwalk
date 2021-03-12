@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,84 +8,18 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
 
-const renderCharacteristics = (char) => {
-  if (char === 'Size') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick1" label="A size too small" value="1" />
-        <Form.Check inline type="radio" name="char-pick1" label="½ a size too small" value="2" />
-        <Form.Check inline type="radio" name="char-pick1" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick1" label="½ a size too big" value="4" />
-        <Form.Check inline type="radio" name="char-pick1" label="A size too wide" value="5" />
-      </>
-    );
-  }
-  if (char === 'Width') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick2" label="Too narrow" value="1" />
-        <Form.Check inline type="radio" name="char-pick2" label="Slightly narrow" value="2" />
-        <Form.Check inline type="radio" name="char-pick2" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick2" label="Slightly wide" value="4" />
-        <Form.Check inline type="radio" name="char-pick2" label="Too wide" value="5" />
-      </>
-    );
-  }
-  if (char === 'Comfort') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick3" label="Uncomfortable" value="1" />
-        <Form.Check inline type="radio" name="char-pick3" label="Slightly comfortable" value="2" />
-        <Form.Check inline type="radio" name="char-pick3" label="Ok" value="3" />
-        <Form.Check inline type="radio" name="char-pick3" label="Comfortable" value="4" />
-        <Form.Check inline type="radio" name="char-pick3" label="Perfect" value="5" />
-      </>
-    );
-  }
-  if (char === 'Quality') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick4" label="Poor" value="1" />
-        <Form.Check inline type="radio" name="char-pick4" label="Below average" value="2" />
-        <Form.Check inline type="radio" name="char-pick4" label="What I expected" value="3" />
-        <Form.Check inline type="radio" name="char-pick4" label="Pretty great" value="4" />
-        <Form.Check inline type="radio" name="char-pick4" label="Perfect" value="5" />
-      </>
-    );
-  }
-  if (char === 'Length') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick5" label="Runs short" value="1" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly short" value="2" />
-        <Form.Check inline type="radio" name="char-pick5" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs slightly long" value="4" />
-        <Form.Check inline type="radio" name="char-pick5" label="Runs too long" value="5" />
-      </>
-    );
-  }
-  if (char === 'Fit') {
-    return (
-      <>
-        <Form.Check inline type="radio" name="char-pick6" label="Runs tight" value="1" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly tight" value="2" />
-        <Form.Check inline type="radio" name="char-pick6" label="Perfect" value="3" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs slightly loose" value="4" />
-        <Form.Check inline type="radio" name="char-pick6" label="Runs loose" value="5" />
-      </>
-    );
-  }
-};
-
 const NewReviewForm = ({
   show, onHide, characteristics, productName, productId, setGetToggle,
 }) => {
   const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [hoverText, setHoverText] = useState('');
   const [recommended, setRecommended] = useState(null);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [charObj, setCharObj] = useState({});
   // const [state, setState] = useState({});
 
   // const stateListener = e => {
@@ -94,6 +28,112 @@ const NewReviewForm = ({
   //   setState({ ...state, [e.target.name]: (e.target.value) });
   // };
 
+  const handleCharInput = (e, char) => {
+    // console.log(characteristics[key].id);
+    // console.log(e.target.value);
+    const key = characteristics[char].id;
+    const val = e.target.value;
+    setCharObj({ ...charObj, [key]: (Number(val)) });
+  };
+
+  const renderCharacteristics = (char) => {
+    if (char === 'Size') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick1" label="A size too small" value="1" />
+          <Form.Check inline type="radio" name="char-pick1" label="½ a size too small" value="2" />
+          <Form.Check inline type="radio" name="char-pick1" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick1" label="½ a size too big" value="4" />
+          <Form.Check inline type="radio" name="char-pick1" label="A size too wide" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Width') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick2" label="Too narrow" value="1" />
+          <Form.Check inline type="radio" name="char-pick2" label="Slightly narrow" value="2" />
+          <Form.Check inline type="radio" name="char-pick2" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick2" label="Slightly wide" value="4" />
+          <Form.Check inline type="radio" name="char-pick2" label="Too wide" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Comfort') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick3" label="Uncomfortable" value="1" />
+          <Form.Check inline type="radio" name="char-pick3" label="Slightly comfortable" value="2" />
+          <Form.Check inline type="radio" name="char-pick3" label="Ok" value="3" />
+          <Form.Check inline type="radio" name="char-pick3" label="Comfortable" value="4" />
+          <Form.Check inline type="radio" name="char-pick3" label="Perfect" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Quality') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick4" label="Poor" value="1" />
+          <Form.Check inline type="radio" name="char-pick4" label="Below average" value="2" />
+          <Form.Check inline type="radio" name="char-pick4" label="What I expected" value="3" />
+          <Form.Check inline type="radio" name="char-pick4" label="Pretty great" value="4" />
+          <Form.Check inline type="radio" name="char-pick4" label="Perfect" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Length') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick5" label="Runs short" value="1" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs slightly short" value="2" />
+          <Form.Check inline type="radio" name="char-pick5" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs slightly long" value="4" />
+          <Form.Check inline type="radio" name="char-pick5" label="Runs too long" value="5" />
+        </div>
+      );
+    }
+    if (char === 'Fit') {
+      return (
+        <div onChange={(e) => handleCharInput(e, char)}>
+          <Form.Check inline type="radio" name="char-pick6" label="Runs tight" value="1" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs slightly tight" value="2" />
+          <Form.Check inline type="radio" name="char-pick6" label="Perfect" value="3" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs slightly loose" value="4" />
+          <Form.Check inline type="radio" name="char-pick6" label="Runs loose" value="5" />
+        </div>
+      );
+    }
+  };
+
+  const ratingPhrase = (num) => {
+    switch (num) {
+      case 0 || -1:
+        setHoverText('');
+        break;
+      case 1:
+        setHoverText('Poor');
+        break;
+      case 2:
+        setHoverText('Not very good');
+        break;
+      case 3:
+        setHoverText('Decent');
+        break;
+      case 4:
+        setHoverText('Pretty good');
+        break;
+      case 5:
+        setHoverText('Excellent');
+        break;
+      default:
+        setHoverText('');
+    }
+  };
+
+  useEffect(() => {
+    ratingPhrase(hover);
+  }, [hover]);
+
   const validationCheck = () => {
     const required = [];
     if (rating === 0) {
@@ -101,6 +141,9 @@ const NewReviewForm = ({
     }
     if (recommended === null) {
       required.push('product recommendation');
+    }
+    if (Object.keys(charObj).length < Object.keys(characteristics).length) {
+      required.push('characteristics');
     }
     if (body.length < 50 || body.length > 1000) {
       required.push('review body');
@@ -112,13 +155,9 @@ const NewReviewForm = ({
       required.push('email address');
     }
     if (required.length) {
-      let result = '';
+      let result = '\n\n';
       for (let i = 0; i < required.length; i += 1) {
-        if (i === required.length - 1) {
-          result += `and ${required[i]}`;
-        } else {
-          result += `${required[i]}, `;
-        }
+        result += `${required[i]}\n`;
       }
       return result;
     }
@@ -144,7 +183,7 @@ const NewReviewForm = ({
           name: nickname,
           email,
           photos: [],
-          characteristics: {},
+          characteristics: charObj,
         },
       };
 
@@ -189,10 +228,16 @@ const NewReviewForm = ({
             <Rating
               name="product-rating"
               value={rating}
+              precision={1}
               onChange={(event, newValue) => {
                 setRating(newValue);
               }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
             />
+            {' '}
+            <span>{hoverText}</span>
           </Form.Group>
           <Form.Group>
             <Form.Label>Do you recommend this product? (required)</Form.Label>
