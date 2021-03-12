@@ -31,8 +31,6 @@ function AddAnswer(props) {
     }
   };
 
-  console.log(photos)
-
   const validationCheck = () => {
     const required = [];
     if (answer === '') {
