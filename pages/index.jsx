@@ -21,7 +21,6 @@ const App = () => {
 
   return (
     <>
-    {console.log('productId', productId)}
       {isDarkMode ? (
         <style type="text/css">
           {`
