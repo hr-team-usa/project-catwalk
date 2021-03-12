@@ -79,7 +79,7 @@ const ProductDescription = ({
     <div>
       <Container className="container-fluid">
         <Row>
-          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={()=> trackEvent({ element: 'Image Gallery', time: new Date() })}>
+          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={() => trackEvent({ element: 'Image Gallery', time: new Date() })}>
             <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
           {isExpanded ? null
