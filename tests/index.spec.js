@@ -10,7 +10,7 @@ import ProductDescription from '../components/Description-Scott/ProductDescripti
 import QAs from '../components/QAs-Malcolm/QAs';
 import AddQuestion from '../components/QAs-Malcolm/components/AddQuestion';
 
-describe('index.js test suite', () => {
+xdescribe('index.js test suite', () => {
   xit('runs a basic jest test', () => {
     expect(true).toEqual(true);
   });

@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { act } from 'react-dom/test-utils';
+
 configure({ adapter: new Adapter() });
 
 import axios from 'axios';
@@ -172,7 +174,13 @@ describe('Reviews Component', () => {
   })
 
   describe('Reviews Breakdown', () => {
+    it('should render only five-star reviews when the five-star ratings bar is clicke', async () => {
 
+    });
+
+    it('should render a remove ratings button after a rating filter is selected', async () => {
+
+    });
   })
 
   describe('Reviews List', () => {
@@ -219,20 +227,35 @@ describe('Reviews Component', () => {
       expect(wrapper.find('#more-reviews-btn').exists()).toBeFalsy();
     });
 
-    xit('should add two reviews when the more reviews button is clicked', () => {
+    it('should add two reviews when the more reviews button is clicked', async () => {
       dummyProps.productReviews = productReviews;
-      const mockUseEffect = jest.fn();
-      React.useEffect = mockUseEffect;
-
-      const wrapper = mount(<ReviewsList {...dummyProps} />)
-
-      mockUseEffect.mockClear();
-      wrapper.setProps();
-      expect(mockUseEffect).toHaveBeenCalled();
-
-      const moreReviews = wrapper.find('#more-reviews-btn');
-      moreReviews.simulate('click');
-      expend(wrapper.find('.rendered-review-list')).toHaveLength(4);
+      let wrapper;
+      act(() => {
+        wrapper = mount(<ReviewsList {...dummyProps} />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const button = wrapper.find('#more-reviews-btn > button');
+      act(() => {
+        button.simulate('click');
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      expect(wrapper.find('.rendered-review')).toHaveLength(4);
     });
 
     it('should use relevant as a default sort status', () => {
@@ -255,6 +278,11 @@ describe('Reviews Component', () => {
     it('should render a review form', () => {
       const wrapper = shallow(<NewReviewForm {...dummyProps} />);
       expect(wrapper).toMatchSnapshot();
+    });
+
+    it('should render a characteristic selector for each category', () => {
+      const wrapper = shallow(<NewReviewForm {...dummyProps} />);
+      expect(wrapper.find('.review-form-chars')).toHaveLength(4);
     });
   });
 });

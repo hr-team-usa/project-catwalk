@@ -105,8 +105,8 @@ const ReviewsList = ({
           <option value="newest">Newest</option>
         </select>
       </div>
-      <div className="rendered-review-list">
-        {renderedReviews.map((review) => <Review key={review.review_id} review={review} markReview={markReview} />)}
+      <div>
+        {renderedReviews.map((review) => <Review className="rendered-review" key={review.review_id} review={review} markReview={markReview} />)}
       </div>
       {!productReviews.length ? <div>Be the first to review this product.</div> : null}
       {(productReviews.length <= 2 || reviewCount >= productReviews.length) ? null : <Button id="more-reviews-btn" className="review-buttons" onClick={() => setReviewCount(reviewCount + 2)}>More Reviews</Button>}

@@ -266,12 +266,14 @@ const NewReviewForm = ({
           <Form.Group>
             <Form.Label>Characteristics (required)</Form.Label>
             <br />
-            {Object.keys(characteristics).map((characteristic, i) => (
-              <div key={i}>
-                <Form.Label>{characteristic}</Form.Label>
-                <Form.Group>{renderCharacteristics(characteristic)}</Form.Group>
-              </div>
-            ))}
+            <div>
+              {Object.keys(characteristics).map((characteristic, i) => (
+                <div key={i}>
+                  <Form.Label>{characteristic}</Form.Label>
+                  <Form.Group className="review-form-chars">{renderCharacteristics(characteristic)}</Form.Group>
+                </div>
+              ))}
+            </div>
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
