@@ -13,9 +13,9 @@
   transform: translateX(0);
 }
 */
-.App > div {
+/* .App > div {
   margin-bottom: 50px;
-}
+} */
 
 #__next {
   background-color: gray;

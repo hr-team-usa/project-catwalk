@@ -16,7 +16,10 @@ const NewReviewForm = ({
   const [hoverText, setHoverText] = useState('');
   const [recommended, setRecommended] = useState(null);
   const [summary, setSummary] = useState('');
+  const [imgContainer, setImgContainer] = useState('');
   const [body, setBody] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const [photosToggle, setPhotosToggle] = useState(false);
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [charObj, setCharObj] = useState({});
@@ -27,6 +30,15 @@ const NewReviewForm = ({
   //   console.log(e.target.value);
   //   setState({ ...state, [e.target.name]: (e.target.value) });
   // };
+
+  const addPhoto = (e) => {
+    e.preventDefault();
+    const photosArray = photos;
+    photosArray.push(imgContainer);
+    setPhotos(photosArray);
+    setPhotosToggle(true);
+    setImgContainer('');
+  };
 
   const handleCharInput = (e, char) => {
     // console.log(characteristics[key].id);
@@ -132,7 +144,8 @@ const NewReviewForm = ({
 
   useEffect(() => {
     ratingPhrase(hover);
-  }, [hover]);
+    setPhotosToggle(false);
+  }, [hover, photosToggle]);
 
   const validationCheck = () => {
     const required = [];
@@ -182,7 +195,7 @@ const NewReviewForm = ({
           recommend: recommended,
           name: nickname,
           email,
-          photos: [],
+          photos,
           characteristics: charObj,
         },
       };
@@ -271,12 +284,20 @@ const NewReviewForm = ({
               {body.length}
               /1000
             </Form.Text>
-            <Form.Control.Feedback type="invalid">
-              Please include a review that is at least 50 characters
-            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
-            <Form.File id="" label="Upload your photos" />
+            <Form.Label>Upload your photos</Form.Label>
+            <Form.Control type="" value={imgContainer} placeholder="Paste image url here" onChange={(e) => setImgContainer(e.target.value)} />
+            <Form.Text>5 photos max</Form.Text>
+            {photos.length ? photos.map((photo, i) => <img key={i} alt="" src={photo} />) : null}
+            <Button onClick={(e) => addPhoto(e)}>Upload</Button>
+            <style jsx>
+              {`
+                img {
+                  height: 75px;
+                }
+            `}
+            </style>
           </Form.Group>
           <Form.Group>
             <Form.Label>What is your nickname? (required)</Form.Label>
