@@ -15,7 +15,7 @@ const ProductDescription = ({
   productId, productRating, reviewsRef, setProductNameGlobal,
   setCurrentProductData, setCurrentStyleData, setCart, cart,
 }) => {
-  const { Track, trackEvent } = useTracking({ module: 'Product Overview' });
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
 
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
@@ -79,7 +79,7 @@ const ProductDescription = ({
     <div>
       <Container className="container-fluid">
         <Row>
-          <Col className={isExpanded ? 'col-12' : 'col-7'}>
+          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={()=> trackEvent({ element: 'Image Gallery', time: new Date() })}>
             <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
           {isExpanded ? null
