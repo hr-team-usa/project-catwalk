@@ -17,9 +17,6 @@ const ReviewsList = ({
   const [reviewCount, setReviewCount] = useState(2);
   const [show, setShow] = useState(false);
 
-  console.log('prod ', productReviews.length);
-  console.log('render ', renderedReviews.length);
-
   const renderReviewList = (reviews, count) => {
     const renderArray = [];
     if (count <= reviews.length) {
