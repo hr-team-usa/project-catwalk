@@ -38,14 +38,16 @@ const QAs = ({ productId, productName }) => {
         setSearchedMatch={setSearchedMatch}
         questions={questions}
       />
-      <Questions
-        productId={productId}
-        setCount={setCount}
-        count={count}
-        questions={(searchMatch || questions)}
-        setRender={setRender}
-        setQuestions={setQuestions}
-      />
+      <div style={{ overflowY: 'scroll', height: '750px' }}>
+        <Questions
+          productId={productId}
+          setCount={setCount}
+          count={count}
+          questions={(searchMatch || questions)}
+          setRender={setRender}
+          setQuestions={setQuestions}
+        />
+      </div>
       <AddMore
         productId={productId}
         productName={productName}
