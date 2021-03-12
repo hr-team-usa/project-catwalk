@@ -1,44 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+/* eslint-disable object-curly-newline */
+import React from 'react';
 import PropTypes from 'prop-types';
-import config from '../../../config';
 import Q from './Q';
 
-// eslint-disable-next-line no-unused-vars
-function Questions({ productId, productName, count }) {
-  const [questions, setQuestions] = useState([]);
-  const [render, setRender] = useState(false);
-  const id = productId;
-  // const count = 'count=4';
-
-  const getQuestions = () => {
-    const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${id}${count}`,
-      method: 'get',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-    };
-
-    axios(options)
-      .then((res) => setQuestions(res.data.results))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getQuestions();
-    setRender(false);
-  }, [render, count]);
-
+function Questions({
+  productId, productName, count, questions, setRender, setQuestions }) {
   return (
     <>
-      {questions.map((item) => (
+      { questions.map((item) => (
         <Q
           question={item}
           key={item.question_id}
           answers={item.answers}
           setRender={setRender}
-          productId={id}
+          productId={productId}
           count={count}
           setQuestions={setQuestions}
           productName={productName}
@@ -54,10 +29,34 @@ Questions.propTypes = {
     PropTypes.number,
   ]).isRequired,
   productName: PropTypes.string,
+  count: PropTypes.string,
+  questions: PropTypes.arrayOf(PropTypes.shape({
+    answers: PropTypes.shape({
+      answerer_name: PropTypes.string,
+      body: PropTypes.string,
+      date: PropTypes.string,
+      helpfulness: PropTypes.number,
+      id: PropTypes.number,
+      photos: PropTypes.arrayOf(PropTypes.shape({
+        url: PropTypes.string,
+      })),
+    }),
+    asker_name: PropTypes.string,
+    question_id: PropTypes.number,
+    question_body: PropTypes.string,
+    question_date: PropTypes.string,
+    question_helpfulness: PropTypes.number,
+  })),
+  setRender: PropTypes.func,
+  setQuestions: PropTypes.func,
 };
 
 Questions.defaultProps = {
   productName: null,
+  count: null,
+  questions: null,
+  setRender: null,
+  setQuestions: null,
 };
 
 export default Questions;

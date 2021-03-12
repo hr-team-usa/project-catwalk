@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Reviews Component Jest tests that test the Jest! should render correctly with no props 1`] = `ShallowWrapper {}`;
-
-exports[`Reviews Component Parent Component should render correctly with no props 1`] = `ShallowWrapper {}`;

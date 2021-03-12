@@ -68,6 +68,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
       }
       thumbnailGroups.push(currentGroup);
     }
+    if (index >= thumbnails.length) {
+      setIndex(0);
+    }
     setThumbCarousel(thumbnailGroups);
   };
 
@@ -124,7 +127,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'expanded':
@@ -135,7 +137,6 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             src={image || '/no-image-icon.png'}
             alt="main product image"
             onClick={expand}
-            fluid
           />
         );
       case 'zoomed':
@@ -178,11 +179,12 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   return (
     <>
-      <div className={styles.mainImageContainer}>
+      <div className={styles.mainImageContainer} style={{ border: '1px solid #92A2B0' }}>
         {/* Main Image: */}
         <Carousel
+          id="mainCarousel"
           className={carouselStyle}
-          indicators={false}
+          indicators={view === 'expanded'}
           interval={null}
           activeIndex={index}
           onSelect={handleSelect}
@@ -194,6 +196,28 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             </Carousel.Item>
 
           )) : null}
+          {index === 0
+            ? (
+              <style type="text/css">
+                {`
+              #maincarousel .carousel-control-prev {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
+          {index === fullSizeImages.length - 1
+            ? (
+              <style type="text/css">
+                {`
+              #maincarousel .carousel-control-next {
+                visibility: hidden;
+              }
+            `}
+              </style>
+            )
+            : null}
         </Carousel>
         <button
           onClick={() => {
@@ -217,7 +241,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           width: '80px',
           height: '500px',
           position: 'absolute',
-          top: '5%',
+          top: '50px',
           left: '5%',
         }}
         >
@@ -238,8 +262,9 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
               >
                 <Card.Img
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
-                  src={thumbnailObj.thumbnail}
+                  src={thumbnailObj.thumbnail || '/no-image-icon.png'}
                   onClick={() => handleSelect(thumbnailObj.index)}
+                  alt="thumbnail image"
                 />
               </Card>
             ))
@@ -256,6 +281,24 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             ) : null}
           </CardColumns>
         </div>
+      ) : null}
+      {index === 0 ? (
+        <style type="text/css">
+          {`
+          #mainCarousel .carousel-control-prev {
+            visibility: hidden
+          }
+      `}
+        </style>
+      ) : null}
+      {index === thumbnails.length - 1 ? (
+        <style type="text/css">
+          {`
+                #mainCarousel .carousel-control-next {
+                  visibility: hidden
+                }
+            `}
+        </style>
       ) : null}
     </>
   );

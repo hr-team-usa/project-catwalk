@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 
-const Review = ({ review, markHelpful }) => {
+const Review = ({ review, markReview }) => {
   const [helpful, setHelpful] = useState(false);
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dateVal = new Date(review.date);
@@ -22,7 +22,7 @@ const Review = ({ review, markHelpful }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="review-summary">
           {review.summary}
         </Col>
       </Row>
@@ -34,7 +34,7 @@ const Review = ({ review, markHelpful }) => {
       <Row>
         {review.photos.map((photo) => <img key={photo.id} alt="" src={photo.url} />)}
       </Row>
-      {review.recommended ? <Row><Col>✓ I recommend this product</Col></Row> : null}
+      {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
       {review.response ? (
         <Row>
           <Col>
@@ -55,13 +55,13 @@ const Review = ({ review, markHelpful }) => {
           <Col>
             Was this review helpful?
             {' '}
-            <span onClick={(e) => { markHelpful(e, review.review_id); setHelpful(true); }}><u>Yes</u></span>
+            <span onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
             {' '}
             (
             {review.helpfulness}
             ) |
             {' '}
-            <u>Report</u>
+            <span value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
           </Col>
         )}
       </Row>
@@ -89,11 +89,11 @@ Review.propTypes = {
       id: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
     })),
-    recommended: PropTypes.bool,
+    recommend: PropTypes.bool,
     response: PropTypes.string,
     helpfulness: PropTypes.number.isRequired,
   }),
-  markHelpful: PropTypes.func.isRequired,
+  markReview: PropTypes.func.isRequired,
 };
 
 Review.defaultProps = {
