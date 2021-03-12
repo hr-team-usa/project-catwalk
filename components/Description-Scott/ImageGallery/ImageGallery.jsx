@@ -241,7 +241,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           width: '80px',
           height: '500px',
           position: 'absolute',
-          top: '5%',
+          top: '50px',
           left: '5%',
         }}
         >
@@ -262,7 +262,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
               >
                 <Card.Img
                   style={thumbnailObj.index === index ? selectedThumbStyle : defaultThumbStyle}
-                  src={thumbnailObj.thumbnail}
+                  src={thumbnailObj.thumbnail || '/no-image-icon.png'}
                   onClick={() => handleSelect(thumbnailObj.index)}
                   alt="thumbnail image"
                 />
