@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
 import Brightness5Icon from '@material-ui/icons/Brightness5'; import ToggleButton from '@material-ui/lab/ToggleButton';
 import Head from 'next/head';
@@ -18,6 +18,26 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const reviewsRef = useRef();
+
+  const retrieveItemsFromLocalStorage = () => {
+    const existing = Object.keys(localStorage);
+    const itemsInCart = [];
+    for (let i = 0; i < existing.length; i += 1) {
+      const nm = existing[i];
+      const sizeAndQuan = localStorage.getItem(nm);
+      const itemDetails = sizeAndQuan.split('/');
+      const sz = itemDetails[0];
+      const quan = itemDetails[1];
+      if (nm.slice(0, 3) === 'NL:') {
+        itemsInCart.push({ name: nm.slice(3), size: sz, quantity: quan });
+      }
+    }
+    setCart(itemsInCart);
+  };
+
+  useEffect(() => {
+    retrieveItemsFromLocalStorage();
+  }, []);
 
   return (
     <>
