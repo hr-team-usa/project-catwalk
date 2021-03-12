@@ -179,7 +179,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   return (
     <>
-      <div className={styles.mainImageContainer}>
+      <div className={styles.mainImageContainer} style={{ border: '1px solid #92A2B0' }}>
         {/* Main Image: */}
         <Carousel
           id="mainCarousel"

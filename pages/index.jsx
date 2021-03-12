@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5';import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5'; import ToggleButton from '@material-ui/lab/ToggleButton';
 import Head from 'next/head';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
@@ -21,6 +21,37 @@ const App = () => {
 
   return (
     <>
+      {isDarkMode ? (
+        <style type="text/css">
+          {`
+          .navbar {
+            border: solid;
+            border-color: rgb(41, 41, 41);
+            ;
+          }
+        .card {
+          background-color: #353B40
+        }
+        `}
+        </style>
+      ) : null}
+      <style type="text/css">
+        {`
+              #basic-nav-dropdown {
+                color: #fff;
+              }
+              .MuiToggleButton-root {
+                color: white;
+                border-color: #fff;
+              }
+              .navbar {
+                border: solid;
+                border-color: rgb(41, 41, 41);
+                border-width: thin;
+                ;
+              }
+            `}
+      </style>
       <Head>
         <title>NextLevel</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -31,7 +62,7 @@ const App = () => {
           <Navbar.Brand href="#home">
             😎
             <strong style={{ fontSize: '20px', fontFamily: 'Palatino', marginLeft: '10px' }}>NEXT Level</strong>
-            <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in USA</i></span>
+            <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in the USA</i></span>
           </Navbar.Brand>
           <NavDropdown title="Cart" id="basic-nav-dropdown">
             {cart.length > 0 ? cart.map((item, index) => (
@@ -51,7 +82,7 @@ const App = () => {
             selected={isDarkMode}
             onChange={() => setIsDarkMode(!isDarkMode)}
           >
-            <Brightness5Icon />
+            <Brightness5Icon id="darkModeIcon" />
           </ToggleButton>
         </Navbar>
         <div className="App">

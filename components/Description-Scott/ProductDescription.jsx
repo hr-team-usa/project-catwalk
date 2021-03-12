@@ -53,6 +53,7 @@ const ProductDescription = ({
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
+
         let defaultStyle;
 
         if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
