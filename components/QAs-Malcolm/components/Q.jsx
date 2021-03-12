@@ -130,7 +130,7 @@ function Q(props) {
   };
 
   const overflowStyle = {
-    overflow: 'scroll',
+    overflowY: 'scroll',
   };
 
   const formatAnswer = (answer) => (
@@ -213,7 +213,7 @@ function Q(props) {
   );
 
   const formatQuestion = () => (
-    <Row style={overflowStyle}>
+    <Row>
       <Col>
         <strong>
           Q:
@@ -262,7 +262,7 @@ function Q(props) {
   };
 
   return (
-    <Container id="questionsContainer">
+    <Container id="questionsContainer" style={{'max-height': '80vh', overflowY: 'scroll'}}>
       {formatQuestion()}
       <br />
       {formatAnswer(oneAnswer)}

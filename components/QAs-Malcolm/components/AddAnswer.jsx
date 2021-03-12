@@ -31,8 +31,6 @@ function AddAnswer(props) {
     }
   };
 
-  console.log(photos)
-
   const validationCheck = () => {
     const required = [];
     if (answer === '') {
@@ -62,12 +60,13 @@ function AddAnswer(props) {
         method: 'post',
         headers: {
           Authorization: config.TOKEN,
+          'Content-Type': 'application/JSON',
         },
         data: {
           body: answer,
           name,
           email,
-          photos: [],
+          photos,
         },
       };
       axios(options)
@@ -141,7 +140,6 @@ function AddAnswer(props) {
                 <Form.Group
                   controlId="addPhoto"
                   onChange={(e) => { handleChange(e); }}
-                  required
                 >
                   <Form.Label>Add Photos</Form.Label>
                   <Form.Control
