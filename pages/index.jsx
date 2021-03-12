@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5'; import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
@@ -33,6 +35,18 @@ const App = () => {
       }
     }
     setCart(itemsInCart);
+  };
+
+  const removeItem = (item) => {
+    const myCart = [];
+    cart.forEach((product) => {
+      if (product.name !== item.name
+        || product.size !== item.size
+        || product.quantity !== item.quantity) {
+        myCart.push(product);
+      }
+    });
+    setCart(myCart);
   };
 
   useEffect(() => {
@@ -92,7 +106,8 @@ const App = () => {
                 (
                 {`${item.size}`}
                 ) x
-                {`${item.quantity}`}
+                {`${item.quantity}  `}
+                <CloseIcon onClick={(e) => removeItem(item)} style={{ fontSize: 'Medium' }} />
               </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
