@@ -547,6 +547,72 @@ describe('product description test suite', () => {
 
       expect(wrapper.find('button.upArrow')).toHaveLength(2);
     })
+
+    // test to make sure previous arrow not displayed when at index 0
+    // test to make sure next arrow not displayed when at final index
+
+    // test to make sure clicking a thumbnail updates the main image
+    xit('updates the main image when a thumbnail is clicked', async () => {
+
+      let wrapper;
+      act(() => {
+        wrapper = mount(<ImageGallery
+          styleInfo={{
+            'default?': true,
+            name: "Forest Green & Black",
+            original_price: "140.00",
+            photos: [
+              { thumbnail_url: "000", url: "000" },
+              { thumbnail_url: "111", url: "111" },
+              { thumbnail_url: "222", url: "222" },
+            ],
+            sale_price: null,
+            style_id: 96887,
+          }}
+          setIsExpanded={() => { }}
+        />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const cards = wrapper.find('Card');
+      expect(cards).toHaveLength(3);
+
+      const button = cards.at(1).find('CardImg');
+
+      console.log('button: ', button.debug());
+      act(() => {
+        button.simulate('click');
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+
+      // console.log('DEBUG HERE: ', wrapper.debug());
+
+      console.log('main img element AFTER click (should have src of "111"): ', wrapper.find('CarouselItem .active img').debug())
+
+      expect(wrapper.find('CarouselItem .active img').prop('src')).toBe("111");
+
+      // const dropdown = wrapper.find('DropdownButton');
+      // expect(dropdown.prop('title')).toBe(1);
+
+      // const dropdownItems = wrapper.find('DropdownItem');
+      // expect(dropdownItems).toHaveLength(3);
+
+    })
   })
 
 })
