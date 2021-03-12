@@ -42,7 +42,6 @@ const NewReviewForm = ({
 
   const removePhoto = (e, photo) => {
     e.preventDefault();
-    // console.log(photo);
     const photosArray = photos;
     photosArray.splice(photosArray.indexOf(photo), 1);
     setPhotos(photosArray);
@@ -50,8 +49,6 @@ const NewReviewForm = ({
   };
 
   const handleCharInput = (e, char) => {
-    // console.log(characteristics[key].id);
-    // console.log(e.target.value);
     const key = characteristics[char].id;
     const val = e.target.value;
     setCharObj({ ...charObj, [key]: (Number(val)) });
@@ -269,12 +266,14 @@ const NewReviewForm = ({
           <Form.Group>
             <Form.Label>Characteristics (required)</Form.Label>
             <br />
-            {Object.keys(characteristics).map((characteristic, i) => (
-              <div key={i}>
-                <Form.Label>{characteristic}</Form.Label>
-                <Form.Group>{renderCharacteristics(characteristic)}</Form.Group>
-              </div>
-            ))}
+            <div>
+              {Object.keys(characteristics).map((characteristic, i) => (
+                <div key={i}>
+                  <Form.Label>{characteristic}</Form.Label>
+                  <Form.Group className="review-form-chars">{renderCharacteristics(characteristic)}</Form.Group>
+                </div>
+              ))}
+            </div>
           </Form.Group>
           <Form.Group>
             <Form.Label>Review summary</Form.Label>
