@@ -14,6 +14,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 import ReviewsList from '../components/Reviews-Jim/components/ReviewsList';
 import Review from '../components/Reviews-Jim/components/Review';
 import ReviewsBreakdown from '../components/Reviews-Jim/components/ReviewsBreakdown';
+import NewReviewForm from '../components/Reviews-Jim/components/NewReviewForm';
 
 const productReviews = [
   {
@@ -143,7 +144,7 @@ const productMeta = {
 
 // USE beforeEach() TO START EACH TEST WITH THE SAME CODE (LIKE A WRAPPER)
 
-xdescribe('Reviews Component', () => {
+describe('Reviews Component', () => {
 
   describe('Jest tests that test the Jest!', () => {
     it('should expect true to equal true', () => {
@@ -175,6 +176,7 @@ xdescribe('Reviews Component', () => {
   })
 
   describe('Reviews List', () => {
+
     const dummyProps = {
       productReviews: [{
         rating: 0,
@@ -202,20 +204,59 @@ xdescribe('Reviews Component', () => {
       },
       productName: 'string',
       productId: 0,
+      setGetToggle: () => {},
     }
 
-    it('should have a button that adds two reviews', () => {
+    it('should render a more reviews button when there are more than two reviews', () => {
+      dummyProps.productReviews = productReviews;
       const wrapper = shallow(<ReviewsList {...dummyProps} />);
-      expect(wrapper.find('#more-reviews-btn').text()).toBe('More Reviews');
+      expect(wrapper.find('#more-reviews-btn').exists()).toBeTruthy();
+    });
+
+    it('should not render a more reviews button when there are two or fewer reviews', () => {
+      dummyProps.productReviews = [];
+      const wrapper = shallow(<ReviewsList {...dummyProps} />);
+      expect(wrapper.find('#more-reviews-btn').exists()).toBeFalsy();
+    });
+
+    xit('should add two reviews when the more reviews button is clicked', () => {
+      dummyProps.productReviews = productReviews;
+      const mockUseEffect = jest.fn();
+      React.useEffect = mockUseEffect;
+
+      const wrapper = mount(<ReviewsList {...dummyProps} />)
+
+      mockUseEffect.mockClear();
+      wrapper.setProps();
+      expect(mockUseEffect).toHaveBeenCalled();
+
+      const moreReviews = wrapper.find('#more-reviews-btn');
+      moreReviews.simulate('click');
+      expend(wrapper.find('.rendered-review-list')).toHaveLength(4);
     });
 
     it('should use relevant as a default sort status', () => {
       const wrapper = shallow(<ReviewsList {...dummyProps} />);
-      // force it to call use state
-      // find the select inside reviews list -- id or classname
       expect(wrapper.find('select').props().value).toBe('relevant');
     });
   })
+
+  describe('Submit a Review', () => {
+
+    const dummyProps = {
+      show: true,
+      onHide: () => {},
+      characteristics: productMeta.characteristics,
+      productName: '',
+      productId: 0,
+      setGetToggle: () => {},
+    }
+
+    it('should render a review form', () => {
+      const wrapper = shallow(<NewReviewForm {...dummyProps} />);
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });
 
 // console.log(wrapper.debug());

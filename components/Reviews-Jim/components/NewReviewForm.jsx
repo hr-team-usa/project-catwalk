@@ -42,7 +42,6 @@ const NewReviewForm = ({
 
   const removePhoto = (e, photo) => {
     e.preventDefault();
-    // console.log(photo);
     const photosArray = photos;
     photosArray.splice(photosArray.indexOf(photo), 1);
     setPhotos(photosArray);
@@ -50,8 +49,6 @@ const NewReviewForm = ({
   };
 
   const handleCharInput = (e, char) => {
-    // console.log(characteristics[key].id);
-    // console.log(e.target.value);
     const key = characteristics[char].id;
     const val = e.target.value;
     setCharObj({ ...charObj, [key]: (Number(val)) });
