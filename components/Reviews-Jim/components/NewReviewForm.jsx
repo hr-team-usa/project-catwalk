@@ -142,6 +142,9 @@ const NewReviewForm = ({
     if (recommended === null) {
       required.push('product recommendation');
     }
+    if (Object.keys(charObj).length < Object.keys(characteristics).length) {
+      required.push('characteristics');
+    }
     if (body.length < 50 || body.length > 1000) {
       required.push('review body');
     }
@@ -152,13 +155,9 @@ const NewReviewForm = ({
       required.push('email address');
     }
     if (required.length) {
-      let result = '';
+      let result = '\n\n';
       for (let i = 0; i < required.length; i += 1) {
-        if (i === required.length - 1) {
-          result += `and ${required[i]}`;
-        } else {
-          result += `${required[i]}, `;
-        }
+        result += `${required[i]}\n`;
       }
       return result;
     }
