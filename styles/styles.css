@@ -13,9 +13,9 @@
   transform: translateX(0);
 }
 */
-.App > div {
+/* .App > div {
   margin-bottom: 50px;
-}
+} */
 
 #__next {
   background-color: gray;
@@ -36,6 +36,8 @@
 
 /* REVIEWS */
 
+/* Review Card */
+
 .review-card {
   margin: 20px 0px;
 }
@@ -48,8 +50,10 @@
   font-weight: 900;
 }
 
+/* Product Breakdown */
+
 .char-rating {
-  margin: 10px 0px;
+  margin: 5x 0px;
   width: 100%;
 }
 .char-bar {
@@ -59,15 +63,22 @@
   height: 5px;
   font-size: 1px;
 }
-
 .char-labels {
   text-align: center;
 }
-
 .char-rating .char-left {
   float: left;
 }
-
 .char-rating .char-right {
   float: right;
+}
+
+/* Rating Breakdown */
+
+.rating-bar {
+  margin: 5px 0px;
+  padding: 5px 0px;
+}
+.rating-bar:hover {
+  background-color: lightgray;
 }

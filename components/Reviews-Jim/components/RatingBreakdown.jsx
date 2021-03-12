@@ -33,7 +33,7 @@ const RatingBreakdown = ({
     setPercentages(ratingsObj);
   };
 
-  const clickListen = (e, value) => {
+  const selectRating = (e, value) => {
     e.preventDefault();
     const newRatings = selectedRatings;
     if (!newRatings.length || !newRatings.includes(value)) {
@@ -53,36 +53,89 @@ const RatingBreakdown = ({
 
   return (
     <div className={classes.root}>
-      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 5)}>
+      <div role="button" className="rating-bar" id="five-rating" onClick={(e) => selectRating(e, 5)}>
         5 Stars (
         {ratings['5'] ? ratings['5'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['5'])} />
+        {selectedRatings.includes(5)
+          ? (
+            <style>
+              {`
+          #five-rating {
+            background-color: lightgray;
+          }
+        `}
+            </style>
+          ) : null}
       </div>
-      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 4)}>
+      <div role="button" className="rating-bar" id="four-rating" onClick={(e) => selectRating(e, 4)}>
         4 Stars (
         {ratings['4'] ? ratings['4'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['4'])} />
+        {selectedRatings.includes(4)
+          ? (
+            <style>
+              {`
+          #four-rating {
+            background-color: lightgray;
+          }
+        `}
+            </style>
+          ) : null}
       </div>
-      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 3)}>
+      <div role="button" className="rating-bar" id="three-rating" onClick={(e) => selectRating(e, 3)}>
         3 Stars (
         {ratings['3'] ? ratings['3'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['3'])} />
+        {selectedRatings.includes(3)
+          ? (
+            <style>
+              {`
+          #three-rating {
+            background-color: lightgray;
+          }
+        `}
+            </style>
+          ) : null}
       </div>
-      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 2)}>
+      <div role="button" className="rating-bar" id="two-rating" onClick={(e) => selectRating(e, 2)}>
         2 Stars (
         {ratings['2'] ? ratings['2'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['2'])} />
+        {selectedRatings.includes(2)
+          ? (
+            <style>
+              {`
+          #two-rating {
+            background-color: lightgray;
+          }
+        `}
+            </style>
+          ) : null}
       </div>
-      <div role="button" className="rating-bar" onClick={(e) => clickListen(e, 1)}>
+      <div role="button" className="rating-bar" id="one-rating" onClick={(e) => selectRating(e, 1)}>
         1 Stars (
         {ratings['1'] ? ratings['1'] : '0'}
         )
         <LinearProgress variant="determinate" value={Number(percentages['1'])} />
+        {selectedRatings.includes(1)
+          ? (
+            <style>
+              {`
+          #one-rating {
+            background-color: lightgray;
+          }
+        `}
+            </style>
+          ) : null}
       </div>
+      {selectedRatings.length ? (
+        <div onClick={() => { setSelectedRatings([]); setRatingsLength(0); }}><u>Remove rating filters</u></div>
+      ) : null}
     </div>
   );
 };

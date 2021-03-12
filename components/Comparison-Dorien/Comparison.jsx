@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import config from '../../config';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import RelatedProducts from './components/RelatedProducts';
 import OutfitList from './components/OutfitList';
 
@@ -132,7 +132,12 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
             />
           )
           : null }
-        <OutfitList />
+        <OutfitList
+          productId={productId}
+          productName={productName}
+          productStyle={currentStyleData}
+          productRating={productRating}
+        />
       </Container>
     </div>
   );

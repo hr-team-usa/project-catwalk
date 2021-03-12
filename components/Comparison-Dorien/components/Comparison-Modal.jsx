@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Stars from '../../Reviews-Jim/components/Stars';
 
 const Comparison_Modal = (props) => {
-  // console.log(props);
   const divProps = { ...props };
   delete divProps.arrowProps;
   divProps.show = 'true';
@@ -17,7 +16,8 @@ const Comparison_Modal = (props) => {
   let productRating = '';
   let relatedRating = '';
   let starStyle = {};
-
+  // let productSizes = [];
+  // let relatedSizes = [];
 
   if (props.popper.state) {
     productName = divProps.popper.state.options.productName;
@@ -27,6 +27,11 @@ const Comparison_Modal = (props) => {
     relatedRating = divProps.popper.state.options.relatedRating;
     starStyle = divProps.popper.state.options.style;
     productPrice = divProps.popper.state.options.productStyle.original_price;
+    // productSizes = Object.values(divProps.popper.state.options.productStyle.skus);
+    // relatedSizes = Object.values(divProps.popper.state.options.relatedStyle.skus);
+
+    // console.log(productSizes[0].quantity);
+    // console.log(relatedSizes[0].quantity);
 }
 
   return (
@@ -93,6 +98,7 @@ const Comparison_Modal = (props) => {
               ) : null}
             </Col>
           </Row>
+
         </Container>
       </Modal.Body>
 

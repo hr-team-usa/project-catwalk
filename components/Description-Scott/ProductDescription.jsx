@@ -15,7 +15,7 @@ const ProductDescription = ({
   productId, productRating, reviewsRef, setProductNameGlobal,
   setCurrentProductData, setCurrentStyleData, setCart, cart,
 }) => {
-  const { Track, trackEvent } = useTracking({ module: 'Product Overview' });
+  const { trackEvent } = useTracking({ module: 'Product Overview' });
 
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
@@ -53,6 +53,7 @@ const ProductDescription = ({
     axios(stylesRequest)
       .then((stylesResponse) => {
         setAllStyles(stylesResponse.data.results);
+
         let defaultStyle;
 
         if (stylesResponse.data.results.find((style) => style['default?'] === true) !== undefined) {
@@ -75,76 +76,48 @@ const ProductDescription = ({
     getProduct();
   }, [productId]);
   return (
-    <Track>
-      <div>
-        <Container className="container-fluid">
-          <Row>
-            {isExpanded ? (
-              <Col
-                className="col-12"
-                onClick={() => {
-                  trackEvent({ element: 'Image Gallery', time: new Date() });
-                }}
-              >
-                <ImageGallery
-                  styleInfo={styleInfo}
-                  setIsExpanded={setIsExpanded}
-                />
-              </Col>
-            ) : (
-              <>
-                <Col
-                  className="col-7"
-                  onClick={() => {
-                    trackEvent({ element: 'Image Gallery', time: new Date() });
-                  }}
-                >
-                  <ImageGallery
+    <div>
+      <Container className="container-fluid">
+        <Row>
+          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={()=> trackEvent({ element: 'Image Gallery', time: new Date() })}>
+            <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
+          </Col>
+          {isExpanded ? null
+            : (
+              <Col className="col-5">
+                <Divider style={{ marginTop: '10px' }} />
+                <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                  <ProductInfo
+                    productName={productName}
+                    productRating={productRating}
+                    category={category}
+                    description={description}
                     styleInfo={styleInfo}
-                    setIsExpanded={setIsExpanded}
+                    reviewsRef={reviewsRef}
                   />
-                </Col>
-                <Col className="col-5">
-                  {isExpanded ? null
-                    : (
-                      <>
-                        <Divider style={{ marginTop: '10px' }} />
-                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                          <ProductInfo
-                            productName={productName}
-                            productRating={productRating}
-                            category={category}
-                            description={description}
-                            styleInfo={styleInfo}
-                            reviewsRef={reviewsRef}
-                          />
-                        </div>
-                        <Divider />
-                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                          <StyleSelector
-                            allStyles={allStyles}
-                            styleInfo={styleInfo}
-                            setStyleInfo={setStyleInfo}
-                          />
-                        </div>
-                        <Divider />
-                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                          <AddToCart
-                            styleInfo={styleInfo}
-                            setCart={setCart}
-                            cart={cart}
-                            productName={productName}
-                          />
-                        </div>
-                      </>
-                    )}
-                </Col>
-              </>
+                </div>
+                <Divider />
+                <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                  <StyleSelector
+                    allStyles={allStyles}
+                    styleInfo={styleInfo}
+                    setStyleInfo={setStyleInfo}
+                  />
+                </div>
+                <Divider />
+                <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                  <AddToCart
+                    styleInfo={styleInfo}
+                    setCart={setCart}
+                    cart={cart}
+                    productName={productName}
+                  />
+                </div>
+              </Col>
             )}
-          </Row>
-        </Container>
-      </div>
-    </Track>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

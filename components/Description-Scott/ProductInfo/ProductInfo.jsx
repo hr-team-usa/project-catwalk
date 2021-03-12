@@ -16,9 +16,10 @@ const ProductInfo = ({
 }) => {
   const { trackEvent } = useTracking({ module: 'Product Overview' });
 
-  const url = 'http://localhost:3000/';
+  const url = 'http://18.224.109.82/';
   const starsStyle = {
-    display: 'inline',
+    display: 'flex',
+    justifySelf: 'flex-start',
   };
 
   const scrollToReviews = (ref) => {
@@ -28,7 +29,7 @@ const ProductInfo = ({
   return (
     <div>
       {productRating !== null ? (
-        <>
+        <div style={{ display: 'flex' }}>
           <Stars style={starsStyle} rating={productRating} />
           <span
             onClick={() => scrollToReviews(reviewsRef)}
@@ -36,9 +37,10 @@ const ProductInfo = ({
             role="button"
             tabIndex={0}
           >
-            <u>Read all reviews</u>
+            <u style={{ position: 'relative', left: '50%', top: '18%' }}>Read all reviews</u>
           </span>
-        </>
+
+        </div>
       ) : null}
       <div className={styles.category}>{category}</div>
       <h2>{productName}</h2>
