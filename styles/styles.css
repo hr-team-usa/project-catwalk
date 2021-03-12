@@ -93,3 +93,7 @@
 .rating-bar:hover {
   background-color: lightgray;
 }
+
+.rating-component {
+  background-color: green;
+}
