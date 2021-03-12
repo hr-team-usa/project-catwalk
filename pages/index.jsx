@@ -109,7 +109,7 @@ const App = () => {
                 {`${item.size}`}
                 ) x
                 {`${item.quantity}  `}
-                <CloseIcon onClick={(e) => removeItem(item)} style={{ fontSize: 'Medium' }} />
+                <CloseIcon onClick={() => removeItem(item)} style={{ fontSize: 'Medium', transform: 'translate(12px, -1px)' }} />
               </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
