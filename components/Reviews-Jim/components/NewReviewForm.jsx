@@ -40,6 +40,15 @@ const NewReviewForm = ({
     setImgContainer('');
   };
 
+  const removePhoto = (e, photo) => {
+    e.preventDefault();
+    // console.log(photo);
+    const photosArray = photos;
+    photosArray.splice(photosArray.indexOf(photo), 1);
+    setPhotos(photosArray);
+    setPhotosToggle(true);
+  };
+
   const handleCharInput = (e, char) => {
     // console.log(characteristics[key].id);
     // console.log(e.target.value);
@@ -288,9 +297,12 @@ const NewReviewForm = ({
           <Form.Group>
             <Form.Label>Upload your photos</Form.Label>
             <Form.Control type="" value={imgContainer} placeholder="Paste image url here" onChange={(e) => setImgContainer(e.target.value)} />
-            <Form.Text>5 photos max</Form.Text>
-            {photos.length ? photos.map((photo, i) => <img key={i} alt="" src={photo} />) : null}
-            <Button onClick={(e) => addPhoto(e)}>Upload</Button>
+            <Form.Text>
+              {photos.length}
+              /5 photos max, click thumbnail to remove
+            </Form.Text>
+            {photos.length ? photos.map((photo, i) => <img key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
+            {(photos.length < 5) ? <Button onClick={(e) => addPhoto(e)}>Upload</Button> : null}
             <style jsx>
               {`
                 img {
