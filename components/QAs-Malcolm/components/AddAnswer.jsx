@@ -27,9 +27,11 @@ function AddAnswer(props) {
       setEmail(e.target.value);
     }
     if (e.target.name === 'photo') {
-      setPhotos(e.target.value);
+      setPhotos([e.target.value]);
     }
   };
+
+  console.log(photos)
 
   const validationCheck = () => {
     const required = [];
@@ -76,7 +78,6 @@ function AddAnswer(props) {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }
   };
-
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
