@@ -4,29 +4,29 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import { CardColumns } from 'react-bootstrap';
-import { CopyrightTwoTone } from '@material-ui/icons';
+import { CopyrightTwoTone, LensTwoTone } from '@material-ui/icons';
 import Stars from '../../Reviews-Jim/components/Stars';
 
 const OutfitList = ({
-  productId, ProductName, productStyle, productRating,
+  productId, productName, productStyle, productRating,
 }) => {
   const [outfitList, setOutfitList] = useState([]);
   const [addedOutfit, setAddedOutfit] = useState(false);
   const [outfitList2, setOutfitList2] = useState([]);
 
+
   const starStyle = {
     display: 'inline',
   };
-
-  console.log(productStyle);
 
   useEffect(() => {
     if (addedOutfit) {
       const newList = outfitList;
       if (newList.length < 3) {
-        newlist.push({
+        newList.push({
           id: productId,
-          productName: productStyle,
+          name: productName,
+          style: productStyle,
           rating: productRating,
         });
         setOutfitList(newList);
@@ -47,7 +47,7 @@ const OutfitList = ({
         }
       }
     }
-  }, [productStyle]);
+  }, [addedOutfit]);
 
   return (
     <div>
@@ -55,7 +55,7 @@ const OutfitList = ({
       <Carousel interval={null} indicators={false}>
         <Carousel.Item id="first-list">
           <CardDeck className="outfit-group">
-            <Card className="outfit-products" onClick={(e) => { console.log(productStyle); }} style={{ width: '5rem' }}>
+            <Card className="outfit-products" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
               <Card.Img variant="top" className="add-outfit-image" src="add-to-outfit2.png" />
               <Card.ImgOverlay>
                 <Card.Title className="text-center outfit-text">Add to Outfit List</Card.Title>
@@ -73,21 +73,21 @@ const OutfitList = ({
                 ? (
                   <>
                     <Card key={outfitList[0].id} className="related-products" onClick={() => changeProduct(outfitList[0].id)}>
-                      <Card.Img variant="top" className="related-image" src={outfitList[0].style} />
+                      <Card.Img variant="top" className="related-image" src={outfitList[0].style.photos[1].url} />
                       <Card.Title>{outfitList[0].name}</Card.Title>
                       {
-              outfitList[0].name === undefined ? (
+              outfitList[0].style !== undefined ? (
                 <Card.Text>
-                  <span className={outfitList[0].name.sale_price}>
-                    {outfitList[0].name.sale_price}
+                  <span className={outfitList[0].style.sale_price}>
+                    {outfitList[0].style.sale_price}
                   </span>
-                  <span className={outfitList[0].name.original_price}>
-                    {outfitList[0].name.original_price}
+                  <span className={outfitList[0].style.original_price}>
+                    {outfitList[0].style.original_price}
                   </span>
                 </Card.Text>
               ) : (
                 <Card.Text>
-                  <span>{outfitList[0].name.original_price}</span>
+                  <span>{outfitList[0].style.original_price}</span>
                 </Card.Text>
               )
       }
@@ -107,7 +107,7 @@ const OutfitList = ({
                     <>
                       {outfitList.map((item, index) => (
                         <Card key={index} className="related-products" onClick={() => changeProduct(item.id)}>
-                          <Card.Img variant="top" className="related-image" src={item.name.photos[0]} />
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
                           <Card.Title>{[item.name]}</Card.Title>
                           {
               item.name === undefined ? (
@@ -140,7 +140,7 @@ const OutfitList = ({
                     <>
                       {outfitList.map((item, index) => (
                         <Card key={index} className="related-products" onClick={() => changeProduct(item.id)}>
-                          <Card.Img variant="top" className="related-image" src={item.name.photos[0]} />
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
                           <Card.Title>{[item.name]}</Card.Title>
                           {
               item.name === undefined ? (
