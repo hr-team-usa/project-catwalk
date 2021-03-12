@@ -49,7 +49,6 @@ function AddQuestion(props) {
   };
 
   const submitQ = (e) => {
-    console.log(typeof props.productId)
     e.preventDefault();
     if (!validationCheck()) {
       const options = {
