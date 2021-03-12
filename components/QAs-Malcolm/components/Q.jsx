@@ -175,8 +175,12 @@ function Q(props) {
             <Col sm="auto" style={answerStyle}>
               {answer.answerer_name === 'Seller' ? (
                 <strong>
-                  By &nbsp;
-                  {answer.answerer_name}
+                  <strong>
+                    <strong>
+                      By &nbsp;
+                      {answer.answerer_name}
+                    </strong>
+                  </strong>
                 </strong>
               ) : `By ${answer.answerer_name}`}
       &nbsp;
