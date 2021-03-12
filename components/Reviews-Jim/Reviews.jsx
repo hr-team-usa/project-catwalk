@@ -76,7 +76,7 @@ const Reviews = ({
   }, [sortStatus, productId, getToggle]);
 
   return (
-    <Container>
+    <Container className="review-widget">
       <h3 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h3>
       <Row>
         <Col xs={4}>
@@ -92,19 +92,21 @@ const Reviews = ({
         </Col>
         <Col>
           {(productReviews && productMeta) ? (
-            <ReviewsList
-              productReviews={productReviews}
-              characteristics={productMeta.characteristics}
-              sortStatus={sortStatus}
-              handleSortChange={handleSortChange}
-              renderToggle={renderToggle}
-              setRenderToggle={setRenderToggle}
-              selectedRatings={selectedRatings}
-              ratingsLength={ratingsLength}
-              productName={productName}
-              productId={productId}
-              setGetToggle={setGetToggle}
-            />
+            <div style={{ overflowY: 'scroll', height: '750px' }}>
+              <ReviewsList
+                productReviews={productReviews}
+                characteristics={productMeta.characteristics}
+                sortStatus={sortStatus}
+                handleSortChange={handleSortChange}
+                renderToggle={renderToggle}
+                setRenderToggle={setRenderToggle}
+                selectedRatings={selectedRatings}
+                ratingsLength={ratingsLength}
+                productName={productName}
+                productId={productId}
+                setGetToggle={setGetToggle}
+              />
+            </div>
           ) : null}
         </Col>
       </Row>
