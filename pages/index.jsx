@@ -47,6 +47,8 @@ const App = () => {
       }
     });
     setCart(myCart);
+
+    localStorage.removeItem(`NL:${item.name}`);
   };
 
   useEffect(() => {
