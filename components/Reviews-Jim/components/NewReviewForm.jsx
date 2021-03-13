@@ -25,6 +25,18 @@ const NewReviewForm = ({
   const [email, setEmail] = useState('');
   const [charObj, setCharObj] = useState({});
 
+  const clearFields = (e) => {
+    e.preventDefault();
+    setRating(0);
+    setRecommended(null);
+    setSummary('');
+    setBody('');
+    setImgContainer('');
+    setPhotos([]);
+    setNickname('');
+    setEmail('');
+  };
+
   const addPhoto = (e) => {
     e.preventDefault();
     if (imgContainer.length) {
@@ -321,8 +333,8 @@ const NewReviewForm = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={(e) => sendReview(e)}>Submit Review</Button>
-        <Button onClick={onHide}>Close</Button>
+        <Button onClick={(e) => { sendReview(e); clearFields(e); }}>Submit Review</Button>
+        <Button onClick={(e) => { onHide(); clearFields(e); }}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
