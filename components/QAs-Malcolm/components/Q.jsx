@@ -9,6 +9,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useTracking } from 'react-tracking';
 import config from '../../../config';
 import AddAnswer from './AddAnswer';
 import ImageModal from './ImageModal';
@@ -16,16 +17,16 @@ import ImageModal from './ImageModal';
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
-  const [clicked, setClicked] = useState(false);
   const [show, setShow] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
-  const [photosArr, setPhotosArr] = useState([]);
   const [helpfulA, setHelpfulA] = useState(false);
   const [helpfulQ, setHelpfulQ] = useState(false);
   const [image, setImage] = useState('');
+  const { trackEvent } = useTracking({ module: 'Questions and Answers' });
+  const answerArr = [];
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -86,16 +87,12 @@ function Q(props) {
     };
     axios(options)
       .then(() => props.setRender(true))
-      .then(() => setClicked(true))
       .catch((err) => console.log(err));
-    // } else {
-    //   window.alert("We're glad you found this helpful!");
-    // }
   };
 
   const report = (e) => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.id}/report`,
       method: 'put',
       headers: {
         Authorization: config.TOKEN,
@@ -182,10 +179,10 @@ function Q(props) {
       &nbsp;
               {formatDate(answer.date)}
             </Col>
-            {helpfulA ? (
+            {helpfulA === answer.id ? (
               <Col sm="auto" style={answerStyle}>
                 Marked as Helpful! (
-                {answer.helpfulness}
+                {props.question.answers[answer.id].helpfulness}
                 )
               </Col>
             )
@@ -193,14 +190,14 @@ function Q(props) {
                 <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
                   Helpful?
                   {' '}
-                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(true); }}>Yes</u>
+                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(answer.id); }}>Yes</u>
                   (
                   {answer.helpfulness}
                   )
                 </Col>
               )}
             <Col sm="auto" style={resultStyle}>
-              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
+              <u id={answer.id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
@@ -267,7 +264,21 @@ function Q(props) {
       <Row>
         <Col>
           {moreAnswers
-            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
+            ? (
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => {
+                  setMoreAnsBtn(!moreAnsBtn);
+                  trackEvent({ element: 'More Answers Button', time: new Date() });
+                }}
+                onKeyUp={() => {
+                  trackEvent({ element: 'More Answers Button', time: new Date() });
+                }}
+              >
+                {btnTxt}
+              </Button>
+            ) : null}
         </Col>
       </Row>
       <br />
