@@ -80,7 +80,7 @@ const RelatedProducts = ({
 
   return (
     <>
-      Related Products
+      <h5 style={{ marginTop: '20px' }}>Related Products</h5>
       {products
                 && (
                 <Carousel interval={null} indicators={false} id="related-carousel">
@@ -144,11 +144,14 @@ const RelatedProducts = ({
         {`
            .related-image {
              height: 160px;
+             max-height: 100%;
+             object-fit: cover;
            }
            .related-products {
              margin: 10px;
-             box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
-             border-color: grey;
+             box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+             border-color: #80808045;
+             border-radius: 7px;
            }
            .related-products-group {
 
@@ -158,6 +161,10 @@ const RelatedProducts = ({
            }
            #related-carousel .carousel-control-prev {
             width: 2%;
+           }
+           .modal-dialog .modal-content {
+            box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+            border-radius: 5px;
            }
            `}
       </style>
