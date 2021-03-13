@@ -70,7 +70,6 @@ const RelatedProducts = ({
     arrayOfArrayProducts.push(arrayOfProducts);
     arrayOfProducts = [];
   }
-  console.log(products);
   return (
     <>
       <h5 style={{ marginTop: '20px' }}>Related Products</h5>
