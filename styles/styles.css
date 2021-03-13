@@ -51,7 +51,17 @@
 }
 
 .review-summary {
+  font-size: 20px;
   font-weight: 900;
+  margin-top: 10px;
+}
+
+.review-body {
+  margin-bottom: 10px;
+}
+
+.review-photos {
+  margin-bottom: 10px;
 }
 
 .review-photo {
@@ -61,10 +71,19 @@
   height: 150px;
 }
 
+.review-user-date {
+  text-align: right;
+  font-size: 12px;
+}
+
+.review-helpful {
+  margin-bottom: 15px;
+}
+
 /* Product Breakdown */
 
 .char-rating {
-  margin: 5x 0px;
+  margin: 15px 0px;
   width: 100%;
 }
 .char-bar {
@@ -79,9 +98,18 @@
 }
 .char-rating .char-left {
   float: left;
+  font-size: 12px;
 }
 .char-rating .char-right {
   float: right;
+  font-size: 12px;
+}
+.char-rating .char-middle {
+  font-size: 12px;
+}
+.char-name {
+  font-weight: bold;
+  font-size: 15px;
 }
 
 /* Rating Breakdown */
