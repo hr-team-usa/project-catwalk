@@ -270,10 +270,12 @@ const OutfitList = ({
                border-color: grey;
              }
              #add-card {
+               height: 267.961px;
                display: flex;
                justify-content: center;
                align-items: center;
                border: 0px;
+               margin-top: 10px;
              }
              #add-button-text {
               font-size: large;
@@ -282,7 +284,7 @@ const OutfitList = ({
 
              #add-button {
               height: 267.961px;
-              width: 240px; 
+              width: 247.5px; 
               border-radius: 0px;
              }
              #add-button .MuiFab-label {
