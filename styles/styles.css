@@ -86,14 +86,21 @@
 
 /* Rating Breakdown */
 
+.avg-rating {
+  font-size: 40px;
+  color: black;
+  font-weight: bold;
+  /* float: left; */
+}
+
+.star-rating {
+  /* float: left; */
+}
+
 .rating-bar {
   margin: 5px 0px;
   padding: 5px 0px;
 }
 .rating-bar:hover {
   background-color: lightgray;
-}
-
-.rating-component {
-  background-color: green;
 }

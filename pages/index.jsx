@@ -4,6 +4,11 @@ import Brightness5Icon from '@material-ui/icons/Brightness5';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import TerrainIcon from '@material-ui/icons/Terrain';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
 import QAs from '../components/QAs-Malcolm/QAs';
@@ -152,6 +157,12 @@ const App = () => {
             productName={productName}
           />
         </div>
+        <BottomNavigation style={{ backgroundColor: '#A9A9A9' }} showLabels>
+          <BottomNavigationAction label="Scott" value="Scott" icon={<SportsBasketballIcon />} href="https://github.com/Scott-Guinn" target="_blank" />
+          <BottomNavigationAction label="Dorien" value="Dorien" icon={<MonetizationOnIcon />} href="https://github.com/Initial-D-cmd" target="_blank" />
+          <BottomNavigationAction label="Malcolm" value="Malcolm" icon={<TerrainIcon />} href="https://github.com/Malcolm-Marshall" target="_blank" />
+          <BottomNavigationAction label="Jim" value="Jim" icon={<EmojiPeopleIcon />} href="https://github.com/JimBurch" target="_blank" />
+        </BottomNavigation>
       </Container>
     </>
   );
