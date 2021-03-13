@@ -39,7 +39,7 @@ function AddQuestion(props) {
       required.push('email address');
     }
     if (required.length) {
-      let result = '\n';
+      let result = '\n\n';
       for (let i = 0; i < required.length; i += 1) {
         result += `${required[i]}\n`;
       }
