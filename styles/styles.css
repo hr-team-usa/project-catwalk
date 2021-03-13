@@ -90,7 +90,7 @@
   background-color: lightgray;
   color: lightgray;
   width: auto;
-  height: 5px;
+  height: 4px;
   font-size: 1px;
 }
 .char-labels {
@@ -109,7 +109,10 @@
 }
 .char-name {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 14px;
+}
+.char-mark {
+  font-size: 16px;
 }
 
 /* Rating Breakdown */
