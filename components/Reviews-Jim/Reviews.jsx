@@ -94,7 +94,7 @@ const Reviews = ({
         </Col>
         <Col>
           {(productReviews && productMeta) ? (
-            <div style={{ overflowY: 'scroll', height: '800px' }}>
+            <div style={{ overflowY: 'scroll', height: '950px' }}>
               <ReviewsList
                 productReviews={productReviews}
                 characteristics={productMeta.characteristics}
