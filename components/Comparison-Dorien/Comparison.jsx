@@ -25,6 +25,9 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
       .then((result) => {
         if (result.data.length !== 0) {
           let arrayOfRelatedProducts = [...new Set(result.data)];
+          if (arrayOfRelatedProducts.indexOf(productId) > 0) {
+            arrayOfRelatedProducts.splice(arrayOfRelatedProducts.indexOf(productId), 1);
+          }
           getRelatedProducts(arrayOfRelatedProducts);
           getRelatedImages(arrayOfRelatedProducts);
           getMultiProductMeta(arrayOfRelatedProducts);
