@@ -90,7 +90,7 @@ const OutfitList = ({
   return (
     <div>
       Outfit Products
-      <Carousel interval={null} indicators={false}>
+      <Carousel interval={null} indicators={false} id="outfit-carousel">
         <Carousel.Item id="first-list">
           <CardDeck className="outfit-group">
             <Card className="outfit-products" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
@@ -245,10 +245,10 @@ const OutfitList = ({
                position: relative;
                bottom: -1px;
              } 
-             .carousel-control-prev {
+             #outfit-carousel .carousel-control-prev {
                width: 2%;
              }
-             .carousel-control-next {
+             #outfit-carousel .carousel-control-next {
                width: 2%;
              }
              .add-outfit {
