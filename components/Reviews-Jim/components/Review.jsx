@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
+import Divider from '@material-ui/core/Divider';
 
 import ImageModal from './ImageModal';
 
@@ -23,16 +24,16 @@ const Review = ({ review, markReview }) => {
         <Col>
           <Rating className="star-rating" value={review.rating} precision={0.25} readOnly />
         </Col>
-        <Col>
+        <Col className="review-user-date">
           {`${review.reviewer_name}, ${month} ${day}, ${year}`}
         </Col>
       </Row>
-      <Row>
-        <Col className="review-summary">
+      <Row className="review-summary">
+        <Col>
           {review.summary}
         </Col>
       </Row>
-      <Row>
+      <Row className="review-body">
         {(review.body.length <= 250)
           ? (
             <Col>
@@ -46,7 +47,7 @@ const Review = ({ review, markReview }) => {
             </Col>
           )}
       </Row>
-      <Row>
+      <Row className="review-photos">
         {review.photos.map((photo) => <img key={photo.id} className="review-photo" alt="" src={photo.url} onClick={() => { setShow(true); setImage(photo.url); }} />)}
       </Row>
       {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
@@ -59,7 +60,7 @@ const Review = ({ review, markReview }) => {
           </Col>
         </Row>
       ) : null}
-      <Row>
+      <Row className="review-helpful">
         {helpful ? (
           <Col>
             Marked as helpful! (
@@ -80,6 +81,7 @@ const Review = ({ review, markReview }) => {
           </Col>
         )}
       </Row>
+      <Divider className="review-divide" />
       <ImageModal
         image={image}
         show={show}
