@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5'; import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
@@ -18,6 +20,40 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const reviewsRef = useRef();
+
+  const retrieveItemsFromLocalStorage = () => {
+    const existing = Object.keys(localStorage);
+    const itemsInCart = [];
+    for (let i = 0; i < existing.length; i += 1) {
+      const nm = existing[i];
+      const sizeAndQuan = localStorage.getItem(nm);
+      const itemDetails = sizeAndQuan.split('/');
+      const sz = itemDetails[0];
+      const quan = itemDetails[1];
+      if (nm.slice(0, 3) === 'NL:') {
+        itemsInCart.push({ name: nm.slice(3), size: sz, quantity: quan });
+      }
+    }
+    setCart(itemsInCart);
+  };
+
+  const removeItem = (item) => {
+    const myCart = [];
+    cart.forEach((product) => {
+      if (product.name !== item.name
+        || product.size !== item.size
+        || product.quantity !== item.quantity) {
+        myCart.push(product);
+      }
+    });
+    setCart(myCart);
+
+    localStorage.removeItem(`NL:${item.name}`);
+  };
+
+  useEffect(() => {
+    retrieveItemsFromLocalStorage();
+  }, []);
 
   return (
     <>
@@ -72,7 +108,8 @@ const App = () => {
                 (
                 {`${item.size}`}
                 ) x
-                {`${item.quantity}`}
+                {`${item.quantity}  `}
+                <CloseIcon onClick={() => removeItem(item)} style={{ fontSize: 'Medium', transform: 'translate(12px, -1px)' }} />
               </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
