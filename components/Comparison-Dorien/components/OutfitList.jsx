@@ -8,6 +8,7 @@ import { IconButton } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Fab from '@material-ui/core/Fab';
 import Stars from '../../Reviews-Jim/components/Stars';
+import styles from './price.module.css';
 
 const OutfitList = ({
   productId, productName, productStyle, productRating, changeProduct
@@ -164,13 +165,13 @@ const OutfitList = ({
                       </Card.ImgOverlay>
                       <Card.Title>{outfitList[0].name}</Card.Title>
                       {
-              outfitList[0].style !== undefined ? (
+              outfitList[0].style.sale_price !== undefined ? (
                 <Card.Text>
-                  <span className={outfitList[0].style.sale_price}>
-                    {outfitList[0].style.sale_price}
+                  <span className={styles.salePrice}>
+                    {`${outfitList[0].style.sale_price}`}
                   </span>
-                  <span className={outfitList[0].style.original_price}>
-                    {outfitList[0].style.original_price}
+                  <span className={styles.originalPrice}>
+                    {`${outfitList[0].style.original_price}`}
                   </span>
                 </Card.Text>
               ) : (
@@ -206,13 +207,13 @@ const OutfitList = ({
                           </Card.ImgOverlay>
                           <Card.Title>{[item.name]}</Card.Title>
                           {
-              item.name === undefined ? (
+              item.style.sale_price !== undefined ? (
                 <Card.Text>
-                  <span className={item.style.sale_price}>
-                    {item.style.sale_price}
+                  <span className={styles.salePrice}>
+                    {`${item.style.sale_price}`}
                   </span>
-                  <span className={item.style.original_price}>
-                    {item.style.original_price}
+                  <span className={styles.originalPrice}>
+                    {`${item.style.original_price}`}
                   </span>
                 </Card.Text>
               ) : (
@@ -247,13 +248,13 @@ const OutfitList = ({
                           </Card.ImgOverlay>
                           <Card.Title>{[item.name]}</Card.Title>
                           {
-              item.name === undefined ? (
+              item.style.sale_price !== undefined ? (
                 <Card.Text>
-                  <span className={item.style.sale_price}>
-                    {item.style.sale_price}
+                  <span className={styles.salePrice}>
+                    {`${item.style.sale_price}`}
                   </span>
-                  <span className={item.style.original_price}>
-                    {item.style.original_price}
+                  <span className={styles.originalPrice}>
+                    {`${item.style.original_price}`}
                   </span>
                 </Card.Text>
               ) : (
@@ -297,18 +298,18 @@ const OutfitList = ({
                     </Card.ImgOverlay>
                     <Card.Title>{outfitList2[0].name}</Card.Title>
                     {
-              outfitList2[0].style !== undefined ? (
+              outfitList[0].style.sale_price !== undefined ? (
                 <Card.Text>
-                  <span className={outfitList2[0].style.sale_price}>
-                    {outfitList2[0].style.sale_price}
+                  <span className={styles.salePrice}>
+                    {`${outfitList[0].style.sale_price}`}
                   </span>
-                  <span className={outfitList2[0].style.original_price}>
-                    {outfitList2[0].style.original_price}
+                  <span className={styles.originalPrice}>
+                    {`${outfitList[0].style.original_price}`}
                   </span>
                 </Card.Text>
               ) : (
                 <Card.Text>
-                  <span>{outfitList2[0].style.original_price}</span>
+                  <span>{outfitList[0].style.original_price}</span>
                 </Card.Text>
               )
       }
@@ -339,13 +340,13 @@ const OutfitList = ({
                         </Card.ImgOverlay>
                         <Card.Title>{[item.name]}</Card.Title>
                         {
-          item.name === undefined ? (
+          item.style.sale_price !== undefined ? (
             <Card.Text>
-              <span className={item.style.sale_price}>
-                {item.style.sale_price}
+              <span className={styles.salePrice}>
+                {`${item.style.sale_price}`}
               </span>
-              <span className={item.style.original_price}>
-                {item.style.original_price}
+              <span className={styles.originalPrice}>
+                {`${item.style.original_price}`}
               </span>
             </Card.Text>
           ) : (
@@ -381,13 +382,13 @@ const OutfitList = ({
                           </Card.ImgOverlay>
                           <Card.Title>{[item.name]}</Card.Title>
                           {
-          item.name === undefined ? (
+          item.style.sale_price !== undefined ? (
             <Card.Text>
-              <span className={item.style.sale_price}>
-                {item.style.sale_price}
+              <span className={styles.salePrice}>
+                {`${item.style.sale_price}`}
               </span>
-              <span className={item.style.original_price}>
-                {item.style.original_price}
+              <span className={styles.originalPrice}>
+                {`${item.style.original_price}`}
               </span>
             </Card.Text>
           ) : (
@@ -421,13 +422,13 @@ const OutfitList = ({
                           </Card.ImgOverlay>
                           <Card.Title>{[item.name]}</Card.Title>
                           {
-          item.name === undefined ? (
+          item.style.sale_price !== undefined ? (
             <Card.Text>
-              <span className={item.style.sale_price}>
-                {item.style.sale_price}
+              <span className={styles.salePrice}>
+                {`${item.style.sale_price}`}
               </span>
-              <span className={item.style.original_price}>
-                {item.style.original_price}
+              <span className={styles.originalPrice}>
+                {`${item.style.original_price}`}
               </span>
             </Card.Text>
           ) : (
