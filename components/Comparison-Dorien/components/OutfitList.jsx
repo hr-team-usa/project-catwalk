@@ -16,6 +16,7 @@ const OutfitList = ({
   const [addedOutfit, setAddedOutfit] = useState(false);
   const [removedOutfit, setRemovedOutfit] = useState(false);
   const [index, setIndex] = useState('');
+  const [toggleOutfitList, setToggleOutfitList] = useState('');
   const [outfitList2, setOutfitList2] = useState([]);
 
   const starStyle = {
@@ -24,6 +25,8 @@ const OutfitList = ({
 
   function removeOutfit(e) {
     setIndex(e.target.closest('.related-products').getAttribute('data-key'));
+    setToggleOutfitList(e.target.closest('.related-products').getAttribute('outfitlist'));
+    // if (index === 0, toggleOutfitList === '2') #outfit-carousel(prev)
     setRemovedOutfit(true);
   }
 
@@ -44,8 +47,11 @@ const OutfitList = ({
   };
 
   useEffect(() => {
-    if (getLocal('outfitList') !== null && getLocal('outfitList').length !== 0 && outfitList.length === 0) {
+    if (getLocal('outfitList') !== null && getLocal('outfitList').length !== 0 && getLocal('outfitList').length < 4 && outfitList.length === 0) {
       setOutfitList(getLocal('outfitList'));
+    }
+    if (getLocal('outfitList2') !== null && getLocal('outfitList2').length !== 0 && getLocal('outfitList2').length < 5 && outfitList2.length === 0) {
+      setOutfitList2(getLocal('outfitList2'));
     }
     if (addedOutfit) {
       const newList = outfitList;
@@ -63,28 +69,47 @@ const OutfitList = ({
           setLocal('outfitList', newList);
         }
         setOutfitList(newList);
-      } else if (newList.length === 4) {
+      } else if (newList.length === 3) {
         const newList2 = outfitList2;
         if (newList2.length < 4) {
-          newList2.push({
+          const obj = {
             id: productId,
             name: productName,
             style: productStyle,
             rating: productRating,
-          });
-          setOutfitList2(newList2);
-          setAddedOutfit(false);
+          };
+          if (JSON.stringify(newList2).indexOf(JSON.stringify(obj)) < 0) {
+            newList2.push(obj);
+            setOutfitList2(newList2);
+            setAddedOutfit(false);
+            setLocal('outfitList2', newList2);
+          }
         } else {
           console.log('add an error no more than 7');
         }
       }
     }
     if (removedOutfit) {
-      if (index < 4) {
+      console.log(toggleOutfitList);
+      if (toggleOutfitList === '1') {
         const changeList = outfitList;
         changeList.splice(index, 1);
+        if (outfitList2.length > 0) {
+          const changeList2 = outfitList2;
+          const replaceItem = changeList2.splice(0, 1);
+          setOutfitList2(changeList2);
+          changeList.push(replaceItem[0]);
+          removeLocal('outfitList2', 0);
+        }
         setOutfitList(changeList);
         removeLocal('outfitList', index);
+        setRemovedOutfit(false);
+      }
+      if (toggleOutfitList === '2') {
+        const changeList2 = outfitList2;
+        changeList2.splice(index, 1);
+        setOutfitList2(changeList2);
+        removeLocal('outfitList2', index);
         setRemovedOutfit(false);
       }
     }
@@ -115,7 +140,7 @@ const OutfitList = ({
               : outfitList.length === 1
                 ? (
                   <>
-                    <Card key={outfitList[0].id} data-key={0} className="related-products">
+                    <Card key={outfitList[0].id} outfitlist="1" data-key={0} className="related-products">
                       <Card.Img variant="top" className="related-image" src={outfitList[0].style.photos[0].url} />
                       <Card.ImgOverlay className="outfit-overlay">
                         <IconButton onClick={(e) => { removeOutfit(e); }}>
@@ -154,7 +179,7 @@ const OutfitList = ({
                   ? (
                     <>
                       {outfitList.map((item, index) => (
-                        <Card key={index} data-key={index} className="related-products">
+                        <Card key={index} outfitlist="1" data-key={index} className="related-products">
                           <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
                           <Card.ImgOverlay className="outfit-overlay">
                             <IconButton onClick={
@@ -195,7 +220,7 @@ const OutfitList = ({
                   : (
                     <>
                       {outfitList.map((item, index) => (
-                        <Card key={index} data-key={index} className="related-products">
+                        <Card key={index} outfitlist="1" data-key={index} className="related-products">
                           <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
                           <Card.ImgOverlay className="outfit-overlay">
                             <IconButton onClick={
@@ -222,6 +247,180 @@ const OutfitList = ({
                 </Card.Text>
               )
       }
+                          {item.rating !== 'NaN' || item.rating !== undefined ? (
+                            <Stars
+                              style={starStyle}
+                              rating={item.rating}
+                            />
+                          ) : null}
+                        </Card>
+                      ))}
+                    </>
+                  )}
+          </CardDeck>
+        </Carousel.Item>
+        <Carousel.Item id="second-list">
+          <CardDeck>
+            {outfitList2.length === 0
+              ? (
+                <>
+                  <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="fourth-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                </>
+              )
+
+              : outfitList2.length === 1 ? (
+                <>
+                  <Card key={outfitList2[0].id} outfitlist="2" data-key={0} className="related-products">
+                    <Card.Img variant="top" className="related-image" src={outfitList2[0].style.photos[0].url} />
+                    <Card.ImgOverlay className="outfit-overlay">
+                      <IconButton onClick={(e) => { removeOutfit(e); }}>
+                        <HighlightOffIcon />
+                      </IconButton>
+                    </Card.ImgOverlay>
+                    <Card.Title>{outfitList2[0].name}</Card.Title>
+                    {
+              outfitList2[0].style !== undefined ? (
+                <Card.Text>
+                  <span className={outfitList2[0].style.sale_price}>
+                    {outfitList2[0].style.sale_price}
+                  </span>
+                  <span className={outfitList2[0].style.original_price}>
+                    {outfitList2[0].style.original_price}
+                  </span>
+                </Card.Text>
+              ) : (
+                <Card.Text>
+                  <span>{outfitList2[0].style.original_price}</span>
+                </Card.Text>
+              )
+      }
+                    {outfitList2[0].rating !== 'NaN' || outfitList2[0].rating !== undefined ? (
+                      <Stars
+                        style={starStyle}
+                        rating={outfitList2[0].rating}
+                      />
+                    ) : null}
+                  </Card>
+                  <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  <Card id="third-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                </>
+              ) : outfitList2.length === 2
+                ? (
+                  <>
+                    {outfitList2.map((item, index) => (
+                      <Card key={index} outfitlist="2" data-key={index} className="related-products">
+                        <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
+                        <Card.ImgOverlay className="outfit-overlay">
+                          <IconButton onClick={
+                          (e) => { removeOutfit(e); }
+                        }
+                          >
+                            <HighlightOffIcon />
+                          </IconButton>
+                        </Card.ImgOverlay>
+                        <Card.Title>{[item.name]}</Card.Title>
+                        {
+          item.name === undefined ? (
+            <Card.Text>
+              <span className={item.style.sale_price}>
+                {item.style.sale_price}
+              </span>
+              <span className={item.style.original_price}>
+                {item.style.original_price}
+              </span>
+            </Card.Text>
+          ) : (
+            <Card.Text>
+              <span>{item.style.original_price}</span>
+            </Card.Text>
+          )
+  }
+                        {item.rating !== 'NaN' || item.rating !== undefined ? (
+                          <Stars
+                            style={starStyle}
+                            rating={item.rating}
+                          />
+                        ) : null}
+                      </Card>
+                    ))}
+                    <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                    <Card id="second-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                  </>
+                ) : outfitList2.length === 3
+                  ? (
+                    <>
+                      {outfitList2.map((item, index) => (
+                        <Card key={index} outfitlist="2" data-key={index} className="related-products">
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
+                          <Card.ImgOverlay className="outfit-overlay">
+                            <IconButton onClick={
+                          (e) => { removeOutfit(e); }
+                        }
+                            >
+                              <HighlightOffIcon />
+                            </IconButton>
+                          </Card.ImgOverlay>
+                          <Card.Title>{[item.name]}</Card.Title>
+                          {
+          item.name === undefined ? (
+            <Card.Text>
+              <span className={item.style.sale_price}>
+                {item.style.sale_price}
+              </span>
+              <span className={item.style.original_price}>
+                {item.style.original_price}
+              </span>
+            </Card.Text>
+          ) : (
+            <Card.Text>
+              <span>{item.style.original_price}</span>
+            </Card.Text>
+          )
+  }
+                          {item.rating !== 'NaN' || item.rating !== undefined ? (
+                            <Stars
+                              style={starStyle}
+                              rating={item.rating}
+                            />
+                          ) : null}
+                        </Card>
+                      ))}
+                      <Card id="first-placeholder" className="outfit-products" style={{ width: '5rem', opacity: '.1' }} />
+                    </>
+                  ) : (
+                    <>
+                      {outfitList2.map((item, index) => (
+                        <Card key={index} data-key={index} className="related-products">
+                          <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
+                          <Card.ImgOverlay className="outfit-overlay">
+                            <IconButton onClick={
+                          (e) => { removeOutfit(e); }
+                        }
+                            >
+                              <HighlightOffIcon />
+                            </IconButton>
+                          </Card.ImgOverlay>
+                          <Card.Title>{[item.name]}</Card.Title>
+                          {
+          item.name === undefined ? (
+            <Card.Text>
+              <span className={item.style.sale_price}>
+                {item.style.sale_price}
+              </span>
+              <span className={item.style.original_price}>
+                {item.style.original_price}
+              </span>
+            </Card.Text>
+          ) : (
+            <Card.Text>
+              <span>{item.style.original_price}</span>
+            </Card.Text>
+          )
+  }
                           {item.rating !== 'NaN' || item.rating !== undefined ? (
                             <Stars
                               style={starStyle}
