@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -23,21 +24,18 @@ const NewReviewForm = ({
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [charObj, setCharObj] = useState({});
-  // const [state, setState] = useState({});
-
-  // const stateListener = e => {
-  //   console.log(e.target.name);
-  //   console.log(e.target.value);
-  //   setState({ ...state, [e.target.name]: (e.target.value) });
-  // };
 
   const addPhoto = (e) => {
     e.preventDefault();
-    const photosArray = photos;
-    photosArray.push(imgContainer);
-    setPhotos(photosArray);
-    setPhotosToggle(true);
-    setImgContainer('');
+    if (imgContainer.length) {
+      const photosArray = photos;
+      photosArray.push(imgContainer);
+      setPhotos(photosArray);
+      setPhotosToggle(true);
+      setImgContainer('');
+    } else {
+      alert('Please upload a valid image url');
+    }
   };
 
   const removePhoto = (e, photo) => {
@@ -345,21 +343,3 @@ NewReviewForm.propTypes = {
 };
 
 export default NewReviewForm;
-
-// https://react-bootstrap.github.io/components/modal/
-// https://react-bootstrap.github.io/components/buttons/
-// https://react-bootstrap.github.io/components/forms/
-// https://react-bootstrap.github.io/components/input-group/
-
-/*
-
-      <>Overall rating*</>
-      <>Do you recommend this product?*</>
-      <>Characteristics*</>
-      <>Review summary</>
-      <>Review body*</>
-      <>Upload your photos</>
-      <>What is your nickname</>
-      <>Your email</>
-
-*/
