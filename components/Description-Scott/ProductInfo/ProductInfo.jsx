@@ -16,7 +16,7 @@ const ProductInfo = ({
 }) => {
   const { trackEvent } = useTracking({ module: 'Product Overview' });
 
-  const url = 'http://3.131.201.33/';
+  const url = 'http://next-level.best/';
   const starsStyle = {
     display: 'flex',
     justifySelf: 'flex-start',
