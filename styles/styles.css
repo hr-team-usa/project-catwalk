@@ -117,3 +117,13 @@
 .rating-bar:hover {
   background-color: lightgray;
 }
+
+/* Review Form */
+
+.upload-btn {
+  margin-top: 5px;
+}
+
+.upload-img {
+  margin-right: 10px;
+}

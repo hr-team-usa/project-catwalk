@@ -94,6 +94,7 @@ const ReviewsList = ({
         reviews, sorted by
         {' '}
         <select
+          style={{ cursor: 'pointer' }}
           value={sortStatus}
           onChange={(e) => handleSortChange(e)}
         >

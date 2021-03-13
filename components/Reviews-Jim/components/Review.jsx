@@ -71,13 +71,13 @@ const Review = ({ review, markReview }) => {
           <Col>
             Was this review helpful?
             {' '}
-            <span onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
+            <span style={{ cursor: 'pointer' }} onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
             {' '}
             (
             {review.helpfulness}
             ) |
             {' '}
-            <span value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
+            <span style={{ cursor: 'pointer' }} value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
           </Col>
         )}
       </Row>

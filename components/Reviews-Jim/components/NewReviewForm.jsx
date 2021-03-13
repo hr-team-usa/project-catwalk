@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -23,21 +24,30 @@ const NewReviewForm = ({
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [charObj, setCharObj] = useState({});
-  // const [state, setState] = useState({});
 
-  // const stateListener = e => {
-  //   console.log(e.target.name);
-  //   console.log(e.target.value);
-  //   setState({ ...state, [e.target.name]: (e.target.value) });
-  // };
+  const clearFields = (e) => {
+    e.preventDefault();
+    setRating(0);
+    setRecommended(null);
+    setSummary('');
+    setBody('');
+    setImgContainer('');
+    setPhotos([]);
+    setNickname('');
+    setEmail('');
+  };
 
   const addPhoto = (e) => {
     e.preventDefault();
-    const photosArray = photos;
-    photosArray.push(imgContainer);
-    setPhotos(photosArray);
-    setPhotosToggle(true);
-    setImgContainer('');
+    if (imgContainer.length) {
+      const photosArray = photos;
+      photosArray.push(imgContainer);
+      setPhotos(photosArray);
+      setPhotosToggle(true);
+      setImgContainer('');
+    } else {
+      alert('Please upload a valid image url');
+    }
   };
 
   const removePhoto = (e, photo) => {
@@ -300,8 +310,8 @@ const NewReviewForm = ({
               {photos.length}
               /5 photos max, click thumbnail to remove
             </Form.Text>
-            {photos.length ? photos.map((photo, i) => <img key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
-            {(photos.length < 5) ? <Button onClick={(e) => addPhoto(e)}>Upload</Button> : null}
+            {photos.length ? photos.map((photo, i) => <img className="upload-img" key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
+            {(photos.length < 5) ? <Button className="upload-btn" onClick={(e) => addPhoto(e)}>Upload</Button> : null}
             <style jsx>
               {`
                 img {
@@ -323,8 +333,8 @@ const NewReviewForm = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={(e) => sendReview(e)}>Submit Review</Button>
-        <Button onClick={onHide}>Close</Button>
+        <Button onClick={(e) => { sendReview(e); clearFields(e); }}>Submit Review</Button>
+        <Button onClick={(e) => { onHide(); clearFields(e); }}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
@@ -345,21 +355,3 @@ NewReviewForm.propTypes = {
 };
 
 export default NewReviewForm;
-
-// https://react-bootstrap.github.io/components/modal/
-// https://react-bootstrap.github.io/components/buttons/
-// https://react-bootstrap.github.io/components/forms/
-// https://react-bootstrap.github.io/components/input-group/
-
-/*
-
-      <>Overall rating*</>
-      <>Do you recommend this product?*</>
-      <>Characteristics*</>
-      <>Review summary</>
-      <>Review body*</>
-      <>Upload your photos</>
-      <>What is your nickname</>
-      <>Your email</>
-
-*/
