@@ -54,7 +54,7 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
   };
 
   // adding product price since the price and images are from the same endpoint
-  const getRelatedImages = (productIds) => { 
+  const getRelatedImages = (productIds) => {
     const obj = {};
     const objStyle = {};
     const arr = [];
