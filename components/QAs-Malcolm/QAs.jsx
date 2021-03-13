@@ -38,7 +38,7 @@ const QAs = ({ productId, productName }) => {
         setSearchedMatch={setSearchedMatch}
         questions={questions}
       />
-      <div style={{ overflowY: 'scroll', height: '750px' }}>
+      <div style={{ overflowY: 'scroll', height: '750px', maxHeight: '80vh' }}>
         <Questions
           productId={productId}
           setCount={setCount}
