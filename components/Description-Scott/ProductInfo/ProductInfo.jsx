@@ -16,7 +16,7 @@ const ProductInfo = ({
 }) => {
   const { trackEvent } = useTracking({ module: 'Product Overview' });
 
-  const url = 'http://3.131.201.33/';
+  const url = 'http://next-level.best/';
   const starsStyle = {
     display: 'flex',
     justifySelf: 'flex-start',
@@ -56,7 +56,7 @@ const ProductInfo = ({
             trackEvent({ element: 'Social Media', time: new Date() });
           }}
         >
-          <TwitterShareButton url={'next-level.best'} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
+          <TwitterShareButton url={url} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
 
