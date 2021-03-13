@@ -22,10 +22,11 @@ function Q(props) {
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
-  const [helpfulA, setHelpfulA] = useState('');
+  const [helpfulA, setHelpfulA] = useState(false);
   const [helpfulQ, setHelpfulQ] = useState(false);
   const [image, setImage] = useState('');
   const { trackEvent } = useTracking({ module: 'Questions and Answers' });
+  const answerArr = [];
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -87,9 +88,6 @@ function Q(props) {
     axios(options)
       .then(() => props.setRender(true))
       .catch((err) => console.log(err));
-    // } else {
-    //   window.alert("We're glad you found this helpful!");
-    // }
   };
 
   const report = (e) => {
