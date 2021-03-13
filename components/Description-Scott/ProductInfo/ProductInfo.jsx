@@ -7,16 +7,16 @@ import {
   TwitterShareButton, TwitterIcon,
   FacebookShareButton, FacebookIcon,
 } from 'react-share';
-import styles from './ProductInfo.module.css';
 import Price from './Price';
 import Stars from '../../Reviews-Jim/components/Stars';
+import styles from './ProductInfo.module.css';
 
 const ProductInfo = ({
   productName, category, description, styleInfo, productRating, reviewsRef,
 }) => {
   const { trackEvent } = useTracking({ module: 'Product Overview' });
 
-  const url = 'http://18.224.109.82/';
+  const url = 'http://next-level.best/';
   const starsStyle = {
     display: 'flex',
     justifySelf: 'flex-start',

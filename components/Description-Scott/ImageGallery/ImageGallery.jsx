@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Carousel from 'react-bootstrap/Carousel';
-import Image from 'react-bootstrap/Image';
-import Card from 'react-bootstrap/Card';
-import CardColumns from 'react-bootstrap/CardColumns';
+import { Carousel, Image, Card, CardColumns } from 'react-bootstrap';
 import ReactImageMagnify from 'react-image-magnify';
-
 import styles from './ImageGallery.module.css';
 
 const ImageGallery = ({ styleInfo, setIsExpanded }) => {
@@ -21,21 +17,23 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   const selectedThumbStyle = {
+    // height: '100%',
     height: '100%',
-    width: '100%',
+    objectFit: 'cover',
+    // width: '100%',
     border: 'double',
     boxShadow: '8px 5px 5px black',
   };
 
   const defaultThumbStyle = {
     height: '100%',
-    width: '100%',
+    objectFit: 'cover',
     boxShadow: '5px 2.5px 2.5px black',
   };
 
   // ------------------ POPULATE STATE FUNCTIONS ------------------
 
-  // populates the fullSizeImages and thumbnails arrays
+  // populates the fullSizeImages and thumbnails states
   const getImages = () => {
     if (Object.entries(styleInfo).length > 0) {
       setMainImageSrc(styleInfo.photos[0].url);
@@ -52,6 +50,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     }
   };
 
+  // divide the thumbnails into groups of seven, populate thumbCarousel state with this array
   const groupBySevens = () => {
     const thumbnailGroups = [];
     let thumbnailIndex = 0;
@@ -59,7 +58,11 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     while (thumbnailIndex < thumbnails.length) {
       const currentGroup = [];
       for (let i = 0; i < 7; i += 1) {
-        currentGroup.push({ thumbnail: thumbnails[thumbnailIndex], index: counter });
+        let imageSrc = thumbnails[thumbnailIndex] || 'no image';
+        if (imageSrc.slice(0, 4) !== 'http') {
+          imageSrc = '/no-image-icon.png';
+        }
+        currentGroup.push({ thumbnail: imageSrc, index: counter });
         counter += 1;
         thumbnailIndex += 1;
         if (thumbnailIndex === thumbnails.length) {
@@ -76,11 +79,13 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   // ------------------ EVENT HANDLERS ------------------
 
+  // image selected
   const handleSelect = (selectedIndex) => {
     setMainImageSrc(fullSizeImages[selectedIndex]);
     setIndex(selectedIndex);
   };
 
+  // expand button click handler
   const expand = () => {
     switch (view) {
       case 'default':
@@ -100,6 +105,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     }
   };
 
+  // click handler for scrolling through thumbnails
   const thumbnailScroll = (direction) => {
     let newIndex = thumbSliderIndex;
     if (direction === 'down') {
@@ -118,6 +124,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
 
   // ------------------ CONDITIONAL RENDERING FUNCTIONS ------------------
 
+  // render a different main image element based on current view state
   const renderCarouselItem = (image) => {
     switch (view) {
       case 'default':
@@ -180,7 +187,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   return (
     <>
       <div className={styles.mainImageContainer} style={{ border: '1px solid #92A2B0' }}>
-        {/* Main Image: */}
+        {/* Main Image Carousel: */}
         <Carousel
           id="mainCarousel"
           className={carouselStyle}
@@ -196,6 +203,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             </Carousel.Item>
 
           )) : null}
+          {/* hide carousel controls when at beg/end of carousel */}
           {index === 0
             ? (
               <style type="text/css">
@@ -219,6 +227,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
             )
             : null}
         </Carousel>
+        {/* expand view button */}
         <button
           onClick={() => {
             if (view === 'expanded') {
@@ -282,6 +291,7 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
           </CardColumns>
         </div>
       ) : null}
+      {/* hide up/down controls when at beg/end of thumbnail group */}
       {index === 0 ? (
         <style type="text/css">
           {`

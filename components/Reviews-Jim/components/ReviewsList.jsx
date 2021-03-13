@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
+import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../../config';
@@ -13,6 +14,7 @@ const ReviewsList = ({
   renderToggle, setRenderToggle, selectedRatings, ratingsLength,
   productName, productId, setGetToggle,
 }) => {
+  const { trackEvent } = useTracking({ module: 'Reviews List' });
   const [renderedReviews, setRenderedReviews] = useState([]);
   const [reviewCount, setReviewCount] = useState(2);
   const [show, setShow] = useState(false);
@@ -32,7 +34,7 @@ const ReviewsList = ({
   const filterReviewList = (reviews, count, ratingArray) => {
     if (ratingsLength) {
       const filterArray = [];
-      for (let i = 0; i < renderedReviews.length; i += 1) {
+      for (let i = 0; i < reviews.length; i += 1) {
         if (ratingArray.includes(reviews[i].rating)) {
           filterArray.push(reviews[i]);
         }
@@ -42,11 +44,6 @@ const ReviewsList = ({
       renderReviewList(productReviews, reviewCount);
     }
   };
-
-  // const addTwoReviews = (e) => {
-  //   e.preventDefault();
-  //   setReviewCount(reviewCount + 2);
-  // };
 
   const markReview = (e, reviewId, string) => {
     e.preventDefault();
@@ -97,6 +94,7 @@ const ReviewsList = ({
         reviews, sorted by
         {' '}
         <select
+          style={{ cursor: 'pointer' }}
           value={sortStatus}
           onChange={(e) => handleSortChange(e)}
         >
@@ -111,7 +109,7 @@ const ReviewsList = ({
       {!productReviews.length ? <div>Be the first to review this product.</div> : null}
       {(productReviews.length <= 2 || reviewCount >= productReviews.length) ? null : <Button id="more-reviews-btn" className="review-buttons" onClick={() => setReviewCount(reviewCount + 2)}>More Reviews</Button>}
       {reviewCount >= productReviews.length ? <Button id="fewer-reviews-btn" className="review-buttons" onClick={() => setReviewCount(2)}>Fewer Reviews</Button> : null}
-      <Button className="review-buttons" onClick={() => setShow(true)}>Add a Review +</Button>
+      <Button className="review-buttons" onClick={() => { setShow(true); trackEvent({ element: 'Add a Review', time: new Date() }); }}>Add a Review +</Button>
       <NewReviewForm
         productName={productName}
         characteristics={characteristics}

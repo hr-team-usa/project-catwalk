@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Divider from '@material-ui/core/Divider';
 import { Container, Row, Col } from 'react-bootstrap';
 import Stars from '../../Reviews-Jim/components/Stars';
 
@@ -40,7 +41,7 @@ const Comparison_Modal = (props) => {
     <Modal.Dialog
       {...divProps}
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Comparing</Modal.Title>
       </Modal.Header>
 
@@ -48,28 +49,28 @@ const Comparison_Modal = (props) => {
         <Container>
           <Row>
             <Col xs={6} md={4}>
-              {productName}
+              <h6>{productName}</h6>
             </Col>
             <Col xs={6} md={4}>
-              Compared to
+              <h6>Compared to</h6>
             </Col>
             <Col xs={6} md={4}>
-              {relatedName}
+              <h6 style={{ display: 'flex', justifyContent: 'flex-end', textAlign: '-webkit-right' }}>{relatedName}</h6>
             </Col>
           </Row>
-
+          <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
           <Row>
             <Col xs={6} md={4}>
-              {productPrice}
+              <h6>{productPrice}</h6>
             </Col>
             <Col xs={6} md={4}>
-              Price
+              <h6>Price</h6>
             </Col>
             <Col xs={6} md={4}>
-              {relatedPrice}
+              <h6 style={{ display: 'flex', justifyContent: 'flex-end' }}>{relatedPrice}</h6>
             </Col>
           </Row>
-
+          <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
           <Row>
             <Col xs={6} md={4}>
               {productRating}
@@ -83,10 +84,9 @@ const Comparison_Modal = (props) => {
               ) : null}
             </Col>
             <Col xs={6} md={4}>
-              Rating /
-              Stars
+              <h6>Rating / Stars</h6>
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={6} md={4} style={{ display: 'flex', flexFlow: 'column', alignItems: 'flex-end' }}>
               {relatedRating}
               {relatedRating !== 'NaN' || relatedRating !== undefined ? (
                 <>

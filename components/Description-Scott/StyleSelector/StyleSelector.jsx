@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line object-curly-newline
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import styleSheet from './StyleSelector.module.css';
 
@@ -88,8 +87,6 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                           key={style.style_id}
                           src="/no-image-icon.png"
                           alt="style thumbnail"
-                          width="80"
-                          height="80"
                           roundedCircle
                         />
                         <span

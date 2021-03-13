@@ -1,7 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5'; import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import TerrainIcon from '@material-ui/icons/Terrain';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
 import Comparison from '../components/Comparison-Dorien/Comparison';
 import QAs from '../components/QAs-Malcolm/QAs';
@@ -18,6 +25,40 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const reviewsRef = useRef();
+
+  const retrieveItemsFromLocalStorage = () => {
+    const existing = Object.keys(localStorage);
+    const itemsInCart = [];
+    for (let i = 0; i < existing.length; i += 1) {
+      const nm = existing[i];
+      const sizeAndQuan = localStorage.getItem(nm);
+      const itemDetails = sizeAndQuan.split('/');
+      const sz = itemDetails[0];
+      const quan = itemDetails[1];
+      if (nm.slice(0, 3) === 'NL:') {
+        itemsInCart.push({ name: nm.slice(3), size: sz, quantity: quan });
+      }
+    }
+    setCart(itemsInCart);
+  };
+
+  const removeItem = (item) => {
+    const myCart = [];
+    cart.forEach((product) => {
+      if (product.name !== item.name
+        || product.size !== item.size
+        || product.quantity !== item.quantity) {
+        myCart.push(product);
+      }
+    });
+    setCart(myCart);
+
+    localStorage.removeItem(`NL:${item.name}`);
+  };
+
+  useEffect(() => {
+    retrieveItemsFromLocalStorage();
+  }, []);
 
   return (
     <>
@@ -60,7 +101,7 @@ const App = () => {
       <Container className={isDarkMode ? styles.darkMode : null}>
         <Navbar bg="dark" variant="dark" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Navbar.Brand href="#home">
-            😎
+            <img src="/america.png" alt="america" style={{height: '45px', width: '45px', borderColor: '#A9A9A9', border: 'solid', borderWeight: 'thin' }} />
             <strong style={{ fontSize: '20px', fontFamily: 'Palatino', marginLeft: '10px' }}>NEXT Level</strong>
             <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in the USA</i></span>
           </Navbar.Brand>
@@ -72,7 +113,8 @@ const App = () => {
                 (
                 {`${item.size}`}
                 ) x
-                {`${item.quantity}`}
+                {`${item.quantity}  `}
+                <CloseIcon onClick={() => removeItem(item)} style={{ fontSize: 'Medium', transform: 'translate(12px, -1px)' }} />
               </NavDropdown.Item>
             ))
               : <NavDropdown.Item>Nothing in Cart</NavDropdown.Item>}
@@ -115,6 +157,12 @@ const App = () => {
             productName={productName}
           />
         </div>
+        <BottomNavigation style={{ backgroundColor: '#A9A9A9' }} showLabels>
+          <BottomNavigationAction label="Scott" value="Scott" icon={<SportsBasketballIcon />} href="https://github.com/Scott-Guinn" target="_blank" />
+          <BottomNavigationAction label="Dorien" value="Dorien" icon={<MonetizationOnIcon />} href="https://github.com/Initial-D-cmd" target="_blank" />
+          <BottomNavigationAction label="Malcolm" value="Malcolm" icon={<TerrainIcon />} href="https://github.com/Malcolm-Marshall" target="_blank" />
+          <BottomNavigationAction label="Jim" value="Jim" icon={<EmojiPeopleIcon />} href="https://github.com/JimBurch" target="_blank" />
+        </BottomNavigation>
       </Container>
     </>
   );

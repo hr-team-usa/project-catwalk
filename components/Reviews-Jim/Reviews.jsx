@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+// import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../config';
@@ -12,6 +13,7 @@ import ReviewsBreakdown from './components/ReviewsBreakdown';
 const Reviews = ({
   productId, setProductRating, reviewsRef, productName,
 }) => {
+  // const { trackEvent } = useTracking({ module: 'Reviews' });
   const [productReviews, setProductReviews] = useState(null);
   const [productMeta, setProductMeta] = useState(null);
   const [sortStatus, setSortStatus] = useState('relevant');
@@ -77,7 +79,7 @@ const Reviews = ({
 
   return (
     <Container className="review-widget">
-      <h3 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h3>
+      <h5 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h5>
       <Row>
         <Col xs={4}>
           {(productReviews && productMeta) ? (
@@ -92,7 +94,7 @@ const Reviews = ({
         </Col>
         <Col>
           {(productReviews && productMeta) ? (
-            <div style={{ overflowY: 'scroll', height: '750px' }}>
+            <div style={{ overflowY: 'scroll', height: '950px' }}>
               <ReviewsList
                 productReviews={productReviews}
                 characteristics={productMeta.characteristics}

@@ -13,7 +13,7 @@ const ProductBreakdown = ({ characteristics }) => {
     <div>
       {charKeys.includes('Size') ?
         <div className="char-rating">
-          <div>Size</div>
+          <div className="char-name">Size</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
@@ -31,7 +31,7 @@ const ProductBreakdown = ({ characteristics }) => {
         </div> : null}
       {charKeys.includes('Width') ?
         <div className="char-rating">
-          <div>Width</div>
+          <div className="char-name">Width</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
@@ -49,7 +49,7 @@ const ProductBreakdown = ({ characteristics }) => {
         </div> : null}
         {charKeys.includes('Comfort') ?
         <div className="char-rating">
-          <div>Comfort</div>
+          <div className="char-name">Comfort</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
@@ -67,7 +67,7 @@ const ProductBreakdown = ({ characteristics }) => {
         </div> : null}
       {charKeys.includes('Quality') ?
         <div className="char-rating">
-          <div>Quality</div>
+          <div className="char-name">Quality</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
@@ -85,7 +85,7 @@ const ProductBreakdown = ({ characteristics }) => {
         </div> : null}
         {charKeys.includes('Length') ?
         <div className="char-rating">
-          <div>Length</div>
+          <div className="char-name">Length</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
@@ -103,7 +103,7 @@ const ProductBreakdown = ({ characteristics }) => {
         </div> : null}
       {charKeys.includes('Fit') ?
         <div className="char-rating">
-          <div>Fit</div>
+          <div className="char-name">Fit</div>
           <div className="char-mark">◆</div>
           <div className="char-bar">*</div>
           <div className="char-labels">
