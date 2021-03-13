@@ -17,15 +17,17 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
   const [carouselStyle, setCarouselStyle] = useState(styles.carousel);
 
   const selectedThumbStyle = {
+    // height: '100%',
     height: '100%',
-    width: '100%',
+    objectFit: 'cover',
+    // width: '100%',
     border: 'double',
     boxShadow: '8px 5px 5px black',
   };
 
   const defaultThumbStyle = {
     height: '100%',
-    width: '100%',
+    objectFit: 'cover',
     boxShadow: '5px 2.5px 2.5px black',
   };
 

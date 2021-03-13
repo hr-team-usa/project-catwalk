@@ -87,8 +87,6 @@ const StyleSelector = ({ allStyles, styleInfo, setStyleInfo }) => {
                           key={style.style_id}
                           src="/no-image-icon.png"
                           alt="style thumbnail"
-                          width="80"
-                          height="80"
                           roundedCircle
                         />
                         <span
