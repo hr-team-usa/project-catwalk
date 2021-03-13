@@ -42,8 +42,8 @@ const Review = ({ review, markReview }) => {
           )
           : (
             <Col>
-              {`${body} ...`}
-              {(body.length <= 250) ? <div onClick={() => setBody(review.body)}><u>See more</u></div> : <div onClick={() => setBody(review.body.substring(0, 250))}><u>See less</u></div>}
+              {body}
+              {(body.length <= 250) ? <span onClick={() => setBody(review.body)}>... <u>See more</u></span> : <span onClick={() => setBody(review.body.substring(0, 250))}> <u>See less</u></span>}
             </Col>
           )}
       </Row>
