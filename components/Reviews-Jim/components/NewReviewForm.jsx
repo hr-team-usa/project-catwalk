@@ -310,8 +310,8 @@ const NewReviewForm = ({
               {photos.length}
               /5 photos max, click thumbnail to remove
             </Form.Text>
-            {photos.length ? photos.map((photo, i) => <img key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
-            {(photos.length < 5) ? <Button onClick={(e) => addPhoto(e)}>Upload</Button> : null}
+            {photos.length ? photos.map((photo, i) => <img className="upload-img" key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
+            {(photos.length < 5) ? <Button className="upload-btn" onClick={(e) => addPhoto(e)}>Upload</Button> : null}
             <style jsx>
               {`
                 img {
