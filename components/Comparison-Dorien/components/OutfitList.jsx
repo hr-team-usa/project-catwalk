@@ -56,10 +56,13 @@ const OutfitList = ({
           style: productStyle,
           rating: productRating,
         };
-        newList.push(obj);
+        if (JSON.stringify(newList).indexOf(JSON.stringify(obj)) < 0) {
+          newList.push(obj);
+          setOutfitList(newList);
+          setAddedOutfit(false);
+          setLocal('outfitList', newList);
+        }
         setOutfitList(newList);
-        setAddedOutfit(false);
-        setLocal('outfitList', newList);
       } else if (newList.length === 4) {
         const newList2 = outfitList2;
         if (newList2.length < 4) {
@@ -91,8 +94,8 @@ const OutfitList = ({
 
   return (
     <div>
-      Outfit Products
-      <Carousel interval={null} indicators={false} id="outfit-carousel">
+      <h5 style={{ marginTop: '20px' }}>Outfit Products</h5>
+      <Carousel interval={null} indicators={false} id="outfit-carousel" style={{ marginBottom: '20px' }}>
         <Carousel.Item id="first-list">
           <CardDeck className="outfit-group">
             <Card id="add-card" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>

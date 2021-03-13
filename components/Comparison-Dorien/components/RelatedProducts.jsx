@@ -80,7 +80,7 @@ const RelatedProducts = ({
 
   return (
     <>
-      Related Products
+      <h5 style={{ marginTop: '20px' }}>Related Products</h5>
       {products
                 && (
                 <Carousel interval={null} indicators={false} id="related-carousel">
