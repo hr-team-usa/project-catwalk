@@ -83,7 +83,7 @@ const RelatedProducts = ({
       Related Products
       {products
                 && (
-                <Carousel interval={null} indicators={false}>
+                <Carousel interval={null} indicators={false} id="related-carousel">
                   {arrayOfArrayProducts.map((array, index) => (
                     <Carousel.Item key={index}>
                       <CardDeck>
@@ -153,13 +153,16 @@ const RelatedProducts = ({
            .related-products-group {
 
            }
-           .carousel-control-next, .carousel-control-prev {
-            width: -1%;
-            }
+           #related-carousel .carousel-control-next {
+            width: 2%;
+           }
+           #related-carousel .carousel-control-prev {
+            width: 2%;
+           }
            `}
       </style>
     </>
-  )
+  );
 };
 
 export default RelatedProducts;

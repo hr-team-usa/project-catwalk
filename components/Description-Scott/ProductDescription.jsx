@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTracking } from 'react-tracking';
@@ -79,7 +80,7 @@ const ProductDescription = ({
     <div>
       <Container className="container-fluid">
         <Row>
-          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={()=> trackEvent({ element: 'Image Gallery', time: new Date() })}>
+          <Col className={isExpanded ? 'col-12' : 'col-7'} onClick={() => trackEvent({ element: 'Image Gallery', time: new Date() })}>
             <ImageGallery styleInfo={styleInfo} setIsExpanded={setIsExpanded} />
           </Col>
           {isExpanded ? null
@@ -124,13 +125,11 @@ const ProductDescription = ({
 ProductDescription.propTypes = {
   productId: PropTypes.number.isRequired,
   productRating: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
   reviewsRef: PropTypes.object,
   setCurrentProductData: PropTypes.func.isRequired,
   setCurrentStyleData: PropTypes.func.isRequired,
   setProductNameGlobal: PropTypes.func.isRequired,
   setCart: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   cart: PropTypes.array.isRequired,
 };
 

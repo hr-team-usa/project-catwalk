@@ -57,7 +57,11 @@ const RatingBreakdown = ({
         5 Stars (
         {ratings['5'] ? ratings['5'] : '0'}
         )
-        <LinearProgress variant="determinate" value={Number(percentages['5'])} />
+        <LinearProgress
+          variant="determinate"
+          value={Number(percentages['5'])}
+          // color="primary"
+        />
         {selectedRatings.includes(5)
           ? (
             <style>
@@ -136,6 +140,16 @@ const RatingBreakdown = ({
       {selectedRatings.length ? (
         <div onClick={() => { setSelectedRatings([]); setRatingsLength(0); }}><u>Remove rating filters</u></div>
       ) : null}
+      <style>
+        {`
+        .MuiLinearProgress-barColorPrimary {
+          background-color: green;
+        }
+        .MuiLinearProgress-colorPrimary {
+          background-color: lightgray;
+        }
+      `}
+      </style>
     </div>
   );
 };

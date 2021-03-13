@@ -36,6 +36,10 @@
 
 /* REVIEWS */
 
+.review-widget {
+  padding: 50px 25px;
+}
+
 /* Review Card */
 
 .review-card {
@@ -48,6 +52,13 @@
 
 .review-summary {
   font-weight: 900;
+}
+
+.review-photo {
+  border: 1px solid lightgray;
+  padding: 7px;
+  margin: 5px;
+  height: 150px;
 }
 
 /* Product Breakdown */
@@ -74,6 +85,17 @@
 }
 
 /* Rating Breakdown */
+
+.avg-rating {
+  font-size: 40px;
+  color: black;
+  font-weight: bold;
+  /* float: left; */
+}
+
+.star-rating {
+  /* float: left; */
+}
 
 .rating-bar {
   margin: 5px 0px;
