@@ -40,7 +40,7 @@ const Comparison_Modal = (props) => {
     <Modal.Dialog
       {...divProps}
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Comparing</Modal.Title>
       </Modal.Header>
 
