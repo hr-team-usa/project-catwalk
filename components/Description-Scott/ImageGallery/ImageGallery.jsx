@@ -56,7 +56,11 @@ const ImageGallery = ({ styleInfo, setIsExpanded }) => {
     while (thumbnailIndex < thumbnails.length) {
       const currentGroup = [];
       for (let i = 0; i < 7; i += 1) {
-        currentGroup.push({ thumbnail: thumbnails[thumbnailIndex], index: counter });
+        let imageSrc = thumbnails[thumbnailIndex] || 'no image';
+        if (imageSrc.slice(0, 4) !== 'http') {
+          imageSrc = '/no-image-icon.png';
+        }
+        currentGroup.push({ thumbnail: imageSrc, index: counter });
         counter += 1;
         thumbnailIndex += 1;
         if (thumbnailIndex === thumbnails.length) {
