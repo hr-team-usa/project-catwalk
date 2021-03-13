@@ -60,7 +60,7 @@ const RatingBreakdown = ({
         <LinearProgress
           variant="determinate"
           value={Number(percentages['5'])}
-          color="secondary"
+          // color="primary"
         />
         {selectedRatings.includes(5)
           ? (
@@ -140,6 +140,16 @@ const RatingBreakdown = ({
       {selectedRatings.length ? (
         <div onClick={() => { setSelectedRatings([]); setRatingsLength(0); }}><u>Remove rating filters</u></div>
       ) : null}
+      <style>
+        {`
+        .MuiLinearProgress-barColorPrimary {
+          background-color: green;
+        }
+        .MuiLinearProgress-colorPrimary {
+          background-color: lightgray;
+        }
+      `}
+      </style>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+// import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from '../../config';
@@ -12,6 +13,7 @@ import ReviewsBreakdown from './components/ReviewsBreakdown';
 const Reviews = ({
   productId, setProductRating, reviewsRef, productName,
 }) => {
+  // const { trackEvent } = useTracking({ module: 'Reviews' });
   const [productReviews, setProductReviews] = useState(null);
   const [productMeta, setProductMeta] = useState(null);
   const [sortStatus, setSortStatus] = useState('relevant');
