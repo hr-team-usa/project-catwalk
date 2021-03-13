@@ -22,7 +22,7 @@ function Q(props) {
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
-  const [helpfulA, setHelpfulA] = useState(false);
+  const [helpfulA, setHelpfulA] = useState('');
   const [helpfulQ, setHelpfulQ] = useState(false);
   const [image, setImage] = useState('');
   const { trackEvent } = useTracking({ module: 'Questions and Answers' });
@@ -181,7 +181,7 @@ function Q(props) {
       &nbsp;
               {formatDate(answer.date)}
             </Col>
-            {helpfulA ? (
+            {helpfulA === answer.id ? (
               <Col sm="auto" style={answerStyle}>
                 Marked as Helpful! (
                 {props.question.answers[answer.id].helpfulness}
@@ -192,7 +192,7 @@ function Q(props) {
                 <Col id={answer.id} qid={props.question.question_id} sm="auto" style={answerStyle}>
                   Helpful?
                   {' '}
-                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(true); }}>Yes</u>
+                  <u onClick={(e) => { handleClick(e, answer.id); setHelpfulA(answer.id); }}>Yes</u>
                   (
                   {answer.helpfulness}
                   )
