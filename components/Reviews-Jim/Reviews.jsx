@@ -79,7 +79,7 @@ const Reviews = ({
 
   return (
     <Container className="review-widget">
-      <h3 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h3>
+      <h5 className="reviews-title" ref={reviewsRef}>Ratings & Reviews</h5>
       <Row>
         <Col xs={4}>
           {(productReviews && productMeta) ? (
@@ -94,7 +94,7 @@ const Reviews = ({
         </Col>
         <Col>
           {(productReviews && productMeta) ? (
-            <div style={{ overflowY: 'scroll', height: '750px' }}>
+            <div style={{ overflowY: 'scroll', height: '800px' }}>
               <ReviewsList
                 productReviews={productReviews}
                 characteristics={productMeta.characteristics}
