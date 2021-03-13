@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
+import Divider from '@material-ui/core/Divider';
 import config from '../../config';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import RelatedProducts from './components/RelatedProducts';
@@ -135,6 +136,7 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
             />
           )
           : null }
+        <Divider style={{ marginTop: '20px', marginBottom: '10px' }} />
         <OutfitList
           productId={productId}
           productName={productName}
