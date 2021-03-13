@@ -14,6 +14,7 @@ const Add = ({
     } else {
       // Actual add to cart here...
       setCart([...cart, { name: productName, size: sku.size, quantity: quantitySelected }]);
+      localStorage.setItem(`NL:${productName}`, `${sku.size}/${quantitySelected}`);
     }
     trackEvent({ element: 'Add to Cart', time: new Date() });
   };
