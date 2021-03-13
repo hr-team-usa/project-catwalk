@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTracking } from 'react-tracking';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line object-curly-newline
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import styleSheet from './StyleSelector.module.css';
 

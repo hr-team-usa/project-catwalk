@@ -12,7 +12,6 @@ const Add = ({
     if (sku.size === 'Select Size') {
       setInvalidAdd(true);
     } else {
-      // Actual add to cart here...
       setCart([...cart, { name: productName, size: sku.size, quantity: quantitySelected }]);
       localStorage.setItem(`NL:${productName}`, `${sku.size}/${quantitySelected}`);
     }
@@ -31,7 +30,6 @@ const Add = ({
       >
         Add to Cart
       </Button>
-      {' '}
     </>
   );
 };

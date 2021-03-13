@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
 import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
@@ -101,7 +101,7 @@ const App = () => {
       <Container className={isDarkMode ? styles.darkMode : null}>
         <Navbar bg="dark" variant="dark" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Navbar.Brand href="#home">
-            😎
+            <img src="/america.png" alt="america" style={{height: '45px', width: '45px', borderColor: '#A9A9A9', border: 'solid', borderWeight: 'thin' }} />
             <strong style={{ fontSize: '20px', fontFamily: 'Palatino', marginLeft: '10px' }}>NEXT Level</strong>
             <span style={{ fontSize: '11px', marginLeft: '20px' }}><i>Made in the USA</i></span>
           </Navbar.Brand>
