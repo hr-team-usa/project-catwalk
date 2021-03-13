@@ -97,7 +97,7 @@ const OutfitList = ({
           <CardDeck className="outfit-group">
             <Card id="add-card" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
               <Fab id="add-button">
-                <div id="add-button-text">Add to outfit</div>
+                <h2 id="add-button-text">Add to outfit</h2>
                 <AddCircleIcon />
               </Fab>
             </Card>
