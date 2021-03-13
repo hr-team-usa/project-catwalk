@@ -56,7 +56,7 @@ const ProductInfo = ({
             trackEvent({ element: 'Social Media', time: new Date() });
           }}
         >
-          <TwitterShareButton url={url} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
+          <TwitterShareButton url={'next-level.best'} hashtags={['TEAMUSA', 'FEC', 'hackreactor']}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
 
