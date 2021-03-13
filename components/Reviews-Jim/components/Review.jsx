@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
+import Divider from '@material-ui/core/Divider';
 
 import ImageModal from './ImageModal';
 
@@ -23,16 +24,16 @@ const Review = ({ review, markReview }) => {
         <Col>
           <Rating className="star-rating" value={review.rating} precision={0.25} readOnly />
         </Col>
-        <Col>
+        <Col className="review-user-date">
           {`${review.reviewer_name}, ${month} ${day}, ${year}`}
         </Col>
       </Row>
-      <Row>
-        <Col className="review-summary">
+      <Row className="review-summary">
+        <Col>
           {review.summary}
         </Col>
       </Row>
-      <Row>
+      <Row className="review-body">
         {(review.body.length <= 250)
           ? (
             <Col>
@@ -41,12 +42,12 @@ const Review = ({ review, markReview }) => {
           )
           : (
             <Col>
-              {`${body} ...`}
-              {(body.length <= 250) ? <div onClick={() => setBody(review.body)}><u>See more</u></div> : <div onClick={() => setBody(review.body.substring(0, 250))}><u>See less</u></div>}
+              {body}
+              {(body.length <= 250) ? <span onClick={() => setBody(review.body)}>... <u>See more</u></span> : <span onClick={() => setBody(review.body.substring(0, 250))}> <u>See less</u></span>}
             </Col>
           )}
       </Row>
-      <Row>
+      <Row className="review-photos">
         {review.photos.map((photo) => <img key={photo.id} className="review-photo" alt="" src={photo.url} onClick={() => { setShow(true); setImage(photo.url); }} />)}
       </Row>
       {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
@@ -59,7 +60,7 @@ const Review = ({ review, markReview }) => {
           </Col>
         </Row>
       ) : null}
-      <Row>
+      <Row className="review-helpful">
         {helpful ? (
           <Col>
             Marked as helpful! (
@@ -70,16 +71,17 @@ const Review = ({ review, markReview }) => {
           <Col>
             Was this review helpful?
             {' '}
-            <span onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
+            <span style={{ cursor: 'pointer' }} onClick={(e) => { markReview(e, review.review_id, 'Yes'); setHelpful(true); }}><u>Yes</u></span>
             {' '}
             (
             {review.helpfulness}
             ) |
             {' '}
-            <span value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
+            <span style={{ cursor: 'pointer' }} value="Report" onClick={(e) => markReview(e, review.review_id, 'Report')}><u>Report</u></span>
           </Col>
         )}
       </Row>
+      <Divider className="review-divide" />
       <ImageModal
         image={image}
         show={show}

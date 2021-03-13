@@ -34,7 +34,7 @@ const ReviewsList = ({
   const filterReviewList = (reviews, count, ratingArray) => {
     if (ratingsLength) {
       const filterArray = [];
-      for (let i = 0; i < renderedReviews.length; i += 1) {
+      for (let i = 0; i < reviews.length; i += 1) {
         if (ratingArray.includes(reviews[i].rating)) {
           filterArray.push(reviews[i]);
         }
@@ -44,11 +44,6 @@ const ReviewsList = ({
       renderReviewList(productReviews, reviewCount);
     }
   };
-
-  // const addTwoReviews = (e) => {
-  //   e.preventDefault();
-  //   setReviewCount(reviewCount + 2);
-  // };
 
   const markReview = (e, reviewId, string) => {
     e.preventDefault();
@@ -99,6 +94,7 @@ const ReviewsList = ({
         reviews, sorted by
         {' '}
         <select
+          style={{ cursor: 'pointer' }}
           value={sortStatus}
           onChange={(e) => handleSortChange(e)}
         >
