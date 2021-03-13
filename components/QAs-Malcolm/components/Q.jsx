@@ -9,6 +9,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useTracking } from 'react-tracking';
 import config from '../../../config';
 import AddAnswer from './AddAnswer';
 import ImageModal from './ImageModal';
@@ -16,16 +17,15 @@ import ImageModal from './ImageModal';
 function Q(props) {
   const [oneAnswer, setOneAnswer] = useState({});
   const [twoAnswer, setTwoAnswer] = useState({});
-  const [clicked, setClicked] = useState(false);
   const [show, setShow] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [moreAnswers, setMoreAnswers] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [moreAnsBtn, setMoreAnsBtn] = useState(false);
-  const [photosArr, setPhotosArr] = useState([]);
   const [helpfulA, setHelpfulA] = useState(false);
   const [helpfulQ, setHelpfulQ] = useState(false);
   const [image, setImage] = useState('');
+  const { trackEvent } = useTracking({ module: 'Questions and Answers' });
 
   const btnTxt = moreAnsBtn === false ? 'Load More Answers' : 'Show Less Answers';
 
@@ -267,7 +267,21 @@ function Q(props) {
       <Row>
         <Col>
           {moreAnswers
-            ? <Button variant="outline-secondary" size="sm" onClick={() => setMoreAnsBtn(!moreAnsBtn)}>{btnTxt}</Button> : null}
+            ? (
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => {
+                  setMoreAnsBtn(!moreAnsBtn);
+                  trackEvent({ element: 'More Answers Button', time: new Date() });
+                }}
+                onKeyUp={() => {
+                  trackEvent({ element: 'More Answers Button', time: new Date() });
+                }}
+              >
+                {btnTxt}
+              </Button>
+            ) : null}
         </Col>
       </Row>
       <br />
