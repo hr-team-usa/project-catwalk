@@ -10,7 +10,7 @@ import Fab from '@material-ui/core/Fab';
 import Stars from '../../Reviews-Jim/components/Stars';
 
 const OutfitList = ({
-  productId, productName, productStyle, productRating,
+  productId, productName, productStyle, productRating, changeProduct
 }) => {
   const [outfitList, setOutfitList] = useState([]);
   const [addedOutfit, setAddedOutfit] = useState(false);
@@ -18,6 +18,7 @@ const OutfitList = ({
   const [index, setIndex] = useState('');
   const [toggleOutfitList, setToggleOutfitList] = useState('');
   const [outfitList2, setOutfitList2] = useState([]);
+  const [addButtonClicked, setAddButtonClicked] = useState(false);
 
   const starStyle = {
     display: 'inline',
@@ -47,13 +48,17 @@ const OutfitList = ({
   };
 
   useEffect(() => {
+    setAddButtonClicked(false);
+  }, [productStyle, productId]);
+
+  useEffect(() => {
     if (getLocal('outfitList') !== null && getLocal('outfitList').length !== 0 && getLocal('outfitList').length < 4 && outfitList.length === 0) {
       setOutfitList(getLocal('outfitList'));
     }
     if (getLocal('outfitList2') !== null && getLocal('outfitList2').length !== 0 && getLocal('outfitList2').length < 5 && outfitList2.length === 0) {
       setOutfitList2(getLocal('outfitList2'));
     }
-    if (addedOutfit) {
+    if (addedOutfit && !addButtonClicked) {
       const newList = outfitList;
       if (newList.length < 3) {
         const obj = {
@@ -67,6 +72,7 @@ const OutfitList = ({
           setOutfitList(newList);
           setAddedOutfit(false);
           setLocal('outfitList', newList);
+          setAddButtonClicked(true);
         }
         setOutfitList(newList);
       } else if (newList.length === 3) {
@@ -83,6 +89,7 @@ const OutfitList = ({
             setOutfitList2(newList2);
             setAddedOutfit(false);
             setLocal('outfitList2', newList2);
+            setAddButtonClicked(true);
           }
         } else {
           console.log('add an error no more than 7');
@@ -104,6 +111,7 @@ const OutfitList = ({
         setOutfitList(changeList);
         removeLocal('outfitList', index);
         setRemovedOutfit(false);
+        setAddButtonClicked(false);
       }
       if (toggleOutfitList === '2') {
         const changeList2 = outfitList2;
@@ -113,9 +121,16 @@ const OutfitList = ({
         setRemovedOutfit(false);
       }
     }
+    if (addedOutfit && addButtonClicked) setAddedOutfit(false);
   }, [addedOutfit, removedOutfit]);
 
-  // onClick={() => changeProduct(outfitList[0].id)}
+  // onClick={() => tochangeProduct(outfitList[0].id)}
+
+  const toChangeProduct = (e, id) => {
+    if (id !== productId && e.target.className === 'outfit-overlay card-img-overlay') {
+      changeProduct(id);
+    }
+  };
 
   return (
     <div>
@@ -142,7 +157,7 @@ const OutfitList = ({
                   <>
                     <Card key={outfitList[0].id} outfitlist="1" data-key={0} className="related-products">
                       <Card.Img variant="top" className="related-image" src={outfitList[0].style.photos[0].url} />
-                      <Card.ImgOverlay className="outfit-overlay">
+                      <Card.ImgOverlay className="outfit-overlay" onClick={(e) => toChangeProduct(e, outfitList[0].id)}>
                         <IconButton onClick={(e) => { removeOutfit(e); }}>
                           <HighlightOffIcon />
                         </IconButton>
@@ -181,7 +196,7 @@ const OutfitList = ({
                       {outfitList.map((item, index) => (
                         <Card key={index} outfitlist="1" data-key={index} className="related-products">
                           <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
-                          <Card.ImgOverlay className="outfit-overlay">
+                          <Card.ImgOverlay className="outfit-overlay" onClick={(e) => toChangeProduct(e, item.id)}>
                             <IconButton onClick={
                               (e) => { removeOutfit(e); }
                             }
@@ -222,7 +237,7 @@ const OutfitList = ({
                       {outfitList.map((item, index) => (
                         <Card key={index} outfitlist="1" data-key={index} className="related-products">
                           <Card.Img variant="top" className="related-image" src={item.style.photos[0].url} />
-                          <Card.ImgOverlay className="outfit-overlay">
+                          <Card.ImgOverlay className="outfit-overlay" onClick={(e) => toChangeProduct(e, item.id)}>
                             <IconButton onClick={
                               (e) => { removeOutfit(e); }
                             }
@@ -275,7 +290,7 @@ const OutfitList = ({
                 <>
                   <Card key={outfitList2[0].id} outfitlist="2" data-key={0} className="related-products">
                     <Card.Img variant="top" className="related-image" src={outfitList2[0].style.photos[0].url} />
-                    <Card.ImgOverlay className="outfit-overlay">
+                    <Card.ImgOverlay className="outfit-overlay" onClick={(e) => toChangeProduct(e, outfitList2[0].id)}>
                       <IconButton onClick={(e) => { removeOutfit(e); }}>
                         <HighlightOffIcon />
                       </IconButton>

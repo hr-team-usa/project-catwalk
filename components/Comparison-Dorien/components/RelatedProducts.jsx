@@ -9,7 +9,7 @@ import Stars from '../../Reviews-Jim/components/Stars';
 import { arrayOf } from 'prop-types';
 
 const RelatedProducts = ({
-  products, images, style, ratings, setProductId, productName, productRating, productStyle, setProducts, setProductImg, setProductStyle,
+  products, images, style, ratings, setProductId, productName, productRating, productStyle, changeProduct,
 }) => {
 // in order to make multiple slides in carousel
   const arrayOfArrayProducts = [];
@@ -70,13 +70,6 @@ const RelatedProducts = ({
     arrayOfArrayProducts.push(arrayOfProducts);
     arrayOfProducts = [];
   }
-
-  const changeProduct = (itemId) => {
-    setProductId(itemId);
-    setProducts([]);
-    setProductImg(false);
-    setProductStyle(false);
-  };
 
   return (
     <>
