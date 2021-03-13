@@ -9,6 +9,8 @@ const Review = ({ review, markReview }) => {
   const [helpful, setHelpful] = useState(false);
   const [show, setShow] = useState(false);
   const [image, setImage] = useState('');
+  const [body, setBody] = useState(review.body.substring(0, 250));
+
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dateVal = new Date(review.date);
   const month = monthNames[dateVal.getMonth()];
@@ -31,12 +33,21 @@ const Review = ({ review, markReview }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
-          {review.body}
-        </Col>
+        {(review.body.length <= 250)
+          ? (
+            <Col>
+              {review.body}
+            </Col>
+          )
+          : (
+            <Col>
+              {`${body} ...`}
+              {(body.length <= 250) ? <div onClick={() => setBody(review.body)}><u>See more</u></div> : <div onClick={() => setBody(review.body.substring(0, 250))}><u>See less</u></div>}
+            </Col>
+          )}
       </Row>
       <Row>
-        {review.photos.map((photo) => <img key={photo.id} className="review-photo" alt="" src={photo.url} onClick={() => { setShow(true); setImage(photo.url)}} />)}
+        {review.photos.map((photo) => <img key={photo.id} className="review-photo" alt="" src={photo.url} onClick={() => { setShow(true); setImage(photo.url); }} />)}
       </Row>
       {review.recommend ? <Row><Col>✓ I recommend this product</Col></Row> : null}
       {review.response ? (

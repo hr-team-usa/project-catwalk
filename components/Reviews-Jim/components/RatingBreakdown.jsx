@@ -57,7 +57,11 @@ const RatingBreakdown = ({
         5 Stars (
         {ratings['5'] ? ratings['5'] : '0'}
         )
-        <LinearProgress variant="determinate" value={Number(percentages['5'])} />
+        <LinearProgress
+          variant="determinate"
+          value={Number(percentages['5'])}
+          color="secondary"
+        />
         {selectedRatings.includes(5)
           ? (
             <style>
