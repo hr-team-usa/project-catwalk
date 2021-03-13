@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { act } from 'react-dom/test-utils';
+
 configure({ adapter: new Adapter() });
 
 import axios from 'axios';
@@ -14,6 +16,7 @@ import Reviews from '../components/Reviews-Jim/Reviews';
 import ReviewsList from '../components/Reviews-Jim/components/ReviewsList';
 import Review from '../components/Reviews-Jim/components/Review';
 import ReviewsBreakdown from '../components/Reviews-Jim/components/ReviewsBreakdown';
+import NewReviewForm from '../components/Reviews-Jim/components/NewReviewForm';
 
 const productReviews = [
   {
@@ -143,7 +146,7 @@ const productMeta = {
 
 // USE beforeEach() TO START EACH TEST WITH THE SAME CODE (LIKE A WRAPPER)
 
-xdescribe('Reviews Component', () => {
+describe('Reviews Component', () => {
 
   describe('Jest tests that test the Jest!', () => {
     it('should expect true to equal true', () => {
@@ -171,10 +174,17 @@ xdescribe('Reviews Component', () => {
   })
 
   describe('Reviews Breakdown', () => {
+    it('should render only five-star reviews when the five-star ratings bar is clicke', async () => {
 
+    });
+
+    it('should render a remove ratings button after a rating filter is selected', async () => {
+
+    });
   })
 
   describe('Reviews List', () => {
+
     const dummyProps = {
       productReviews: [{
         rating: 0,
@@ -202,20 +212,79 @@ xdescribe('Reviews Component', () => {
       },
       productName: 'string',
       productId: 0,
+      setGetToggle: () => {},
     }
 
-    it('should have a button that adds two reviews', () => {
+    it('should render a more reviews button when there are more than two reviews', () => {
+      dummyProps.productReviews = productReviews;
       const wrapper = shallow(<ReviewsList {...dummyProps} />);
-      expect(wrapper.find('#more-reviews-btn').text()).toBe('More Reviews');
+      expect(wrapper.find('#more-reviews-btn').exists()).toBeTruthy();
+    });
+
+    it('should not render a more reviews button when there are two or fewer reviews', () => {
+      dummyProps.productReviews = [];
+      const wrapper = shallow(<ReviewsList {...dummyProps} />);
+      expect(wrapper.find('#more-reviews-btn').exists()).toBeFalsy();
+    });
+
+    it('should add two reviews when the more reviews button is clicked', async () => {
+      dummyProps.productReviews = productReviews;
+      let wrapper;
+      act(() => {
+        wrapper = mount(<ReviewsList {...dummyProps} />);
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      const button = wrapper.find('#more-reviews-btn > button');
+      act(() => {
+        button.simulate('click');
+      });
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setImmediate(() => {
+              wrapper.update();
+              resolve();
+            });
+          })
+      );
+      expect(wrapper.find('.rendered-review')).toHaveLength(4);
     });
 
     it('should use relevant as a default sort status', () => {
       const wrapper = shallow(<ReviewsList {...dummyProps} />);
-      // force it to call use state
-      // find the select inside reviews list -- id or classname
       expect(wrapper.find('select').props().value).toBe('relevant');
     });
   })
+
+  describe('Submit a Review', () => {
+
+    const dummyProps = {
+      show: true,
+      onHide: () => {},
+      characteristics: productMeta.characteristics,
+      productName: '',
+      productId: 0,
+      setGetToggle: () => {},
+    }
+
+    it('should render a review form', () => {
+      const wrapper = shallow(<NewReviewForm {...dummyProps} />);
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('should render a characteristic selector for each category', () => {
+      const wrapper = shallow(<NewReviewForm {...dummyProps} />);
+      expect(wrapper.find('.review-form-chars')).toHaveLength(4);
+    });
+  });
 });
 
 // console.log(wrapper.debug());
