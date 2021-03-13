@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { IconButton } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Fab from '@material-ui/core/Fab';
 import Stars from '../../Reviews-Jim/components/Stars';
 
 const OutfitList = ({
@@ -93,11 +95,11 @@ const OutfitList = ({
       <Carousel interval={null} indicators={false} id="outfit-carousel">
         <Carousel.Item id="first-list">
           <CardDeck className="outfit-group">
-            <Card className="outfit-products" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
-              <Card.Img variant="top" className="add-outfit-image" src="add-to-outfit2.png" />
-              <Card.ImgOverlay>
-                <Card.Title className="text-center outfit-text">Add to Outfit List</Card.Title>
-              </Card.ImgOverlay>
+            <Card id="add-card" onClick={() => { setAddedOutfit(true); }} style={{ width: '5rem' }}>
+              <Fab id="add-button">
+                <div id="add-button-text">Add to outfit</div>
+                <AddCircleIcon />
+              </Fab>
             </Card>
             {outfitList.length === 0
               ? (
@@ -262,12 +264,36 @@ const OutfitList = ({
                padding: 0px;
              }
              .outfit-products {
+               height: 270.961px;
                margin: 10px;
-               box-shadow: 0.5px 0.5px 0.5px 0.5px grey;
+               box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
                border-color: grey;
              }
-             .related-products-group {
-  
+             #add-card {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               border: 0px;
+             }
+             #add-button-text {
+              font-size: large;
+              font-family: inherit;
+             }
+
+             #add-button {
+              height: 267.961px;
+              width: 240px; 
+              border-radius: 0px;
+             }
+             #add-button .MuiFab-label {
+              height: 100px; 
+              width: 100px;
+              display: flex;
+              flex-flow: column;
+             }
+             #add-button .MuiFab-label .MuiSvgIcon-root {
+              height: 150px; 
+              width: 150px;
              }
              `}
       </style>
