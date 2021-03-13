@@ -112,6 +112,13 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
     return (allRatings / ratingCount).toFixed(1);
   };
 
+  const changeProduct = (itemId) => {
+    setProductId(itemId);
+    setProducts([]);
+    setProductImg(false);
+    setProductStyle(false);
+  };
+
   useEffect(() => {
     getRelatedProductsId();
   }, [productId]);
@@ -133,6 +140,7 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
               setProducts={setProducts}
               setProductImg={setProductImg}
               setProductStyle={setProductStyle}
+              changeProduct={changeProduct}
             />
           )
           : null }
@@ -142,6 +150,7 @@ const Comparison = ({ productId, setProductId, productName, productRating, curre
           productName={productName}
           productStyle={currentStyleData}
           productRating={productRating}
+          changeProduct={changeProduct}
         />
       </Container>
     </div>
