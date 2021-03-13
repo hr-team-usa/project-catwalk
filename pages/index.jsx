@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, NavDropdown } from 'react-bootstrap';
-import Brightness5Icon from '@material-ui/icons/Brightness5';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
 import CloseIcon from '@material-ui/icons/Close';
 import Head from 'next/head';
 import ProductDescription from '../components/Description-Scott/ProductDescription';
