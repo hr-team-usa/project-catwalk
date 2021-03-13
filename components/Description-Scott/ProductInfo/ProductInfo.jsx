@@ -7,9 +7,9 @@ import {
   TwitterShareButton, TwitterIcon,
   FacebookShareButton, FacebookIcon,
 } from 'react-share';
-import styles from './ProductInfo.module.css';
 import Price from './Price';
 import Stars from '../../Reviews-Jim/components/Stars';
+import styles from './ProductInfo.module.css';
 
 const ProductInfo = ({
   productName, category, description, styleInfo, productRating, reviewsRef,

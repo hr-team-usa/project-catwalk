@@ -51,15 +51,19 @@ const ReviewsBreakdown = ({
 
   return (
     <div>
-      <div className="avg-rating">{rating}</div>
-      <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
+      <div>
+        <div className="avg-rating">{rating}</div>
+        <Rating className="star-rating" value={Number(rating)} precision={0.25} readOnly />
+      </div>
       <br />
-      {recommended ? (
-        <>
-          {recommended}
-          % of reviews recommend this product
-        </>
-      ) : <>No reviews recommend this product</>}
+      <div>
+        {recommended ? (
+          <>
+            {recommended}
+            % of reviews recommend this product
+          </>
+        ) : <>No reviews recommend this product</>}
+      </div>
       <RatingBreakdown
         ratings={productMeta.ratings}
         selectedRatings={selectedRatings}

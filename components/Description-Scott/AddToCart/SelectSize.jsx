@@ -1,9 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Overlay from 'react-bootstrap/Overlay';
-import styles from './SelectSize.module.css';
 
 const SelectSize = ({
   styleInfo, setSku, setIsOutOfStock, invalidAdd, setInvalidAdd,
@@ -24,7 +24,6 @@ const SelectSize = ({
           skusAvailable.push(skus[i]);
         }
       }
-      // skusAvailable.length === 0 ? setIsOutOfStock(true) : setIsOutOfStock(false)
       if (skusAvailable.length === 0) {
         setIsOutOfStock(true);
       } else {
@@ -32,9 +31,6 @@ const SelectSize = ({
       }
     }
     setSizesAvailable(skusAvailable);
-    // use this for testing 'out of stock':
-    // setSizesAvailable([]);
-    // setIsOutOfStock(true);
   };
 
   const clickHandler = (sku) => {
@@ -60,7 +56,7 @@ const SelectSize = ({
     // eslint-disable-next-line vars-on-top
     var emptyStock = ( // eslint-disable-line no-var
 
-      <DropdownButton className={styles.dropdown} disabled id="dropdown-basic-button" title="Out of Stock" />);
+      <DropdownButton disabled id="dropdown-basic-button" title="Out of Stock" />);
   } else {
     // eslint-disable-next-line vars-on-top
     var stock = ( // eslint-disable-line no-var
@@ -75,7 +71,7 @@ const SelectSize = ({
         <Overlay target={target.current} show={overlayShow} placement="top">
           {({
             placement, arrowprops, show: _show, popper, ...props
-          }) => ( // made this  lowercase to rid error -Jim -MichaelScott
+          }) => (
             <div
               {...props}
               style={{
@@ -83,6 +79,7 @@ const SelectSize = ({
                 padding: '2px 10px',
                 color: 'white',
                 borderRadius: 3,
+                // eslint-disable-next-line react/prop-types
                 ...props.style,
               }}
             >
