@@ -86,7 +86,6 @@ function Q(props) {
     };
     axios(options)
       .then(() => props.setRender(true))
-      .then(() => setClicked(true))
       .catch((err) => console.log(err));
     // } else {
     //   window.alert("We're glad you found this helpful!");
@@ -95,7 +94,7 @@ function Q(props) {
 
   const report = (e) => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${e.target.id}/report`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.id}/report`,
       method: 'put',
       headers: {
         Authorization: config.TOKEN,
@@ -185,7 +184,7 @@ function Q(props) {
             {helpfulA ? (
               <Col sm="auto" style={answerStyle}>
                 Marked as Helpful! (
-                {answer.helpfulness}
+                {props.question.answers[answer.id].helpfulness}
                 )
               </Col>
             )
@@ -200,7 +199,7 @@ function Q(props) {
                 </Col>
               )}
             <Col sm="auto" style={resultStyle}>
-              <u id={props.question.question_id} onClick={(e) => report(e)}>Report</u>
+              <u id={answer.id} onClick={(e) => report(e)}>Report</u>
             </Col>
           </Row>
           <br />
