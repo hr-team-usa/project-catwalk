@@ -15,6 +15,29 @@ function AddAnswer(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
+  const [imgContainer, setImgContainer] = useState('');
+  const [photosToggle, setPhotosToggle] = useState(false);
+
+  const addPhoto = (e) => {
+    e.preventDefault();
+    if (imgContainer.length) {
+      const photosArray = photos;
+      photosArray.push(imgContainer);
+      setPhotos(photosArray);
+      setPhotosToggle(true);
+      setImgContainer('');
+    } else {
+      alert('Please upload a valid image url');
+    }
+  };
+
+  const removePhoto = (e, photo) => {
+    e.preventDefault();
+    const photosArray = photos;
+    photosArray.splice(photosArray.indexOf(photo), 1);
+    setPhotos(photosArray);
+    setPhotosToggle(true);
+  };
 
   const handleChange = (e) => {
     if (e.target.name === 'formAnswer') {
@@ -43,7 +66,7 @@ function AddAnswer(props) {
       required.push('email address');
     }
     if (required.length) {
-      let result = '\n';
+      let result = '\n\n';
       for (let i = 0; i < required.length; i += 1) {
         result += `${required[i]}\n`;
       }
@@ -137,20 +160,22 @@ function AddAnswer(props) {
                   </Form.Text>
                 </Form.Group>
 
-                <Form.Group
-                  controlId="addPhoto"
-                  onChange={(e) => { handleChange(e); }}
-                >
-                  <Form.Label>Add Photos</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Photo URL"
-                    maxLength={1000}
-                    name="photo"
-                  />
-                  <Form.Text className="text-muted">
-                    Please copy and past full photo URL
-                  </Form.Text>
+                <Form.Group>
+                  <Form.Label>Upload your photos</Form.Label>
+                  <Form.Control type="" value={imgContainer} placeholder="Paste image url here" onChange={(e) => setImgContainer(e.target.value)} />
+                  <Form.Text>
+                    {photos.length}
+              /5 photos max, click thumbnail to remove
+            </Form.Text>
+                  {photos.length ? photos.map((photo, i) => <img className="upload-img" key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
+                  {(photos.length < 5) ? <Button className="upload-btn" onClick={(e) => addPhoto(e)}>Upload</Button> : null}
+                  <style jsx>
+                    {`
+                img {
+                  height: 75px;
+                }
+            `}
+                  </style>
                 </Form.Group>
                 <br />
                 <br />

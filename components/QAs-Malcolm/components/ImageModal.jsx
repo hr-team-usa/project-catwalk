@@ -5,6 +5,10 @@ import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 
 function ImageModal(props) {
+  // const imageStyle = {
+  //   objectFit: 'contain',
+  // };
+
   return (
     <Modal
       {...props}
@@ -17,11 +21,12 @@ function ImageModal(props) {
           src={props.img}
           width="100%"
           height="100%"
+          // style={imageStyle}
         />
 
       </Modal.Header>
     </Modal>
-  )
+  );
 }
 
 export default ImageModal;
