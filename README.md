@@ -30,7 +30,7 @@ $ npm run test
 ```
 
 ## Product Overview
-[Screenshot]
+![Alt text](/screenshots/NextLevel-ProductOverviewSS.png "Product Overview")
 
 ### Overview & Features
 The Product Overview widget displays the currently selected product. It contains four major subcomponents. 1) An image gallery displaying a carousel of product images with a nested column of thumbnail images. Click the main image (or expand icon) to expand the view and click it again to enter zoom view. 2) Product info is displayed to the right, including up to date sale pricing if avaiable. 3) A style selector shows thumbnails grouped into rows of four for the various styles, click on the thumbnail to change the currently displayed product to that style. 4) An Add to Cart subcomponent which gives users the ability to add items of a specific size and quantity to the cart (stored in local storage as well as in app memory).
