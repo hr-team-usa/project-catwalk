@@ -78,7 +78,7 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 * TLC
 
 ## Authors
-[Scott Guinn](https://github.com/Scott-Guinn)
-[Dorien Pine](https://github.com/Initial-D-cmd)
-[Malcolm Marshall](https://github.com/Malcolm-Marshall)
-[Jim Burch](https://github.com/JimBurch)
+* [Scott Guinn](https://github.com/Scott-Guinn)
+* [Dorien Pine](https://github.com/Initial-D-cmd)
+* [Malcolm Marshall](https://github.com/Malcolm-Marshall)
+* [Jim Burch](https://github.com/JimBurch)
