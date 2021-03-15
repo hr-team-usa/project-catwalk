@@ -56,7 +56,7 @@ Users can easily navigate through various images and styles with the click of a 
 ### Results & Wins
 
 ## Reviews & Ratings
-![Alt text](/screenshots/NextLevel-Reviews.png "Reviews & Ratings")
+![Alt text](/screenshots/NextLevel-ReviewsSS.png "Reviews & Ratings")
 
 ### Overview & Features
 The Reviews & Ratings widget displays all the reviews for each product, a breakdown of the ratings and characteristics, and a form to submit a new reviews. Users can mark reviews as helpful, report bad ones, and filter reviews based on their ratings.
