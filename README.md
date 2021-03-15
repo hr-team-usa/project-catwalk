@@ -1,7 +1,7 @@
 # Front End Capstone
 An e-commerce web app that includes a product overview, comparison tools and outfit builder, user questions and answers, and a ratings and reviews breakdown.
 
-[DEMO VIDEO]
+[![Alt text](https://www.youtube.com/watch?v=0lDV6Q23qII)](https://www.youtube.com/watch?v=0lDV6Q23qII)
 
 ## Getting Started
 Fork and clone the Front End Capstone repository to your preferred directory:
@@ -56,7 +56,7 @@ Users can easily navigate through various images and styles with the click of a 
 ### Results & Wins
 
 ## Reviews & Ratings
-[Screenshot]
+![Alt text](/screenshots/NextLevel-Reviews.png "Reviews & Ratings")
 
 ### Overview & Features
 The Reviews & Ratings widget displays all the reviews for each product, a breakdown of the ratings and characteristics, and a form to submit a new reviews. Users can mark reviews as helpful, report bad ones, and filter reviews based on their ratings.
