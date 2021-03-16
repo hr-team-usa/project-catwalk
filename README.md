@@ -52,8 +52,14 @@ Users can easily navigate through various images and styles with the click of a 
 [Screenshot]
 
 ### Overview & Features
+The Questions and Answers widget displays questions and corresponding answers for whatever product is active in the product overview. The user has the ability to rank each question and answer as helpful, which determines the order in which both questions and answers are displayed. There is also an option to report a question if needed, and the reported question will be reviewed for inappropriate content and removed. If a user cannot find the question they would like to see answered, there is a form to fill out a question. Likewise, there is a form to fill out an answer to an already existing question.
+
 ### Challenges
+A challenge I faced with this widget was state management and controlling the amount of re-renders. The main area where this was a difficulty was with the search component. After three characters are typed in the search bar, the component will only show the questions that contain that sequence of characters, and changes with each additional key stroke. Initially I had this set of search characters being passed to a parent component, then back down two levels of child components. This process triggered too many re-renders of the page resulting in a crash. To resolve this issue, I reorganized where I placed my axios requests so minimal re rendering and requests were needed for the page to function.
+
 ### Results & Wins
+This single component will fill the browser screen, and never any more than that. If there are more questions or answers, the user has the ability to scroll down within the component, as well as the ability to add more or less questions and or answers. I really like this feature and it makes for a very pleasant user experience.
+
 
 ## Reviews & Ratings
 ![Alt text](/screenshots/NextLevel-ReviewsSS.png "Reviews & Ratings")
