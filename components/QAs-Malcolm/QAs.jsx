@@ -11,18 +11,20 @@ const QAs = ({ productId, productName }) => {
   const [render, setRender] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [searchMatch, setSearchedMatch] = useState(null);
-
   const getQuestions = () => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${productId}${count}`,
+      // url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions?product_id=${productId}${count}`,
+      url: `http://18.216.172.236:3001/qa/questions?product_id=${productId}${count}`,
       method: 'get',
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      // headers: {
+      //   Authorization: config.TOKEN,
+      // },
     };
 
     axios(options)
-      .then((res) => setQuestions(res.data.results))
+      .then((res) => {
+        setQuestions(res.data.results);
+      })
       .catch((err) => console.log(err));
   };
 

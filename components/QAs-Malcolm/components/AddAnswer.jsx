@@ -79,12 +79,13 @@ function AddAnswer(props) {
     e.preventDefault();
     if (!validationCheck()) {
       const options = {
-        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
+        // url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/questions/${props.questionId}/answers`,
+        url: `https://18.216.172.236:3001/qa/questions/${props.questionId}/answers`,
         method: 'post',
-        headers: {
-          Authorization: config.TOKEN,
-          'Content-Type': 'application/JSON',
-        },
+        // headers: {
+        //   Authorization: config.TOKEN,
+        //   'Content-Type': 'application/JSON',
+        // },
         data: {
           body: answer,
           name,
@@ -167,7 +168,7 @@ function AddAnswer(props) {
                     {photos.length}
               /5 photos max, click thumbnail to remove
             </Form.Text>
-                  {photos.length ? photos.map((photo, i) => <img className="upload-img" key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
+                  {photos.length ? photos?.map((photo, i) => <img className="upload-img" key={i} alt="" src={photo} onClick={(e) => removePhoto(e, photo)} />) : null}
                   {(photos.length < 5) ? <Button className="upload-btn" onClick={(e) => addPhoto(e)}>Upload</Button> : null}
                   <style jsx>
                     {`

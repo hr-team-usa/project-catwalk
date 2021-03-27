@@ -32,6 +32,7 @@ function Q(props) {
 
   const parseAnswers = () => {
     let one = Object.keys(props.answers).slice(0, 1);
+    console.log(one)
     let two = Object.keys(props.answers).slice(1, 2);
     const all = Object.keys(props.answers);
     if (all.length > 2) {
@@ -79,11 +80,12 @@ function Q(props) {
       qaPath = 'answers';
     }
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${id}/helpful`,
-      method: 'put',
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      // url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/${qaPath}/${id}/helpful`,
+      url: `http://18.216.172.236:3001/qa/${qaPath}/${id}/helpful`,
+      method: 'put'
+      // headers: {
+      //   Authorization: config.TOKEN,
+      // },
     };
     axios(options)
       .then(() => props.setRender(true))
@@ -92,11 +94,12 @@ function Q(props) {
 
   const report = (e) => {
     const options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.id}/report`,
+      // url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-bld/qa/answers/${e.target.id}/report`,
+      url: `https://18.216.172.236:3001/qa/answers/${e.target.id}/report`,
       method: 'put',
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      // headers: {
+      //   Authorization: config.TOKEN,
+      // },
     };
     axios(options)
       .then(() => { e.target.innerHTML = 'Reported'; })
@@ -141,7 +144,7 @@ function Q(props) {
           <Row>
             <Col>
               {
-                answer.photos ? answer.photos.map((img, i) => (
+                answer.photos ? answer.photos?.map((img, i) => (
                   <>
                     <Image
                       src={img}
