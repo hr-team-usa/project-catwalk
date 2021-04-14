@@ -1,9 +1,8 @@
 # Front End Capstone
 An e-commerce web app that includes a product overview, comparison tools and outfit builder, user questions and answers, and a ratings and reviews breakdown.
 
+## Product Demo
 [![Alt text](/screenshots/NextLevel-DemoSS.png)](https://www.youtube.com/watch?v=0lDV6Q23qII)
-
-[![Next Level Product Demo](http://img.youtube.com/vi/0lDV6Q23qII/0.jpg)](http://www.youtube.com/watch?v=0lDV6Q23qII "Next Level Product Demo")
 
 ## Getting Started
 Fork and clone the Front End Capstone repository to your preferred directory:
