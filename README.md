@@ -83,7 +83,7 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 * Next.js <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg" />
 * Bootstrap <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" />
 * React-Bootstrap
-* Material UI ![Material UI](/public/materialui.png =26x26)
+* Material UI <img align="left" src="/public/materialui.png" alt="Material UI" width="26px" />
 * Axios
 * Jest & Enzyme
 * TLC
