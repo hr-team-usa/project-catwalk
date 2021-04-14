@@ -82,8 +82,8 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 * React <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
 * Next.js <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg" />
 * Bootstrap <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" />
-* React-Bootstrap
-* Material UI
+* React-Bootstrap <img align="left" src="/public/reactbootstrap.jpg" alt="React-Bootstrap" width="26px" />
+* Material UI <img align="left" src="/public/materialui.png" alt="Material UI" width="26px" />
 * Axios
 * Jest & Enzyme
 * TLC
