@@ -1,4 +1,4 @@
-# Front End Capstone
+# Next Level E-Commerce
 An e-commerce web app that includes a product overview, comparison tools and outfit builder, user questions and answers, and a ratings and reviews breakdown.
 
 ## Product Demo
