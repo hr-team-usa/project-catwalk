@@ -54,7 +54,7 @@ A challenged I faced was retrieving all the data from each of the other widgets 
 This widget fits perfectly and looks like it was meant to be there. It also meets all of the specification such as a modal that shows you the differences between the related product and the selected product and even clean rendering upon adding/removing an outfit to/from the list.
 
 ## Questions & Answers
-[Screenshot]
+![image](https://user-images.githubusercontent.com/65040302/114786546-2388e880-9d33-11eb-8c23-c64184c32eac.png)
 
 ### Overview & Features
 The Questions and Answers widget displays questions and corresponding answers for whatever product is active in the product overview. The user has the ability to rank each question and answer as helpful, which determines the order in which both questions and answers are displayed. There is also an option to report a question if needed, and the reported question will be reviewed for inappropriate content and removed. If a user cannot find the question they would like to see answered, there is a form to fill out a question. Likewise, there is a form to fill out an answer to an already existing question.
