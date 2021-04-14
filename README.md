@@ -76,8 +76,8 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 
 ## Built With:
 * React <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
-* Next.js
-* Bootstrap
+* Next.js <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg" />
+* Bootstrap <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" />
 * React-Bootstrap
 * Material UI
 * Axios
