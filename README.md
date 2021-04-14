@@ -42,7 +42,7 @@ Working with a combination of react-bootstrap, material-ui, and vanilla css fram
 Users can easily navigate through various images and styles with the click of a button. Furthermore, various image display options partially overcome the problem of having images that do not fit easily into a small, fixed container. Thin, soft borders and dividing lines present a clean, polished interface to the user, and simple dropdown selectors make purchasing a cinch.
 
 ## Product Comparison & Outfit
-[Screenshot]
+![image](https://user-images.githubusercontent.com/65040302/114786215-98a7ee00-9d32-11eb-93d9-58ff38843210.png)
 
 ### Overview & Features
 The Product Comparison displays all products that are tagged related to the currently selected product. They are displayed as cards in a carousel slide and some products will have greater than four related products. Each card has a hover over feature which allows you to compare the selected product to the related product that you hover over. You may also click on the related product select that product to be veiwed in the Product Overview as well as the Q/A, and Reviews.
