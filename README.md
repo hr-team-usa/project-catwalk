@@ -74,7 +74,7 @@ This widget pulls data from two different API endpoints, product reviews and pro
 Users can easily select ratings, filter reviews, and clear those filters with one "remove all" click. The reviews render quickly as they don't need to call the API for every filter -- just on initialization and sorting (which is a specific API endpoint). The characteristics ratings also use vanilla CSS as Material UI and Bootstrap didn't have a component that fit the need.
 
 ## Built With:
-* React
+* React <img align="left" alt=“React” width="26px" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" />
 * Next.js
 * Bootstrap
 * React-Bootstrap
