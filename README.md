@@ -3,7 +3,7 @@ An e-commerce web app that includes a product overview, comparison tools and out
 
 [![Alt text](/screenshots/NextLevel-DemoSS.png)](https://www.youtube.com/watch?v=0lDV6Q23qII)
 
-## Getting Started TEST
+## Getting Started
 Fork and clone the Front End Capstone repository to your preferred directory:
 
 ```
