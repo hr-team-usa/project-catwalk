@@ -86,7 +86,7 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 * Material UI <img align="left" src="/public/materialui.png" alt="Material UI" width="26px" />
 * Axios <img align="left" src="/public/axios.png" alt="Axios" width="26px" />
 * Jest & Enzyme <img align="left" src="/public/jest.png" alt="Jest" width="26px" />
-* 🌷    TLC
+* 🌷   &nbsp; TLC
 
 ## Authors
 * [Scott Guinn](https://github.com/Scott-Guinn)
