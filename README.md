@@ -1,7 +1,6 @@
 # Front End Capstone
 An e-commerce web app that includes a product overview, comparison tools and outfit builder, user questions and answers, and a ratings and reviews breakdown.
 
-## Product Demo
 [![Alt text](/screenshots/NextLevel-DemoSS.png)](https://www.youtube.com/watch?v=0lDV6Q23qII)
 
 ## Getting Started
@@ -46,8 +45,13 @@ Users can easily navigate through various images and styles with the click of a 
 [Screenshot]
 
 ### Overview & Features
+The Product Comparison displays all products that are tagged related to the currently selected product. They are displayed as cards in a carousel slide and some products will have greater than four related products. Each card has a hover over feature which allows you to compare the selected product to the related product that you hover over. You may also click on the related product select that product to be veiwed in the Product Overview as well as the Q/A, and Reviews.
+The Outfit features an "Add to Outfit" button that allows you to add the currently selected product to the Outfit list which is also a carousel slide with cards for each added product. You may add up to a maximum of 7 products to your Outfit List which also has local storage to prevent loss of data in between inconveniences.
+
 ### Challenges
+A challenged I faced was retrieving all the data from each of the other widgets that have already requested specifc data from the RESTful API without having to repeat any requests, I also faced some challanges with created a functional Outfit carousel that was rendered with the correct dimensions while it was empty. The biggest challenge I would also have to say is having my components interact with the other teams widgets and sharing functionality between widgets.
 ### Results & Wins
+This widget fits perfectly and looks like it was meant to be there. It also meets all of the specification such as a modal that shows you the differences between the related product and the selected product and even clean rendering upon adding/removing an outfit to/from the list.
 
 ## Questions & Answers
 [Screenshot]
