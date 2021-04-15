@@ -89,7 +89,7 @@ Users can easily select ratings, filter reviews, and clear those filters with on
 * Jest & Enzyme <img align="left" src="/public/jest.png" alt="Jest" width="26px" />
 * 🌷 &nbsp;&nbsp;&nbsp;&nbsp; TLC
 
-## Authors
+## Contributors
 * [Scott Guinn](https://github.com/Scott-Guinn)
 * [Dorien Pine](https://github.com/Initial-D-cmd)
 * [Malcolm Marshall](https://github.com/Malcolm-Marshall)
